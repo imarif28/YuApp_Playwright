@@ -48,6 +48,14 @@ export class CustomerPage {
         return this.page.getByText('Produk berhasil ditambahkan ke keranjang');
     }
 
+    get successDelete(): Locator {
+        return this.page.getByText('1 produk dihapus dari keranjang');
+    }
+
+    get errorChehckOut(): Locator {
+        return this.page.getByText(/Minimum purchase is Rp\. [\d.,]+/);
+    }
+
     get profileButton(): Locator {
         return this.page.locator('button:has(div.MuiAvatar-root)');
     }
@@ -116,6 +124,11 @@ export class CustomerPage {
     checkboxByProductName(productName: string): Locator {
         return this.page.locator('.MuiStack-root.mui-1187icl', { hasText: new RegExp(productName, 'i') })
             .getByRole('checkbox');
+    }
+
+    deleteByProductName(productName: string): Locator {
+        return this.page.locator('.MuiStack-root.mui-1187icl', { hasText: new RegExp(productName, 'i') })
+            .getByTestId('DeleteOutlineRoundedIcon');
     }
 
     checkoutPageHeading(productName: string): Locator {
@@ -217,10 +230,52 @@ export class CustomerPage {
         await expect(targetCheckbox).toBeChecked({ timeout: 20000 });
     }
 
+    async unselectProductCheckbox(productName: string) {
+        const targetContainer = this.productContainerByName(productName);
+        const targetCheckbox = this.checkboxInContainer(targetContainer);
+
+        const isTargetChecked = await targetCheckbox.isChecked();
+
+        if (isTargetChecked) {
+            // --- Uncheck produk target ---
+            await targetCheckbox.click();
+            await this.page.waitForTimeout(2000);
+        }
+
+        // --- Uncheck semua item lain yang masih tercentang ---
+        const checkedCount = await this.checkedProductContainer().count();
+
+        for (let i = 0; i < checkedCount; i++) {
+            const checkedContainer = this.checkedProductContainer().nth(i);
+            const checkbox = this.checkboxInContainer(checkedContainer);
+
+            if (await checkbox.isChecked()) {
+                await checkbox.click();
+                await this.page.waitForTimeout(2000);
+            }
+        }
+
+        // --- Verifikasi bahwa produk target tidak tercentang ---
+        await expect(targetCheckbox).not.toBeChecked({ timeout: 20000 });
+    }
+
+    async deleteProduct(productName: string) {
+        await this.shoppingCartIcon.click();
+        await this.productLinkInCart().click();
+        await this.unselectProductCheckbox(productName);
+        await expect(this.deleteByProductName(productName)).toBeVisible();
+        await this.deleteByProductName(productName).click();
+        await expect(this.successDelete).toBeVisible({ timeout: 20000 });
+    }
 
     async createOrder() {
         await this.buatPesananButton.click();
         await this.verifyOrderCreationSuccess();
+    }
+
+    async createOrderUnder() {
+        await this.buatPesananButton.click();
+        await expect(this.errorChehckOut).toBeVisible({ timeout: 20000 });
     }
 
     async navigateToTransactionList() {

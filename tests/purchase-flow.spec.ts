@@ -15,18 +15,18 @@ test.describe('Purchase Flow Approve', () => {
     const nama_marketing = 'IlhamMarketing';
 
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
-    const jalur_pengiriman = 'Udara';
+    const jalur_pengiriman = 'Laut';
     // Nama bank untuk metode pembayaran (bisa penggalan kata, case-insensitive, misal: 'PERMATA' untuk 'VA_PERMATA')
     const nama_bank = 'PERMATA';
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = '9818723';
+    const no_local_china = '68127636';
     // Path relatif ke file bukti pembayaran yang akan diupload oleh Finance
     const filePath = 'dimasganteng.png';
 
     // Data lengkap untuk pengisian form 'New Receipt' oleh Agen China
     const receiptData = {
         no_local_cina: no_local_china,        // Menggunakan nomor lokal China dari Admin
-        shipping_mark: 'CB34',                // Tanda pengiriman unik untuk resi ini
+        shipping_mark: 'CB35',                // Tanda pengiriman unik untuk resi ini
         jalur_pengiriman: jalur_pengiriman,   // Menggunakan jalur pengiriman dari Customer
         panjang: '10',                        // Dimensi barang (Panjang)
         lebar: '10',                          // Dimensi barang (Lebar)
