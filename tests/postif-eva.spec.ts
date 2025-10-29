@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { EvaPage } from '../pages/EvaPage';
 
-test.describe('Flow Postif Eva', () => {
     // --- Variabel Data Tes ---
 
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
@@ -58,4 +57,3 @@ test.describe('Flow Postif Eva', () => {
 
         await evaPage.agentFinalizeShipping(receiptData.shipping_mark);
     });
-});

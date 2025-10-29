@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../pages/CustomerPage';
 
-test.describe('Flow Postif Customer', () => {
     
     // --- Variabel Data Tes ---
 
@@ -12,6 +11,14 @@ test.describe('Flow Postif Customer', () => {
     // Nama bank untuk metode pembayaran (bisa penggalan kata, case-insensitive, misal: 'PERMATA' untuk 'VA_PERMATA')
     const nama_bank = 'PERMATA';
     // Nomor lokal China yang diinput oleh Admin
+
+    test('Menambah item di keranjang', async ({ page }) => {
+        const customerPage = new CustomerPage(page);
+
+        await customerPage.goto();
+        await customerPage.login(process.env.CUSTOMER_WHATSAPP!, process.env.CUSTOMER_PASSWORD!);
+        await customerPage.addProductToCart(nama_barang);
+    });
 
     test('Melakukan pembelian', async ({ page }) => {
         const customerPage = new CustomerPage(page);
@@ -42,4 +49,3 @@ test.describe('Flow Postif Customer', () => {
         await customerPage.chooseShippingAndPayment(jalur_pengiriman, nama_bank);
         await customerPage.verifyPaymentPage(nama_bank);
     });
-});

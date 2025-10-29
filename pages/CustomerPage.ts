@@ -234,22 +234,16 @@ export class CustomerPage {
         const targetContainer = this.productContainerByName(productName);
         const targetCheckbox = this.checkboxInContainer(targetContainer);
 
-        const isTargetChecked = await targetCheckbox.isChecked();
+        // --- Iterasi semua container dan uncheck yang tercentang ---
+        const totalContainers = await this.productContainer.count();
 
-        if (isTargetChecked) {
-            // --- Uncheck produk target ---
-            await targetCheckbox.click();
-            await this.page.waitForTimeout(2000);
-        }
+        for (let i = 0; i < totalContainers; i++) {
+            const container = this.productContainer.nth(i);
+            const checkbox = this.checkboxInContainer(container);
 
-        // --- Uncheck semua item lain yang masih tercentang ---
-        const checkedCount = await this.checkedProductContainer().count();
+            const isChecked = await checkbox.isChecked();
 
-        for (let i = 0; i < checkedCount; i++) {
-            const checkedContainer = this.checkedProductContainer().nth(i);
-            const checkbox = this.checkboxInContainer(checkedContainer);
-
-            if (await checkbox.isChecked()) {
+            if (isChecked) {
                 await checkbox.click();
                 await this.page.waitForTimeout(2000);
             }
@@ -257,11 +251,15 @@ export class CustomerPage {
 
         // --- Verifikasi bahwa produk target tidak tercentang ---
         await expect(targetCheckbox).not.toBeChecked({ timeout: 20000 });
+
+        // --- Verifikasi bahwa TIDAK ADA item yang tercentang ---
+        await expect(this.checkedProductContainer()).toHaveCount(0, { timeout: 5000 });
     }
 
     async deleteProduct(productName: string) {
         await this.shoppingCartIcon.click();
         await this.productLinkInCart().click();
+        await expect(this.productContainerByName(productName)).toBeVisible();
         await this.unselectProductCheckbox(productName);
         await expect(this.deleteByProductName(productName)).toBeVisible();
         await this.deleteByProductName(productName).click();

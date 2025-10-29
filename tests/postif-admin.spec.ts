@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { AdminPage } from '../pages/AdminPage';
 
-test.describe('Flow Postif Admin', () => {
     // --- Variabel Data Tes ---
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
@@ -52,5 +51,3 @@ test.describe('Flow Postif Admin', () => {
 
         await adminPage.adminInputLocalChinaNumber(customer_name, no_local_china);
     });
-
-});

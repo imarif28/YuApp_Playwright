@@ -1,13 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../pages/CustomerPage';
 
-test.describe('Flow Negtaif Customer', () => {
+
     // --- Variabel Data Tes ---
 
     // Nama produk yang dibeli (bisa penggalan kata, case-insensitive)
     const nama_barang = 'Tas Persegi Kecil Gaya Korea';
-    // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
-
+ 
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = 'Laut';
     // Nama bank untuk metode pembayaran (bisa penggalan kata, case-insensitive, misal: 'PERMATA' untuk 'VA_PERMATA')
@@ -35,4 +34,3 @@ test.describe('Flow Negtaif Customer', () => {
         await customerPage.chooseShippingAndPayment(jalur_pengiriman, nama_bank);
         await customerPage.verifyPaymentPage(nama_bank);
     });
-});
