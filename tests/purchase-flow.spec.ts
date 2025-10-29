@@ -73,7 +73,7 @@ test.describe('Purchase Flow Approve', () => {
 
         await customerPage.navigateToTransactionList();
         await customerPage.selectShippingForOrder();
-        await customerPage.chooseShippingAndPayment(jalur_pengiriman, nama_bank);
+        await customerPage.chooseShippingAndPaymentWithoutPromo(jalur_pengiriman, nama_bank);
         await customerPage.verifyPaymentPage(nama_bank);
     });
 

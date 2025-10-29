@@ -96,6 +96,15 @@ export class CustomerPage {
             .locator('button:has([data-testid="CloseRoundedIcon"])');
     }
 
+
+    get errorPaymentBank(): Locator {
+        return this.page.getByText('Error, Checkout Fail. Please try again');
+    }
+
+    get errorPaymentPromo(): Locator {
+        return this.page.getByText('Transaksi gagal, Promo sudah tidak dapat digunakan. Gunakan promo lain');
+    }
+
     checkedProductContainer() {
         return this.productContainer.filter({
             has: this.page.locator('input[type="checkbox"]:checked')
@@ -313,6 +322,16 @@ export class CustomerPage {
         await this.paymentMethodRadio(bankName).check();
         await this.confirmPaymentButton.click();
         await this.page.waitForLoadState('networkidle');
+        await expect(this.removePromoButton).toBeVisible();
+        await this.checkoutButton.click();
+    }
+
+    async chooseShippingAndPaymentWithoutPromo (shippingMethod: string, bankName: string) {
+        await this.shippingMethodLabel(shippingMethod).click();
+        await this.paymentMethodDropdown.click();
+        await this.paymentMethodRadio(bankName).check();
+        await this.confirmPaymentButton.click();
+        await this.page.waitForLoadState('networkidle');
         await this.removePromoIfExists();
         await this.checkoutButton.click();
     }
@@ -333,4 +352,13 @@ export class CustomerPage {
     async verifyPaymentPage(bankName: string) {
         await expect(this.paymentPageVerificationElement(bankName)).toBeVisible({ timeout: 20000 });
     }
+
+    async errorPaymentBankPage() {
+        await expect(this.errorPaymentBank).toBeVisible({ timeout: 10000 });
+    }
+
+    async errorPaymentPromoPage() {
+        await expect(this.errorPaymentPromo).toBeVisible({ timeout: 10000 });
+    }
+
 }

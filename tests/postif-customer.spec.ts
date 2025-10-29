@@ -38,7 +38,7 @@ import { CustomerPage } from '../pages/CustomerPage';
         await customerPage.deleteProduct(nama_barang);
     });
 
-    test('Memilih metode pengiriman dan pembayaran', async ({ page }) => {
+    test('Pilih pengiriman menggunkan promo', async ({ page }) => {
         const customerPage = new CustomerPage(page);
 
         await customerPage.goto();
@@ -47,5 +47,17 @@ import { CustomerPage } from '../pages/CustomerPage';
         await customerPage.navigateToTransactionList();
         await customerPage.selectShippingForOrder();
         await customerPage.chooseShippingAndPayment(jalur_pengiriman, nama_bank);
+        await customerPage.verifyPaymentPage(nama_bank);
+    });
+
+    test('Pilih pengiriman tidak menggunakan promo', async ({ page }) => {
+        const customerPage = new CustomerPage(page);
+
+        await customerPage.goto();
+        await customerPage.login(process.env.CUSTOMER_WHATSAPP!, process.env.CUSTOMER_PASSWORD!);
+
+        await customerPage.navigateToTransactionList();
+        await customerPage.selectShippingForOrder();
+        await customerPage.chooseShippingAndPaymentWithoutPromo(jalur_pengiriman, nama_bank);
         await customerPage.verifyPaymentPage(nama_bank);
     });
