@@ -76,13 +76,6 @@ export class CustomerPage {
         return this.page.getByRole('button', { name: 'Checkout' });
     }
 
-    get pilihPengirimanLink(): Locator {
-        return this.page.locator('.MuiBox-root.mui-1i31c9e')
-            .filter({ hasText: 'Menunggu pembayaran' })
-            .getByRole('link', { name: 'Pilih Pengiriman' })
-            .first();
-    }
-
     get productContainer() {
         return this.page.locator('.MuiStack-root.mui-1187icl');
     }
@@ -96,6 +89,9 @@ export class CustomerPage {
             .locator('button:has([data-testid="CloseRoundedIcon"])');
     }
 
+    get inputPromo(): Locator {
+        return this.page.getByPlaceholder('Masukkan Kode Promo');
+    }
 
     get errorPaymentBank(): Locator {
         return this.page.getByText('Error, Checkout Fail. Please try again');
@@ -111,14 +107,18 @@ export class CustomerPage {
         });
     }
 
-    productContainerByName(productName: string) {
-        return this.productContainer.filter({
-            hasText: new RegExp(productName, 'i')
-        });
+    promoContainerByName(promoName: string) {
+        return this.appliedPromoContainer.filter({
+            hasText: new RegExp(`^${promoName}$`)
+        }).nth(2);
     }
 
     checkboxInContainer(container: Locator) {
         return container.getByRole('checkbox');
+    }
+
+    get productLinkInCart(): Locator {
+        return this.page.getByRole('link', { name: 'Tampilkan Semua' });
     }
 
     // -- Dynamic Locators (berdasarkan parameter) --
@@ -126,9 +126,6 @@ export class CustomerPage {
         return this.page.getByRole('link', { name: new RegExp(productName.trim(), 'i') }).first();
     }
 
-    productLinkInCart(): Locator {
-        return this.page.getByRole('link', { name: 'Tampilkan Semua' });
-    }
 
     checkboxByProductName(productName: string): Locator {
         return this.page.locator('.MuiStack-root.mui-1187icl', { hasText: new RegExp(productName, 'i') })
@@ -142,6 +139,20 @@ export class CustomerPage {
 
     checkoutPageHeading(productName: string): Locator {
         return this.page.locator('.MuiStack-root.mui-1fkwys2', { hasText: new RegExp(productName, 'i') });
+    }
+
+    pilihPengirimanLink(productName: string): Locator {
+        return this.page.locator('.MuiBox-root.mui-1i31c9e')
+            .filter({ hasText: productName })
+            .filter({ hasText: 'Menunggu pembayaran' })
+            .getByRole('link', { name: 'Pilih Pengiriman' })
+            .first();
+    }
+
+    productContainerByName(productName: string) {
+        return this.productContainer.filter({
+            hasText: new RegExp(productName, 'i')
+        });
     }
 
     shippingMethodLabel(shippingMethod: string): Locator {
@@ -185,7 +196,7 @@ export class CustomerPage {
 
     async checkoutProduct(productName: string) {
         await this.shoppingCartIcon.click();
-        await this.productLinkInCart().click();
+        await this.productLinkInCart.click();
         await this.selectProductCheckbox(productName);
         await this.pesanLink.click();
         await expect(this.checkoutPageHeading(productName)).toBeVisible({ timeout: 20000 });
@@ -267,7 +278,7 @@ export class CustomerPage {
 
     async deleteProduct(productName: string) {
         await this.shoppingCartIcon.click();
-        await this.productLinkInCart().click();
+        await this.productLinkInCart.click();
         await expect(this.productContainerByName(productName)).toBeVisible();
         await this.unselectProductCheckbox(productName);
         await expect(this.deleteByProductName(productName)).toBeVisible();
@@ -290,9 +301,9 @@ export class CustomerPage {
         await this.transactionListMenuItem.click();
     }
 
-    async selectShippingForOrder() {
-        await expect(this.pilihPengirimanLink).toBeVisible({ timeout: 10000 });
-        await this.pilihPengirimanLink.click();
+    async selectShippingForOrder(productName: string) {
+        await expect(this.pilihPengirimanLink(productName)).toBeVisible({ timeout: 10000 });
+        await this.pilihPengirimanLink(productName).click();
     }
 
     async removePromoIfExists() {
@@ -316,17 +327,50 @@ export class CustomerPage {
         }
     }
 
-    async chooseShippingAndPayment(shippingMethod: string, bankName: string) {
+    async chooseShippingAndPaymentPromo(shippingMethod: string, bankName: string, promoName: string) {
         await this.shippingMethodLabel(shippingMethod).click();
         await this.paymentMethodDropdown.click();
         await this.paymentMethodRadio(bankName).check();
         await this.confirmPaymentButton.click();
         await this.page.waitForLoadState('networkidle');
-        await expect(this.removePromoButton).toBeVisible();
+        
+        // Cek apakah ada promo aktif
+        const activePromoCount = await this.appliedPromoContainer.count();
+
+        if (activePromoCount > 0) {
+            console.log("Promo aktif terdeteksi.");
+            // Cek apakah promo aktif adalah promo yang benar
+            const correctPromoIsActive = await this.promoContainerByName(promoName).count() > 0;
+
+            if (correctPromoIsActive) {
+                console.log(`Promo "${promoName}" sudah aktif. Melanjutkan.`);
+            } else {
+                console.log("Promo aktif tidak sesuai. Menghapus promo lama...");
+                await this.removePromoButton.click();
+                await this.page.waitForTimeout(2000);
+                console.log("Promo lama dihapus. Menerapkan promo baru...");
+                // Lanjutkan ke logika penerapan promo baru di bawah
+                await this.applyPromoCode(promoName);
+            }
+        } else {
+            console.log("Tidak ada promo aktif. Menerapkan promo baru...");
+            // Langsung terapkan promo baru
+            await this.applyPromoCode(promoName);
+        }
+
+        console.log("Melanjutkan ke checkout...");
         await this.checkoutButton.click();
     }
 
-    async chooseShippingAndPaymentWithoutPromo (shippingMethod: string, bankName: string) {
+    async applyPromoCode(promoName: string) {
+        await this.inputPromo.fill(promoName);
+        await this.inputPromo.press('Enter');
+        // Verifikasi bahwa promo yang benar sekarang aktif
+        await expect(this.promoContainerByName(promoName)).toBeVisible({ timeout: 10000 });
+        console.log(`Promo "${promoName}" berhasil diterapkan.`);
+    }
+
+    async chooseShippingAndPaymentWithoutPromo(shippingMethod: string, bankName: string) {
         await this.shippingMethodLabel(shippingMethod).click();
         await this.paymentMethodDropdown.click();
         await this.paymentMethodRadio(bankName).check();

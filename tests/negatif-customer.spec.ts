@@ -4,9 +4,10 @@ import { CustomerPage } from '../pages/CustomerPage';
 
     // --- Variabel Data Tes ---
 
-    // Nama produk yang dibeli (bisa penggalan kata, case-insensitive)
-    const nama_barang = 'Tas Persegi Kecil Gaya Korea';
- 
+    // Nama produk yang dibeli (bisa penggalan kata, case-insensitive) Tas Persegi Kecil Gaya Korea, Lintas Batas Tas
+    const nama_barang = 'Lintas Batas Tas';
+    // Nama promo yang sudah di pakai
+    const promo_terpakai = 'PROMOJUNE'
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = 'Laut';
     // Nama bank untuk metode pembayaran (bisa penggalan kata, case-insensitive, misal: 'PERMATA' untuk 'VA_PERMATA')
@@ -30,8 +31,8 @@ import { CustomerPage } from '../pages/CustomerPage';
         await customerPage.login(process.env.CUSTOMER_WHATSAPP!, process.env.CUSTOMER_PASSWORD!);
 
         await customerPage.navigateToTransactionList();
-        await customerPage.selectShippingForOrder();
-        await customerPage.chooseShippingAndPayment(jalur_pengiriman, nama_bank);
+        await customerPage.selectShippingForOrder(nama_barang);
+        await customerPage.chooseShippingAndPaymentWithoutPromo(jalur_pengiriman, nama_bank);
         await customerPage.errorPaymentBankPage();
     });
 
@@ -42,7 +43,7 @@ import { CustomerPage } from '../pages/CustomerPage';
         await customerPage.login(process.env.CUSTOMER_WHATSAPP!, process.env.CUSTOMER_PASSWORD!);
 
         await customerPage.navigateToTransactionList();
-        await customerPage.selectShippingForOrder();
-        await customerPage.chooseShippingAndPayment(jalur_pengiriman, nama_bank);
+        await customerPage.selectShippingForOrder(nama_barang);
+        await customerPage.chooseShippingAndPaymentPromo(jalur_pengiriman, nama_bank, promo_terpakai);
         await customerPage.errorPaymentPromoPage();
     });

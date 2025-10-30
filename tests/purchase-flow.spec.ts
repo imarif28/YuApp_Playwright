@@ -72,7 +72,7 @@ test.describe('Purchase Flow Approve', () => {
         await customerPage.login(process.env.CUSTOMER_WHATSAPP!, process.env.CUSTOMER_PASSWORD!);
 
         await customerPage.navigateToTransactionList();
-        await customerPage.selectShippingForOrder();
+        await customerPage.selectShippingForOrder(nama_barang);
         await customerPage.chooseShippingAndPaymentWithoutPromo(jalur_pengiriman, nama_bank);
         await customerPage.verifyPaymentPage(nama_bank);
     });
