@@ -128,7 +128,7 @@ export class EvaPage {
         return this.page.getByRole('link', { name: `Deliveries By Coload (${deliveryType})` });
     }
     orderRowByShippingMark(shippingMark: string): Locator {
-        return this.page.locator('tr', { hasText: shippingMark });
+        return this.page.locator('tr', { hasText: shippingMark }).first();
     }
 
     constructor(page: Page) {
