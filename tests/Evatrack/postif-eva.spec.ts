@@ -1,17 +1,17 @@
 import { test, expect } from '@playwright/test';
-import { EvaPage } from '../pages/EvaPage';
+import { EvaPage } from '../../pages/EvaPage';
 
     // --- Variabel Data Tes ---
 
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = 'Laut';
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = '8687578';
+    const no_local_china = '37443';
 
     // Data lengkap untuk pengisian form 'New Receipt' oleh Agen China
     const receiptData = {
         no_local_cina: no_local_china,        // Menggunakan nomor lokal China dari Admin
-        shipping_mark: 'CB9',                // Tanda pengiriman unik untuk resi ini
+        shipping_mark: 'CB41',                // Tanda pengiriman unik untuk resi ini
         jalur_pengiriman: jalur_pengiriman,   // Menggunakan jalur pengiriman dari Customer
         panjang: '10',                        // Dimensi barang (Panjang)
         lebar: '10',                          // Dimensi barang (Lebar)

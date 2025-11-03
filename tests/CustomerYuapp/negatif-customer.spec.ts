@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { CustomerPage } from '../pages/CustomerPage';
+import { CustomerPage } from '../../pages/CustomerPage';
 
 
     // --- Variabel Data Tes ---
 
     // Nama produk yang dibeli (bisa penggalan kata, case-insensitive) Tas Persegi Kecil Gaya Korea, Lintas Batas Tas
-    const nama_barang = 'Lintas Batas Tas';
+    const nama_barang = 'Tas Persegi Kecil Gaya Korea';
     // Nama promo yang sudah di pakai
     const promo_terpakai = 'PROMOJUNE'
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')

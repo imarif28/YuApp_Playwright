@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { CustomerPage } from '../pages/CustomerPage';
+import { CustomerPage } from '../../pages/CustomerPage';
 
 
     // --- Variabel Data Tes ---
@@ -43,10 +43,13 @@ import { CustomerPage } from '../pages/CustomerPage';
 
     test('Menghapus item di keranjang', async ({ page }) => {
         const customerPage = new CustomerPage(page);
+        // Nama produk yang ingin dihapus
+        const nama_barang_hapus = 'Tas Persegi Kecil Gaya Korea'
 
         await customerPage.goto();
         await customerPage.login(process.env.CUSTOMER_WHATSAPP!, process.env.CUSTOMER_PASSWORD!);
-        await customerPage.deleteProduct(nama_barang);
+        await customerPage.deleteProduct(nama_barang_hapus);
+        await customerPage.verifyDeleteProduct();
     });
 
     test('Detail Transaksi', async ({ page }) => {
@@ -82,4 +85,15 @@ import { CustomerPage } from '../pages/CustomerPage';
         await customerPage.selectShippingForOrder(nama_barang);
         await customerPage.chooseShippingAndPaymentWithoutPromo(jalur_pengiriman, nama_bank);
         await customerPage.verifyPaymentPage(nama_bank);
+    });
+
+    test('Batalkan Transaksi', async ({ page }) => {
+        const customerPage = new CustomerPage(page);
+
+        await customerPage.goto();
+        await customerPage.login(process.env.CUSTOMER_WHATSAPP!, process.env.CUSTOMER_PASSWORD!);
+
+        await customerPage.navigateToTransactionList();
+        await customerPage.cancelTransactionForOrder(nama_barang);
+        await customerPage.verifyCancelTransaction();
     });

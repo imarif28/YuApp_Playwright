@@ -83,6 +83,18 @@ export class CustomerPage {
         return this.page.locator('.MuiStack-root.mui-1187icl');
     }
 
+    get dialogCancelTransaction() {
+        return this.page.getByRole('dialog');
+    }
+
+    get confirmCancelTransaction() {
+        return this.page.getByRole('dialog').getByRole('button', { name: 'Ya' });
+    }
+
+    get successCancelTransaction(): Locator {
+        return this.page.getByText('Transaksi dibatalkan');
+    }
+
     get appliedPromoContainer(): Locator {
         return this.page.locator('div:has([data-testid="CheckCircleRoundedIcon"])');
     }
@@ -160,6 +172,13 @@ export class CustomerPage {
         return this.transaksiContainerByProductName(productName)
             .filter({ hasText: 'Sedang dihitung' })
             .getByRole('link', { name: 'Detail Transaksi' })
+            .first();
+    }
+
+    batalTransaksiLink(productName: string): Locator {
+        return this.transaksiContainerByProductName(productName)
+            .filter({ hasText: 'Menunggu pembayaran' })
+            .getByRole('button', { name: 'Batalkan Transaksi' })
             .first();
     }
 
@@ -297,7 +316,6 @@ export class CustomerPage {
         await this.unselectProductCheckbox(productName);
         await expect(this.deleteByProductName(productName)).toBeVisible();
         await this.deleteByProductName(productName).click();
-        await expect(this.successDelete).toBeVisible({ timeout: 20000 });
     }
 
     async createOrder() {
@@ -321,9 +339,16 @@ export class CustomerPage {
     }
 
     async transactionDetailForOrder(productName: string) {
-        await expect(this.detailTransaksiLink(productName)).toBeVisible();
+        await expect(this.detailTransaksiLink(productName)).toBeVisible({ timeout: 10000 });
         await this.detailTransaksiLink((productName)).click();
         await this.page.waitForURL('**/transaction/**');
+    }
+
+    async cancelTransactionForOrder(productName: string) {
+        await expect(this.batalTransaksiLink(productName)).toBeVisible({ timeout: 20000 });
+        await this.batalTransaksiLink((productName)).click();
+        await expect(this.dialogCancelTransaction).toBeVisible();
+        await this.confirmCancelTransaction.click();
     }
 
     // async removePromoIfExists() {
@@ -452,6 +477,10 @@ export class CustomerPage {
         await expect(this.successMessageHeading).toBeVisible({ timeout: 10000 });
     }
 
+    async verifyDeleteProduct() {
+        await expect(this.successDelete).toBeVisible({ timeout: 10000 });
+    }
+
     async verifyPaymentPage(bankName: string) {
         await expect(this.paymentPageVerificationElement(bankName)).toBeVisible({ timeout: 20000 });
     }
@@ -462,6 +491,10 @@ export class CustomerPage {
 
     async errorPaymentPromoPage() {
         await expect(this.errorPaymentPromo).toBeVisible({ timeout: 10000 });
+    }
+
+    async verifyCancelTransaction() {
+        await expect(this.successCancelTransaction).toBeVisible({ timeout: 10000 });
     }
 
 }

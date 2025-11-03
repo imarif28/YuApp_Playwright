@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { AdminPage } from '../pages/AdminPage';
+import { LoginPage } from '../../pages/LoginPage';
+import { AdminPage } from '../../pages/AdminPage';
 
     // --- Variabel Data Tes ---
 
@@ -10,7 +10,7 @@ import { AdminPage } from '../pages/AdminPage';
     const nama_marketing = 'IlhamMarketing';
 
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = '8687578';
+    const no_local_china = '37443';
     // Path relatif ke file bukti pembayaran yang akan diupload oleh Finance
     const filePath = 'dimasganteng.png';
 
