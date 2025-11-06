@@ -13,7 +13,7 @@ Proyek ini berisi skrip otomatisasi pengujian (*end-to-end*) menggunakan **Playw
 
 1.  **Clone Repository**:
     ```bash
-    git clone [https://github.com/imarif28/YuApp_Playwright.git](https://github.com/imarif28/YuApp_Playwright.git)
+    git clone https://github.com/imarif28/YuApp_Playwright.git 
     cd [Nama Folder Proyek]
     ```
 
