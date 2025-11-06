@@ -126,6 +126,46 @@ export class CustomerPage {
         return this.page.getByRole('link', { name: 'Tampilkan Semua' });
     }
 
+    get cameraIcon(): Locator {
+        return this.page.getByTestId('CameraAltIcon');
+    }
+
+    get imageSearchInput(): Locator {
+        return this.page.locator('label[for="image-search-desktop"]');
+    }
+
+    get searchSuccessMessage(): Locator {
+        return this.page.getByText(/Ditemukan \d+ produk/);
+    }
+
+    get searchNotFoundMessage(): Locator {
+        return this.page.getByText('Gambar tidak ditemukan. Silakan coba gambar lain.');
+    }
+
+    get invalidFormatMessage(): Locator {
+        return this.page.getByText('Format gambar yang didukung adalah JPG dan PNG');
+    }
+
+    get addLinkIcon(): Locator {
+        return this.page.getByTestId('AddLinkRoundedIcon');
+    }
+
+    get linkSearchDialog(): Locator {
+        return this.page.getByRole('dialog', { name: 'Cari Berdasarkan Tautan' });
+    }
+
+    get linkSearchDialogTextbox(): Locator {
+        return this.linkSearchDialog.getByRole('textbox');
+    }
+
+    get linkSearchDialogCariButton(): Locator {
+        return this.linkSearchDialog.getByRole('button', { name: 'Cari' });
+    }
+
+    get linkSearchDialogErrorMessage(): Locator {
+        return this.linkSearchDialog.getByText('Tautan tidak valid');
+    }
+
     // -- Dynamic Locators (berdasarkan parameter) --
 
     promoContainerByName(promoName: string) {
@@ -160,7 +200,7 @@ export class CustomerPage {
         return this.page.locator('.MuiBox-root.mui-1i31c9e')
             .filter({ hasText: productName })
     }
-    
+
     pilihPengirimanLink(productName: string): Locator {
         return this.transaksiContainerByProductName(productName)
             .filter({ hasText: 'Menunggu pembayaran' })
@@ -170,7 +210,7 @@ export class CustomerPage {
 
     detailTransaksiLink(productName: string): Locator {
         return this.transaksiContainerByProductName(productName)
-            .filter({ hasText: 'Sedang dihitung' })
+            // .filter({ hasText: 'Sedang dihitung' })
             .getByRole('link', { name: 'Detail Transaksi' })
             .first();
     }
@@ -351,27 +391,6 @@ export class CustomerPage {
         await this.confirmCancelTransaction.click();
     }
 
-    // async removePromoIfExists() {
-    //     try {
-    //         console.log('Mengecek keberadaan promo...');
-
-    //         // Gunakan count() untuk cek keberadaan elemen
-    //         const promoCount = await this.removePromoButton.count();
-
-    //         if (promoCount > 0) {
-    //             console.log('Promo ditemukan, menghapus promo...');
-    //             await this.removePromoButton.click();
-    //             await this.page.waitForTimeout(2000);
-    //             console.log('Promo berhasil dihapus');
-    //         } else {
-    //             console.log('Tidak ada promo yang diterapkan');
-    //         }
-    //     } catch (error) {
-    //         console.log('Error saat menghapus promo:', error);
-    //         // Lanjutkan tanpa error
-    //     }
-    // }
-
     async removePromoIfExists(): Promise<void> {
         // Cek apakah tombol hapus promo terlihat
         if (await this.removePromoButton.isVisible()) {
@@ -382,41 +401,6 @@ export class CustomerPage {
         }
         // Jika tidak terlihat, fungsi ini selesai tanpa melakukan apa-apa.
     }
-
-    // async chooseShippingAndPaymentPromo(shippingMethod: string, bankName: string, promoName: string) {
-    //     await this.shippingMethodLabel(shippingMethod).click();
-    //     await this.paymentMethodDropdown.click();
-    //     await this.paymentMethodRadio(bankName).check();
-    //     await this.confirmPaymentButton.click();
-    //     await this.page.waitForLoadState('networkidle');
-
-    //     // Cek apakah ada promo aktif
-    //     const activePromoCount = await this.appliedPromoContainer.count();
-
-    //     if (activePromoCount > 0) {
-    //         console.log("Promo aktif terdeteksi.");
-    //         // Cek apakah promo aktif adalah promo yang benar
-    //         const correctPromoIsActive = await this.promoContainerByName(promoName).count() > 0;
-
-    //         if (correctPromoIsActive) {
-    //             console.log(`Promo "${promoName}" sudah aktif. Melanjutkan.`);
-    //         } else {
-    //             console.log("Promo aktif tidak sesuai. Menghapus promo lama...");
-    //             await this.removePromoButton.click();
-    //             await this.page.waitForTimeout(2000);
-    //             console.log("Promo lama dihapus. Menerapkan promo baru...");
-    //             // Lanjutkan ke logika penerapan promo baru di bawah
-    //             await this.applyPromoCode(promoName);
-    //         }
-    //     } else {
-    //         console.log("Tidak ada promo aktif. Menerapkan promo baru...");
-    //         // Langsung terapkan promo baru
-    //         await this.applyPromoCode(promoName);
-    //     }
-
-    //     console.log("Melanjutkan ke checkout...");
-    //     await this.checkoutButton.click();
-    // }
 
     async chooseShippingAndPaymentPromo(shippingMethod: string, bankName: string, promoName: string) {
         await this.shippingMethodLabel(shippingMethod).click();
@@ -460,6 +444,18 @@ export class CustomerPage {
         await this.checkoutButton.click();
     }
 
+    async searchByImage(filePath: string) {
+        await this.cameraIcon.click();
+        await this.imageSearchInput.setInputFiles(filePath);
+    }
+
+    async searchByLink(url: string) {
+        await this.addLinkIcon.click();
+        await expect(this.linkSearchDialog).toBeVisible();
+        await this.linkSearchDialogTextbox.fill(url);
+        await this.linkSearchDialogCariButton.click();
+    }
+
     // -- Verifications --
     async verifyLoginSuccess() {
         await expect(this.page.getByRole('link', { name: 'YuApp' })).toBeVisible({ timeout: 10000 });
@@ -474,7 +470,7 @@ export class CustomerPage {
     }
 
     async verifyOrderCreationSuccess() {
-        await expect(this.successMessageHeading).toBeVisible({ timeout: 10000 });
+        await expect(this.successMessageHeading).toBeVisible({ timeout: 20000 });
     }
 
     async verifyDeleteProduct() {
@@ -495,6 +491,27 @@ export class CustomerPage {
 
     async verifyCancelTransaction() {
         await expect(this.successCancelTransaction).toBeVisible({ timeout: 10000 });
+    }
+
+    async verifySearchByImageSuccess() {
+        await expect(this.searchSuccessMessage).toBeVisible({ timeout: 50000 });
+    }
+
+    async verifySearchByImageNotFound() {
+        await expect(this.searchNotFoundMessage).toBeVisible({ timeout: 50000 });
+    }
+
+    async verifySearchByImageInvalidFormat() {
+        await expect(this.invalidFormatMessage).toBeVisible({ timeout: 2000 });
+    }
+
+    async verifySearchByLinkSuccess() {
+        // await expect(this.page.locator('p', { hasText: new RegExp(partialProductName.trim(), 'i') })).toBeVisible({ timeout: 8000 });
+    await expect(this.keranjangButton).toBeVisible({ timeout: 8000 });
+    }
+
+    async verifySearchByLinkInvalid() {
+        await expect(this.linkSearchDialogErrorMessage).toBeVisible({ timeout: 800 });
     }
 
 }

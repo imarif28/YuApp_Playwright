@@ -163,7 +163,7 @@ export class EvaPage {
         berat: string,
         total_ctn: string,
         deskripsi: string,
-        tipe_ekspedisi: string
+        // tipe_ekspedisi: string
     }) {
         await this.forceOpenTrackingMenu();
         await this.receiptLink.click();
@@ -192,7 +192,7 @@ export class EvaPage {
         await this.totalCtnInput.press('Tab');
         await this.deskripsiInput.fill(data.deskripsi);
         await this.deskripsiInput.press('Tab');
-        await this.tipeEkspedisiDropdown.selectOption({ label: data.tipe_ekspedisi });
+        // await this.tipeEkspedisiDropdown.selectOption({ label: data.tipe_ekspedisi });
 
         await expect(this.tambahBarangButton).toBeEnabled();
         await this.tambahBarangButton.click();
