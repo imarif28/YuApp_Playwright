@@ -70,5 +70,5 @@ Proyek ini berisi skrip otomatisasi pengujian (*end-to-end*) menggunakan **Playw
 
 ---
 
-*Dibuat sebagai bagian dari program magang QA.*# Playwright E2E Test - YuApp & EvaTrack Purchase Flow
+*Dibuat sebagai bagian dari program magang QA.
 
