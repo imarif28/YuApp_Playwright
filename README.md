@@ -31,16 +31,16 @@ YuApp_Playwright/
 │   └── mobil.webp
 ├── tests/                     # File pengujian
 │   ├── AdminYuapp/
-│       ├── admin-positive.spec.ts
-│       ├── admin-negative.spec.ts
+    │  ├── admin-positive.spec.ts
+    │  ├── admin-negative.spec.ts
 │   ├── CustomerYuapp/
-│       ├── customer-positive.spec.ts
-│       ├── customer-negative.spec.ts
+    │  ├── customer-positive.spec.ts
+    │  ├── customer-negative.spec.ts
 │   ├── Evatrack/
-│       ├── evatrack-positive.spec.ts
-│       ├── evatrack-negative.spec.ts
+    │  ├── evatrack-positive.spec.ts
+    │  ├── evatrack-negative.spec.ts
 │   ├── PurchaseFlow/
-│       ├── flow[nomer].spec.ts
+    │  ├── flow[nomer].spec.ts
 ├── .env                       # Variabel environment (diabaikan git)
 ├── .env.example              # Template untuk .env
 ├── playwright.config.ts      # Konfigurasi Playwright
