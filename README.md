@@ -20,27 +20,27 @@ Proyek ini berisi skrip otomatisasi pengujian untuk **end-to-end testing** mengg
 ```
 YuApp_Playwright/
 ├── pages/                     # Kelas Page Object Model
-│   ├── AdminPage.ts
-│   ├── CustomerPage.ts
-│   ├── EvaPage.ts
-│   ├── LoginPage.ts
+│    ├── AdminPage.ts
+│    ├── CustomerPage.ts
+│    ├── EvaPage.ts
+│    ├── LoginPage.ts
 ├── gambar/                    # Asset gambar untuk pengujian
-│   ├── dimasganteng.png
-│   └── beard.jpg
-│   └── coba.png
-│   └── mobil.webp
+│    ├── dimasganteng.png
+│    └── beard.jpg
+│    └── coba.png
+│    └── mobil.webp
 ├── tests/                     # File pengujian
-│   ├── AdminYuapp/
-    │  ├── admin-positive.spec.ts
-    │  ├── admin-negative.spec.ts
-│   ├── CustomerYuapp/
-    │  ├── customer-positive.spec.ts
-    │  ├── customer-negative.spec.ts
-│   ├── Evatrack/
-    │  ├── evatrack-positive.spec.ts
-    │  ├── evatrack-negative.spec.ts
-│   ├── PurchaseFlow/
-    │  ├── flow[nomer].spec.ts
+│    ├── AdminYuapp/
+│    │  ├── admin-positive.spec.ts
+│    │  ├── admin-negative.spec.ts
+│    ├── CustomerYuapp/
+│    │  ├── customer-positive.spec.ts
+|    │  ├── customer-negative.spec.ts
+│    ├── Evatrack/
+|    │  ├── evatrack-positive.spec.ts
+|    │  ├── evatrack-negative.spec.ts
+│    ├── PurchaseFlow/
+|    │  ├── flow[nomer].spec.ts
 ├── .env                       # Variabel environment (diabaikan git)
 ├── .env.example              # Template untuk .env
 ├── playwright.config.ts      # Konfigurasi Playwright
