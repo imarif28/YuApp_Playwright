@@ -19,32 +19,38 @@ Proyek ini berisi skrip otomatisasi pengujian untuk **end-to-end testing** mengg
 
 ```
 YuApp_Playwright/
-├── pages/                     # Kelas Page Object Model
-│    ├── AdminPage.ts
-│    ├── CustomerPage.ts
-│    ├── EvaPage.ts
-│    ├── LoginPage.ts
-├── gambar/                    # Asset gambar untuk pengujian
-│    ├── dimasganteng.png
-│    └── beard.jpg
-│    └── coba.png
-│    └── mobil.webp
-├── tests/                     # File pengujian
-│    ├── AdminYuapp/
-│    │  ├── admin-positive.spec.ts
-│    │  ├── admin-negative.spec.ts
-│    ├── CustomerYuapp/
-│    │  ├── customer-positive.spec.ts
-|    │  ├── customer-negative.spec.ts
-│    ├── Evatrack/
-|    │  ├── evatrack-positive.spec.ts
-|    │  ├── evatrack-negative.spec.ts
-│    ├── PurchaseFlow/
-|    │  ├── flow[nomer].spec.ts
-├── .env                       # Variabel environment (diabaikan git)
-├── .env.example              # Template untuk .env
-├── playwright.config.ts      # Konfigurasi Playwright
-└── package.json              # Dependencies proyek
+├── pages/                               # Kelas Page Object Model
+│   ├── AdminPage.ts
+│   ├── CustomerPage.ts
+│   ├── EvaPage.ts
+│   └── LoginPage.ts
+│
+├── gambar/                              # Asset gambar untuk pengujian
+│   ├── dimasganteng.png
+│   ├── beard.jpg
+│   ├── coba.png
+│   └── mobil.webp
+│
+├── tests/                               # File pengujian
+│   ├── AdminYuapp/
+│   │   ├── admin-positive.spec.ts
+│   │   └── admin-negative.spec.ts
+│   │
+│   ├── CustomerYuapp/
+│   │   ├── customer-positive.spec.ts
+│   │   └── customer-negative.spec.ts
+│   │
+│   ├── Evatrack/
+│   │   ├── evatrack-positive.spec.ts
+│   │   └── evatrack-negative.spec.ts
+│   │
+│   └── PurchaseFlow/
+│       └── flow[nomer].spec.ts
+│
+├── .env                                  # Variabel environment (diabaikan git)
+├── .env.example                          # Template untuk .env
+├── playwright.config.ts                  # Konfigurasi Playwright
+└── package.json                          # Dependencies proyek
 ```
 
 ## 🛠️ Pengaturan & Instalasi
@@ -208,6 +214,30 @@ $env:URL="https://detail.1688.com/offer/123456789.html"
 npx playwright test customer-positive.spec.ts
 ```
 
+#### Mengembalikan Variabel ke Nilai Default
+
+Jika ingin mengembalikan variabel ke nilai default, cukup hapus nilai/value dari variabel tersebut:
+
+**CMD:**
+```cmd
+set "BARANG="
+set "JALUR="
+set "PROMO="
+set "BANK="
+set "GAMBAR="
+set "URL="
+```
+
+**PowerShell:**
+```powershell
+$env:BARANG=""
+$env:JALUR=""
+$env:PROMO=""
+$env:BANK=""
+$env:GAMBAR=""
+$env:URL=""
+```
+
 #### Variabel Pengujian AdminYuapp
 
 | Variabel | Deskripsi | Nilai Default |
@@ -239,6 +269,26 @@ $env:BANK="BNI"
 $env:GAMBAR="bukti_bayar.jpg"
 $env:URL="https://detail.1688.com/offer/123456789.html"
 npx playwright test customer-yuapp.spec.ts
+```
+
+#### Mengembalikan Variabel ke Nilai Default
+
+Jika ingin mengembalikan variabel ke nilai default, cukup hapus nilai/value dari variabel tersebut:
+
+**CMD:**
+```cmd
+set "CUSTOMER="
+set "MARKETING="
+set "RESI="
+set "GAMBAR="
+```
+
+**PowerShell:**
+```powershell
+$env:CUSTOMER=""
+$env:MARKETING=""
+$env:RESI=""
+$env:GAMBAR=""
 ```
 
 ## 📊 Melihat Laporan Pengujian
