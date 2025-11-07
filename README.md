@@ -150,14 +150,14 @@ npx playwright test flow[nomor].spec.ts --headed
 ```cmd
 set "RESI=nomor_resi_baru"
 set "TANDA=kode_mark_baru"
-npx playwright test flow-1.spec.ts --headed
+npx playwright test flow[nomor].spec.ts --headed
 ```
 
 **PowerShell:**
 ```powershell
 $env:RESI="nomor_resi_baru"
 $env:TANDA="kode_mark_baru"
-npx playwright test flow-1.spec.ts --headed
+npx playwright test flow[nomor].spec.ts --headed
 ```
 
 ### B. Pengujian Kasus Positif & Negatif
@@ -257,7 +257,7 @@ set "PROMO=DISKON2024"
 set "BANK=BNI"
 set "GAMBAR=bukti_bayar.jpg"
 set "URL=https://detail.1688.com/offer/123456789.html"
-npx playwright test customer-yuapp.spec.ts
+npx playwright test admin-positive.spec.ts
 ```
 
 **PowerShell:**
@@ -268,7 +268,7 @@ $env:PROMO="DISKON2024"
 $env:BANK="BNI"
 $env:GAMBAR="bukti_bayar.jpg"
 $env:URL="https://detail.1688.com/offer/123456789.html"
-npx playwright test customer-yuapp.spec.ts
+npx playwright test admin-positive.spec.ts
 ```
 
 #### Mengembalikan Variabel ke Nilai Default
@@ -347,4 +347,3 @@ GitHub: [https://github.com/imarif28/YuApp_Playwright](https://github.com/imarif
 
 ---
 
-*Terakhir Diperbarui: November 2025*
