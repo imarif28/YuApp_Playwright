@@ -43,6 +43,16 @@ export class AdminPage {
         return this.page.locator('a[href*="/prosesbukti/approve/"]');
     }
 
+    get settingKursLink(): Locator {
+        return this.page.getByRole('link', { name: /Setting Kurs/i });
+    }
+    get rateYuanInput(): Locator {
+        return this.page.locator('#rate_yuan');
+    }
+    get saveRateButton(): Locator {
+        return this.page.locator('button.btn-success'); // Menggunakan locator dari rekaman Anda
+    }
+
     // -- Dynamic Locators --
     orderRowByCustomerName(customerName: string): Locator {
         return this.page.locator('tbody tr', { hasText: customerName }).first();
@@ -122,4 +132,12 @@ export class AdminPage {
         await this.updateButton.click();
         await expect(this.successNotification).toBeVisible();
     }
+
+    async updateYuanRate(rate: string) {
+        await this.settingKursLink.click();
+        await this.rateYuanInput.fill(rate);
+        await this.saveRateButton.click();
+        await expect(this.successNotification).toBeVisible();
+    }
+
 }

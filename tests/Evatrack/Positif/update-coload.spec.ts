@@ -6,11 +6,11 @@ import { EvaPage } from '../../../pages/EvaPage';
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = process.env.JALUR || 'Laut';
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = process.env.RESI || '37443';
+    const no_local_china = process.env.RESI || '7366324';
 
     const receiptData = {
         no_local_cina: no_local_china,              // Menggunakan nomor lokal China dari Admin
-        shipping_mark: process.env.TANDA || 'CB41', // Tanda pengiriman unik untuk resi ini
+        shipping_mark: process.env.TANDA || 'CB44', // Tanda pengiriman unik untuk resi ini
         jalur_pengiriman: jalur_pengiriman,         // Menggunakan jalur pengiriman dari Customer
         panjang: process.env.PANJANG || '10',       // Dimensi barang (Panjang)
         lebar: process.env.LEBAR || '10',           // Dimensi barang (Lebar)

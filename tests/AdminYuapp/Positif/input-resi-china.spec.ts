@@ -8,7 +8,7 @@ import { AdminPage } from '../../../pages/AdminPage';
     const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
 
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = process.env.RESI || '37443';
+    const no_local_china = process.env.RESI || '7366324';
 
     test('Menginput nomor lokal China', async ({ page }) => {
         const loginPage = new LoginPage(page);
