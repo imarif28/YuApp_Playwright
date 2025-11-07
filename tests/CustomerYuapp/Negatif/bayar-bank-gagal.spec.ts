@@ -6,7 +6,7 @@ import { CustomerPage } from '../../../pages/CustomerPage';
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = process.env.JALUR || 'Laut';
     // Nama bank untuk metode pembayaran (bisa penggalan kata, case-insensitive, misal: 'PERMATA' untuk 'VA_PERMATA')
-    const nama_bank = process.env.BANK || 'BCA';
+    const nama_bank = 'BCA';
 
     test('Pembayaran dengan Bank Lain', async ({ page }) => {
         const customerPage = new CustomerPage(page);

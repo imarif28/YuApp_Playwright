@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../../../pages/CustomerPage';
 
     // Path ke file dengan format tidak valid
-    const gambar = process.env.GAMBAR || 'mobil.webp';
+    const gambar = 'mobil.webp';
     const pathgambar = `gambar/${gambar}`;
 
     test('Mencari berdasarkan format file tidak valid', async ({ page }) => {

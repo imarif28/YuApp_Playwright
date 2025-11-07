@@ -14,7 +14,7 @@ test.describe('Purchase Flow Approve', () => {
 
         await loginPage.goto();
         await loginPage.login(process.env.MARKETING_USERNAME!, process.env.MARKETING_PASSWORD!);
-        await adminPage.marketingUpdateStatusToAwaitingPayment(customer_name);
+        await adminPage.updateStatusToAwaitingPayment(customer_name);
     });
 
 });

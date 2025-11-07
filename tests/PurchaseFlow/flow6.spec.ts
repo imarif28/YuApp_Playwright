@@ -17,7 +17,7 @@ test.describe('Purchase Flow Approve', () => {
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
 
-        await adminPage.adminInputLocalChinaNumber(customer_name, no_local_china);
+        await adminPage.inputLocalChinaNumber(customer_name, no_local_china);
     });
 
 });

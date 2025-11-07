@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../../../pages/CustomerPage';
 
-    // Nama produk yang dibeli (bisa penggalan kata, case-insensitive) Tas Persegi Kecil Gaya Korea, Lintas Batas Tas
+     // Nama produk yang dibeli (bisa penggalan kata, case-insensitive) Tas Persegi Kecil Gaya Korea, Lintas Batas Tas
     const nama_barang = process.env.BARANG || 'Lintas Batas Tas';
     // Nama promo yang sudah di pakai
-    const promo_terpakai = process.env.PROMO ||  'PROMOJUNE'
+    const promo_terpakai = 'PROMOJUNE'
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = process.env.PENGIRIMAN || 'Laut';
     // Nama bank untuk metode pembayaran (bisa penggalan kata, case-insensitive, misal: 'PERMATA' untuk 'VA_PERMATA')

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../../../pages/CustomerPage';
 
     // Nama produk yang dibeli (bisa penggalan kata, case-insensitive) Tas Persegi Kecil Gaya Korea, Lintas Batas Tas
-    const nama_barang = process.env.BARANG || 'Tas Persegi Kecil Gaya Korea';
+    const nama_barang = 'Tas Persegi Kecil Gaya Korea';
 
     test('Pembelian dibawah Minimal', async ({ page }) => {
         const customerPage = new CustomerPage(page);

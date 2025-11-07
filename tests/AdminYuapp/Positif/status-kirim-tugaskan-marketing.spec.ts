@@ -6,12 +6,15 @@ import { AdminPage } from '../../../pages/AdminPage';
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
     const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
+    // Nama akun marketing yang akan ditugaskan oleh Admin
+    const nama_marketing = process.env.MARKETING || 'IlhamMarketing';
 
-    test('Mengubah status order menjadi Menunggu pembayaran', async ({ page }) => {
+    test('Mengubah status order menjadi pengiriman', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 
         await loginPage.goto();
-        await loginPage.login(process.env.MARKETING_USERNAME!, process.env.MARKETING_PASSWORD!);
-        await adminPage.updateStatusToAwaitingPayment(customer_name);
+        await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
+        await adminPage.applyShippingAdjustment(customer_name, nama_marketing);
     });
+

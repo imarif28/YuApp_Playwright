@@ -16,7 +16,7 @@ test.describe('Purchase Flow Approve', () => {
 
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
-        await adminPage.adjustShippingPrice(customer_name, nama_marketing);
+        await adminPage.applyShippingAdjustment(customer_name, nama_marketing);
     });
 
 });

@@ -53,7 +53,27 @@ export class AdminPage {
     }
 
     // -- Actions --
-    async adjustShippingPrice(customerName: string, marketerName: string) {
+    async updateStatusToShippingAdjustment(customerName: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await this.statusDropdown.selectOption({ label: 'Penyesuaian harga pengiriman' });
+         await this.updateButton.click();
+        await expect(this.successNotification).toBeVisible();
+    }
+
+    async assignMarketing(customerName: string, marketerName: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await this.marketingDropdown.selectOption({ label: marketerName });
+        await this.updateButton.click();
+        await expect(this.successNotification).toBeVisible();
+    }
+
+    async applyShippingAdjustment(customerName: string, marketerName: string) {
         await this.orderMenuLink.click();
         const orderRow = this.orderRowByCustomerName(customerName);
         await expect(orderRow).toBeVisible();
@@ -64,7 +84,7 @@ export class AdminPage {
         await expect(this.successNotification).toBeVisible();
     }
 
-    async marketingUpdateStatusToAwaitingPayment(customerName: string) {
+    async updateStatusToAwaitingPayment(customerName: string) {
         await this.orderMenuLink.click();
         const orderRow = this.orderRowByCustomerName(customerName);
         await expect(orderRow).toBeVisible();
@@ -74,7 +94,7 @@ export class AdminPage {
         await expect(this.successNotification).toBeVisible();
     }
 
-    async financeApprovePayment(customerName: string, filePath: string) {
+    async uploadAndApproveManualPayment(customerName: string, filePath: string) {
         await this.orderMenuLink.click();
         const orderRow = this.orderRowByCustomerName(customerName);
         await expect(orderRow).toBeVisible();
@@ -93,7 +113,7 @@ export class AdminPage {
         await expect(this.successNotification).toBeVisible();
     }
 
-    async adminInputLocalChinaNumber(customerName: string, localChinaNumber: string) {
+    async inputLocalChinaNumber(customerName: string, localChinaNumber: string) {
         await this.orderMenuLink.click();
         const orderRow = this.orderRowByCustomerName(customerName);
         await expect(orderRow).toBeVisible();

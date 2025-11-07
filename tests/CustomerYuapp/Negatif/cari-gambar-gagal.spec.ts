@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../../../pages/CustomerPage';
 
     // Path ke file gambar yang tidak akan ditemukan
-    const gambar = process.env.GAMBAR || 'dimasganteng.png';
+    const gambar = 'dimasganteng.png';
     const pathgambar = `gambar/${gambar}`;
 
     test('Mencari berdasarkan gambar tidak ditemukan', async ({ page }) => {
