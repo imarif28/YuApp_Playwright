@@ -128,7 +128,7 @@ EVA_PASSWORD="..."
 
 ## 🚀 Menjalankan Pengujian
 
-### A. Pengujian Purchase Flow (flow-1.spec.ts - flow-10.spec.ts)
+### A. Pengujian Purchase Flow (flow1.spec.ts - flow10.spec.ts)
 
 #### Eksekusi Dasar
 
