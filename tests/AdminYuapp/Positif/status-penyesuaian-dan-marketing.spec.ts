@@ -9,7 +9,7 @@ import { AdminPage } from '../../../pages/AdminPage';
     // Nama akun marketing yang akan ditugaskan oleh Admin
     const nama_marketing = process.env.MARKETING || 'IlhamMarketing';
 
-    test('Mengubah status order menjadi pengiriman', async ({ page }) => {
+    test('Mengubah status back office menjadi pengiriman', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 

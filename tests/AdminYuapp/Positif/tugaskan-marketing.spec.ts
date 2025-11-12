@@ -16,5 +16,6 @@ import { AdminPage } from '../../../pages/AdminPage';
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
         await adminPage.assignMarketing(customer_name, nama_marketing);
+        await adminPage.verifysuccessNotification();
     });
 

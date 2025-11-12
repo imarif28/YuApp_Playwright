@@ -15,4 +15,5 @@ import { AdminPage } from '../../../pages/AdminPage';
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
         
         await adminPage.updateYuanRate(rate_yuan);
+        await adminPage.verifysuccessNotification();
     });

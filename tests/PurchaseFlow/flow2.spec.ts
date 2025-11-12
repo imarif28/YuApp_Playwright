@@ -10,13 +10,14 @@ test.describe('Purchase Flow Approve', () => {
     // Nama akun marketing yang akan ditugaskan oleh Admin
     const nama_marketing = 'IlhamMarketing';
 
-    test('Admin berhasil mengubah status order menjadi pengiriman', async ({ page }) => {
+    test('Admin berhasil mengubah status back office menjadi pengiriman', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
         await adminPage.applyShippingAdjustment(customer_name, nama_marketing);
+        await adminPage.verifysuccessNotification();
     });
 
 });

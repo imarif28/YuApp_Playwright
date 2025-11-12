@@ -19,6 +19,7 @@ test.describe('Purchase Flow Approve', () => {
         await loginPage.login(process.env.FINANCE_USERNAME!, process.env.FINANCE_PASSWORD!);
 
         await adminPage.uploadAndApproveManualPayment(customer_name, filePath);
+        await adminPage.verifysuccessNotification();
     });
 
 });

@@ -7,12 +7,12 @@ import { AdminPage } from '../../../pages/AdminPage';
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
     const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
 
-    test('Mengubah status order menjadi pengiriman', async ({ page }) => {
+    test('Mengubah status back office menjadi Pengiriman barang ke gudang china', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
-        await adminPage.updateStatusToShippingAdjustment(customer_name);
+        await adminPage.updateStatusToChinaWarehouse(customer_name);
+        await adminPage.verifysuccessNotification();
     });
-

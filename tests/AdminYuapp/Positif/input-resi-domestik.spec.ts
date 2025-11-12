@@ -7,17 +7,16 @@ import { AdminPage } from '../../../pages/AdminPage';
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
     const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
 
-    // Path relatif ke file bukti pembayaran yang akan diupload oleh Finance
-    const gambar = process.env.GAMBAR || 'dimasganteng.png';
-    const filePath = `gambar/${gambar}`;
- 
-    test('Menyetujui_pembayaran', async ({ page }) => {
+    // Nomor resi domestic yang diinput oleh Admin
+    const no_resi_domestic = process.env.RESI_DOM || '124112435U4346';
+
+    test('Menginput nomor resi domestik', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 
         await loginPage.goto();
-        await loginPage.login(process.env.FINANCE_USERNAME!, process.env.FINANCE_PASSWORD!);
+        await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
 
-        await adminPage.uploadAndApproveManualPayment(customer_name, filePath);
+        await adminPage.inputDomesticTrackingNumber(customer_name, no_resi_domestic);
         await adminPage.verifysuccessNotification();
     });

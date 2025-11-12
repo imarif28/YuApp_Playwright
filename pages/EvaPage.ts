@@ -26,6 +26,9 @@ export class EvaPage {
     get shippingMarkInput(): Locator {
         return this.page.locator('#shipping_mark');
     }
+    get coloadTrackingNumberInput(): Locator {
+        return this.page.locator('#no_resi_coload');
+    }
     get ekspedisiDropdown(): Locator {
         return this.page.locator('#ekspedisi_resi');
     }
@@ -163,7 +166,7 @@ export class EvaPage {
         berat: string,
         total_ctn: string,
         deskripsi: string,
-        // tipe_ekspedisi: string
+        no_resi_coload: string
     }) {
         await this.forceOpenTrackingMenu();
         await this.receiptLink.click();
@@ -175,6 +178,7 @@ export class EvaPage {
         await this.ekspedisiDropdown.selectOption({ label: data.jalur_pengiriman });
         await this.coloadCombobox.click();
         await this.yuappTreeItem.click();
+        await this.coloadTrackingNumberInput.fill(data.no_resi_coload);
         await this.shippingPathRadio(data.jalur_pengiriman).check();
 
         await expect(this.addGoodButton).toBeEnabled();
