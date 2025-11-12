@@ -8,9 +8,9 @@ import { AdminPage } from '../../../pages/AdminPage';
     const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
 
     // Nomor resi evatrack yang diinput oleh Admin
-    const no_resi_evatrack = process.env.RESI_EVA || 'OUAA1548';
+    const no_resi_evatrack = process.env.RESI_EVA || 'OUAA1541';
 
-    test('Menginput nomor resi coload evatrack', async ({ page }) => {
+    test('Menginput nomor resi evatrack', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 

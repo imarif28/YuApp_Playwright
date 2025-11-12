@@ -8,7 +8,7 @@ import { AdminPage } from '../../../pages/AdminPage';
     const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
 
     // Nomor resi domestic yang diinput oleh Admin
-    const no_resi_domestic = process.env.RESI_DOM || '124112435U4346';
+    const no_resi_domestic = process.env.RESI_DOM || '124112435U4341';
 
     test('Menginput nomor resi domestik', async ({ page }) => {
         const loginPage = new LoginPage(page);
