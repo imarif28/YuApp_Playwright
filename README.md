@@ -261,7 +261,7 @@ set "RESI_COLOAD=COBA1"
 set "RESI_EVA=OUAA1541"
 set "RESI_DOM=124112435U4341"
 set "GAMBAR=dimasganteng.png"
-npx playwright test tests/AdminYuapp/admin-positive.spec.ts
+npx playwright test admin-positive.spec.ts
 ```
 
 **PowerShell:**
@@ -273,7 +273,7 @@ $env:RESI_COLOAD="COBA1"
 $env:RESI_EVA="OUAA1541"
 $env:RESI_DOM="124112435U4341"
 $env:GAMBAR="dimasganteng.png"
-npx playwright test tests/AdminYuapp/admin-positive.spec.ts
+npx playwright test admin-positive.spec.ts
 ```
 
 #### Mengembalikan Variabel ke Nilai Default
