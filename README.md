@@ -245,30 +245,35 @@ $env:URL=""
 | `CUSTOMER` | Nama customer untuk pencarian di dashboard | `'Ilham Muhammad Arif'` |
 | `MARKETING` | Nama akun marketing untuk penugasan | `'IlhamMarketing'` |
 | `RESI` | Nomor tracking lokal China | `'37443'` |
+| `RESI_COLOAD` | Nomor tracking coload evatrack | `'COBA1'` |
+| `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` |
+| `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` |
 | `GAMBAR` | Nama file bukti pembayaran (di folder `gambar/`) | `'dimasganteng.png'` |
 
 **Mengatur Variabel:**
 
 **CMD:**
 ```cmd
-set "BARANG=Tas Persegi Kecil"
-set "JALUR=Laut"
-set "PROMO=DISKON2024"
-set "BANK=BNI"
-set "GAMBAR=bukti_bayar.jpg"
-set "URL=https://detail.1688.com/offer/123456789.html"
-npx playwright test admin-positive.spec.ts
+set "CUSTOMER=Ilham Muhammad Arif"
+set "MARKETING=IlhamMarketing"
+set "RESI=37443"
+set "RESI_COLOAD=COBA1"
+set "RESI_EVA=OUAA1541"
+set "RESI_DOM=124112435U4341"
+set "GAMBAR=dimasganteng.png"
+npx playwright test tests/AdminYuapp/admin-positive.spec.ts
 ```
 
 **PowerShell:**
 ```powershell
-$env:BARANG="Tas Persegi Kecil"
-$env:JALUR="Laut"
-$env:PROMO="DISKON2024"
-$env:BANK="BNI"
-$env:GAMBAR="bukti_bayar.jpg"
-$env:URL="https://detail.1688.com/offer/123456789.html"
-npx playwright test admin-positive.spec.ts
+$env:CUSTOMER="Ilham Muhammad Arif"
+$env:MARKETING="IlhamMarketing"
+$env:RESI="37443"
+$env:RESI_COLOAD="COBA1"
+$env:RESI_EVA="OUAA1541"
+$env:RESI_DOM="124112435U4341"
+$env:GAMBAR="dimasganteng.png"
+npx playwright test tests/AdminYuapp/admin-positive.spec.ts
 ```
 
 #### Mengembalikan Variabel ke Nilai Default
@@ -280,6 +285,9 @@ Jika ingin mengembalikan variabel ke nilai default, cukup hapus nilai/value dari
 set "CUSTOMER="
 set "MARKETING="
 set "RESI="
+set "RESI_COLOAD="
+set "RESI_EVA="
+set "RESI_DOM="
 set "GAMBAR="
 ```
 
@@ -288,6 +296,9 @@ set "GAMBAR="
 $env:CUSTOMER=""
 $env:MARKETING=""
 $env:RESI=""
+$env:RESI_COLOAD=""
+$env:RESI_EVA=""
+$env:RESI_DOM=""
 $env:GAMBAR=""
 ```
 
