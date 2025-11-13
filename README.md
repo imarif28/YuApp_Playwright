@@ -248,8 +248,9 @@ $env:URL=""
 | `RESI_COLOAD` | Nomor tracking coload evatrack | `'COBA1'` |
 | `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` |
 | `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` |
-| `KURIR_SEA` | Kategori Biaya Jalur Laut | `'3' ( BB - SEA - 100.000,00 )` |
-| `KURIR_AIR` | Kategori Biaya Jalur Udara | `'4' ( CC - AIR - 50.000,00 )` |
+| `GAMBAR` | Nama file bukti pembayaran (di folder `gambar/`) | `'dimasganteng.png'` |
+| `KURIR_SEA` | Value Kategori Biaya Jalur Laut | `'3' ( BB - SEA - 100.000,00 )` |
+| `KURIR_AIR` | Value Kategori Biaya Jalur Udara | `'4' ( CC - AIR - 50.000,00 )` |
 | `PANJANG` | Dimensi barang (Panjang) | `'10'` |
 | `LEBAR` | Dimensi barang (Lebar) | `'10'` |
 | `TINGGI` | Dimensi barang (Tinggi) | `'10'` |
@@ -266,6 +267,12 @@ set "RESI_COLOAD=COBA1"
 set "RESI_EVA=OUAA1541"
 set "RESI_DOM=124112435U4341"
 set "GAMBAR=dimasganteng.png"
+set "KURIR_SEA=3"
+set "KURIR_AIR=4"
+set "PANJANG=10"
+set "LEBAR=10"
+set "TINGGI=10"
+set "BERAT=10"
 npx playwright test admin-positive.spec.ts
 ```
 
@@ -278,6 +285,12 @@ $env:RESI_COLOAD="COBA1"
 $env:RESI_EVA="OUAA1541"
 $env:RESI_DOM="124112435U4341"
 $env:GAMBAR="dimasganteng.png"
+$env:KURIR_SEA="3"
+$env:KURIR_AIR="4"
+$env:PANJANG="10"
+$env:LEBAR="10"
+$env:TINGGI="10"
+$env:BERAT="10"
 npx playwright test admin-positive.spec.ts
 ```
 
@@ -294,6 +307,12 @@ set "RESI_COLOAD="
 set "RESI_EVA="
 set "RESI_DOM="
 set "GAMBAR="
+set "KURIR_SEA="
+set "KURIR_AIR="
+set "PANJANG="
+set "LEBAR="
+set "TINGGI="
+set "BERAT="
 ```
 
 **PowerShell:**
@@ -305,6 +324,12 @@ $env:RESI_COLOAD=""
 $env:RESI_EVA=""
 $env:RESI_DOM=""
 $env:GAMBAR=""
+$env:KURIR_SEA=""
+$env:KURIR_AIR=""
+$env:PANJANG=""
+$env:LEBAR=""
+$env:TINGGI=""
+$env:BERAT=""
 ```
 
 ## 📊 Melihat Laporan Pengujian
