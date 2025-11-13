@@ -248,7 +248,12 @@ $env:URL=""
 | `RESI_COLOAD` | Nomor tracking coload evatrack | `'COBA1'` |
 | `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` |
 | `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` |
-| `GAMBAR` | Nama file bukti pembayaran (di folder `gambar/`) | `'dimasganteng.png'` |
+| `KURIR_SEA` | Kategori Biaya Jalur Laut | `'3' ( BB - SEA - 100.000,00 )` |
+| `KURIR_AIR` | Kategori Biaya Jalur Udara | `'4' ( CC - AIR - 50.000,00 )` |
+| `PANJANG` | Dimensi barang (Panjang) | `'10'` |
+| `LEBAR` | Dimensi barang (Lebar) | `'10'` |
+| `TINGGI` | Dimensi barang (Tinggi) | `'10'` |
+| `BERAT` | Berat barang | `'10'` |
 
 **Mengatur Variabel:**
 
