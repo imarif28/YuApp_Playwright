@@ -6,17 +6,14 @@ import { AdminPage } from '../../../pages/AdminPage';
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
     const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
-
-    // Nomor resi evatrack yang diinput oleh Admin
-    const no_resi_evatrack = process.env.RESI_EVA || 'OUAA1541';
-
-    test('Menginput nomor resi evatrack', async ({ page }) => {
+ 
+    test('Mengupload Bukti pembayaran tanpa upload file', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
 
-        await adminPage.inputEvatrackTrackingNumber(customer_name, no_resi_evatrack);
-        await adminPage.verifysuccessNotification();
+        await adminPage.uploadPaymentWithoutFile(customer_name);
+        await adminPage.verifyMissingFileError();
     });

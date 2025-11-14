@@ -41,6 +41,17 @@ export class AdminPage {
     get domesticTrackingNumberInput(): Locator {
         return this.page.locator('#no_resi');
     }
+    get kurirDomestikDropdown(): Locator {
+        return this.page.locator('#kurir_domestik');
+    }
+    get additionalCostsChina(): Locator {
+        return this.page.locator('div.row:has(input[value="Domestik China"])')
+            .locator('input[name="tambahan_price[]"]');
+    }
+    get additionalCostsIndonesia(): Locator {
+        return this.page.locator('div.row:has(input[value="Domestik Indonesia"])')
+            .locator('input[name="tambahan_price[]"]');
+    }
     get chooseFileButton(): Locator {
         return this.page.getByRole('button', { name: 'Choose File' });
     }
@@ -63,7 +74,33 @@ export class AdminPage {
     }
 
     get duplicateChinaNumberError(): Locator {
-        return this.page.getByText('The no local china has already been taken..');
+        return this.page.getByText(/The no local china has already been taken/);
+    }
+
+    get missingFileError(): Locator {
+        return this.page.getByText(/The file field is required/);
+    }
+
+    get invoicesMenuLink(): Locator {
+        return this.page.getByRole('link', { name: /Invoices/i }).first();
+    }
+    get seaCategoryDropdown(): Locator {
+        return this.page.locator('#biaya_kategori_sea');
+    }
+    get panjang1Input(): Locator {
+        return this.page.locator('#panjang1');
+    }
+    get lebar1Input(): Locator {
+        return this.page.locator('#lebar1');
+    }
+    get tinggi1Input(): Locator {
+        return this.page.locator('#tinggi1');
+    }
+    get airCategoryDropdown(): Locator {
+        return this.page.locator('#biaya_kategori_air');
+    }
+    get berat2Input(): Locator {
+        return this.page.locator('#berat2');
     }
 
     // -- Dynamic Locators --
@@ -204,6 +241,31 @@ export class AdminPage {
         await this.confirmModalSubmitButton.click();
     }
 
+    async uploadPaymentWithoutFile(customerName: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Bukti Pembayaran Manual').click();
+        await this.uploadButton.click();
+    }
+
+    async uploadProofOfGoods(customerName: string, filePath: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Upload Bukti Barang').click();
+        await this.chooseFileButton.setInputFiles(filePath);
+        await this.uploadButton.click();
+    }
+
+    async uploadGoodsWithoutFile(customerName: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Upload Bukti Barang').click();
+        await this.uploadButton.click();
+    }
+
     async inputColoadTrackingNumber(customerName: string, coloadTrackingNumber: string) {
         await this.orderMenuLink.click();
         const orderRow = this.orderRowByCustomerName(customerName);
@@ -240,10 +302,67 @@ export class AdminPage {
         await this.updateButton.click();
     }
 
+    async addAdditionalCostsChina(customerName: string, additionalCosts: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await this.additionalCostsChina.fill(additionalCosts);
+        await this.updateButton.click();
+    }
+
+    async addAdditionalCostsIndonesia(customerName: string, additionalCosts: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await this.additionalCostsIndonesia.fill(additionalCosts);
+        await this.updateButton.click();
+    }
+
+    async selectDomesticCourier(customerName: string, domesticCourier: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await this.kurirDomestikDropdown.selectOption({ value: domesticCourier });
+        await this.updateButton.click();
+    }
+   
     async updateYuanRate(rate: string) {
         await this.settingKursLink.click();
         await this.rateYuanInput.fill(rate);
         await this.saveRateButton.click();
+    }
+
+    async editInvoice(customerName: string, data: {
+        seaCategoryValue: string,
+        panjang: string,
+        lebar: string,
+        tinggi: string,
+        airCategoryValue: string,
+        berat: string
+    }) {
+        await this.invoicesMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+
+        await this.seaCategoryDropdown.press('Enter');
+        await this.seaCategoryDropdown.selectOption({ value: data.seaCategoryValue });
+        await this.panjang1Input.fill(data.panjang);
+        await this.panjang1Input.press('Tab');
+        await this.lebar1Input.fill(data.lebar);
+        await this.lebar1Input.press('Tab');
+        await this.tinggi1Input.fill(data.tinggi);
+        await this.tinggi1Input.press('Tab');
+
+        await this.airCategoryDropdown.press('Enter');
+        await this.airCategoryDropdown.selectOption({ value: data.airCategoryValue });
+        await this.berat2Input.fill(data.berat);
+        await this.berat2Input.press('Tab');
+
+        await this.updateButton.click();
     }
 
     // -- Verifications --
@@ -253,5 +372,9 @@ export class AdminPage {
 
     async verifyDuplicateChinaNumberError() {
         await expect(this.duplicateChinaNumberError).toBeVisible();
+    }
+
+    async verifyMissingFileError() {
+        await expect(this.missingFileError).toBeVisible();
     }
 }

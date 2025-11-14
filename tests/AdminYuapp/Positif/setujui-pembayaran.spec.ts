@@ -11,7 +11,7 @@ import { AdminPage } from '../../../pages/AdminPage';
     const gambar = process.env.GAMBAR || 'dimasganteng.png';
     const filePath = `gambar/${gambar}`;
  
-    test('Menyetujui_pembayaran', async ({ page }) => {
+    test('Menyetujui pembayaran', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 

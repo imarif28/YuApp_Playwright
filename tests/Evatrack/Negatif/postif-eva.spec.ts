@@ -6,20 +6,22 @@ import { EvaPage } from '../../../pages/EvaPage';
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = process.env.JALUR || 'Laut';
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = process.env.RESI || '37443';
+    const no_local_china = process.env.RESI || '7366324';
+    // Tanda pengiriman unik
+    const shipping_mark = process.env.TANDA || 'CB46';
 
     // Data lengkap untuk pengisian form 'New Receipt' oleh Agen China
     const receiptData = {
-        no_local_cina: no_local_china,              // Menggunakan nomor lokal China dari Admin
-        shipping_mark: process.env.TANDA || 'CB41', // Tanda pengiriman unik untuk resi ini
-        jalur_pengiriman: jalur_pengiriman,         // Menggunakan jalur pengiriman dari Customer
-        panjang: process.env.PANJANG || '10',       // Dimensi barang (Panjang)
-        lebar: process.env.LEBAR || '10',           // Dimensi barang (Lebar)
-        tinggi: process.env.TINGGI || '10',         // Dimensi barang (Tinggi)
-        berat: process.env.BERAT || '10',           // Berat barang
-        total_ctn: process.env.KARTON || '10',      // Jumlah karton/paket
-        deskripsi: process.env.DESKRIPSI || 'Kantong pelatihan olahraga lintas-batas Tas Silindris Kantong Renang Pemisahan Kering dan Basah Logo Kustom Kustom Tas Nylon Tanah Nylon', // Deskripsi barang
-        // tipe_ekspedisi: 'UDARA - ALL CATEGORIES' // Tipe ekspedisi yang dipilih Agen (sesuaikan jika perlu)
+        no_local_cina: no_local_china,        // Menggunakan nomor lokal China dari Admin
+        shipping_mark: shipping_mark,         // Tanda pengiriman unik untuk resi ini
+        jalur_pengiriman: jalur_pengiriman,   // Menggunakan jalur pengiriman dari Customer
+        panjang: '10',                        // Dimensi barang (Panjang)
+        lebar: '10',                          // Dimensi barang (Lebar)
+        tinggi: '10',                         // Dimensi barang (Tinggi)
+        berat: '10',                          // Berat barang
+        total_ctn: '10',                      // Jumlah karton/paket
+        deskripsi: 'Kantong pelatihan olahraga lintas-batas Tas Silindris Kantong Renang Pemisahan Kering dan Basah Logo Kustom Kustom Tas Nylon Tanah Nylon', // Deskripsi barang
+        no_resi_coload: shipping_mark,        // Nomor Tracking Coload
     };
 
     test('Input new receipt', async ({ page }) => {
