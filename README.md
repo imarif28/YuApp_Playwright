@@ -240,21 +240,22 @@ $env:URL=""
 
 #### Variabel Pengujian AdminYuapp
 
-| Variabel | Deskripsi | Nilai Default |
-|----------|-----------|---------------|
-| `CUSTOMER` | Nama customer untuk pencarian di dashboard | `'Ilham Muhammad Arif'` |
-| `MARKETING` | Nama akun marketing untuk penugasan | `'IlhamMarketing'` |
-| `RESI` | Nomor tracking lokal China | `'37443'` |
-| `RESI_COLOAD` | Nomor tracking coload evatrack | `'COBA1'` |
-| `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` |
-| `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` |
-| `GAMBAR` | Nama file bukti pembayaran (di folder `gambar/`) | `'dimasganteng.png'` |
-| `KURIR_SEA` | Value Kategori Biaya Jalur Laut | `'3' ( BB - SEA - 100.000,00 )` |
-| `KURIR_AIR` | Value Kategori Biaya Jalur Udara | `'4' ( CC - AIR - 50.000,00 )` |
-| `PANJANG` | Dimensi barang (Panjang) | `'10'` |
-| `LEBAR` | Dimensi barang (Lebar) | `'10'` |
-| `TINGGI` | Dimensi barang (Tinggi) | `'10'` |
-| `BERAT` | Berat barang | `'10'` |
+| Variabel | Deskripsi | Nilai Default | Opsi |
+|----------|-----------|---------------|------|
+| `CUSTOMER` | Nama customer untuk pencarian di dashboard | `'Ilham Muhammad Arif'` |  Nama pelanggan YuApp |
+| `MARKETING` | Nama akun marketing untuk penugasan | `'IlhamMarketing'` | Nama akun marketing yang terdaftar |
+| `RESI` | Nomor tracking lokal China | `'37443'` | Nomor resi lokal China unik |
+| `RESI_COLOAD` | Nomor tracking coload evatrack | `'COBA1'` | Nomor resi coload unik |
+| `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` | Nomor resi evatrack yang valid |
+| `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` | Nomor resi domestic yang valid |
+| `KURIR` | Value kurir yang ada di Indonesia | `'1'` | `'1'` = J&T Cargo/Sentral Cargo<br>`'3'` = JNE |
+| `GAMBAR` | Nama file bukti pembayaran (di folder `gambar/`) | `'dimasganteng.png'` | File gambar valid (`.jpg`, `.png`) |
+| `KURIR_SEA` | Value kategori biaya Jalur Laut | `'3'` | `'1'` = LARTAS SEA - SEA <br>`'3'` = BB - SEA<br>`'5'` = UMUM - SEA |
+| `KURIR_AIR` | Value kategori biaya Jalur Udara | `'4'` | `'2'` = LARTAS - AIR<br>`'4'` = CC - AIR  |
+| `PANJANG` | Dimensi barang (Panjang) | `'10'` | Nilai numerik (cm) |
+| `LEBAR` | Dimensi barang (Lebar) | `'10'` | Nilai numerik (cm) |
+| `TINGGI` | Dimensi barang (Tinggi) | `'10'` | Nilai numerik (cm) |
+| `BERAT` | Berat barang | `'10'` | Nilai numerik (kg) |
 
 **Mengatur Variabel:**
 
@@ -266,6 +267,7 @@ set "RESI=37443"
 set "RESI_COLOAD=COBA1"
 set "RESI_EVA=OUAA1541"
 set "RESI_DOM=124112435U4341"
+set "KURIR=1"
 set "GAMBAR=dimasganteng.png"
 set "KURIR_SEA=3"
 set "KURIR_AIR=4"
@@ -284,6 +286,7 @@ $env:RESI="37443"
 $env:RESI_COLOAD="COBA1"
 $env:RESI_EVA="OUAA1541"
 $env:RESI_DOM="124112435U4341"
+$env:KURIR="1"
 $env:GAMBAR="dimasganteng.png"
 $env:KURIR_SEA="3"
 $env:KURIR_AIR="4"
@@ -306,6 +309,7 @@ set "RESI="
 set "RESI_COLOAD="
 set "RESI_EVA="
 set "RESI_DOM="
+set "KURIR="
 set "GAMBAR="
 set "KURIR_SEA="
 set "KURIR_AIR="
@@ -323,6 +327,7 @@ $env:RESI=""
 $env:RESI_COLOAD=""
 $env:RESI_EVA=""
 $env:RESI_DOM=""
+$env:KURIR=""
 $env:GAMBAR=""
 $env:KURIR_SEA=""
 $env:KURIR_AIR=""
