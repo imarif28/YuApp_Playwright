@@ -242,13 +242,19 @@ $env:URL=""
 
 | Variabel | Deskripsi | Nilai Default | Opsi |
 |----------|-----------|---------------|------|
-| `CUSTOMER` | Nama customer untuk pencarian di dashboard | `'Ilham Muhammad Arif'` |  Nama pelanggan YuApp |
+| `CUSTOMER` | Nama customer untuk pencarian di dashboard | `'Ilham Muhammad Arif'` | Nama pelanggan YuApp |
 | `MARKETING` | Nama akun marketing untuk penugasan | `'IlhamMarketing'` | Nama akun marketing yang terdaftar |
 | `RESI` | Nomor tracking lokal China | `'37443'` | Nomor resi lokal China unik |
 | `RESI_COLOAD` | Nomor tracking coload evatrack | `'COBA1'` | Nomor resi coload unik |
 | `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` | Nomor resi evatrack yang valid |
 | `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` | Nomor resi domestic yang valid |
 | `KURIR` | Value kurir yang ada di Indonesia | `'1'` | `'1'` = J&T Cargo/Sentral Cargo<br>`'3'` = JNE |
+| `USER_BARU` | Username untuk akun baru yang akan dibuat | `'test'` | Nama username untuk akun baru |
+| `PASS_BARU` | Password untuk akun baru | `'123'` | Kombinasi angka dan huruf untuk akun baru |
+| `NAMA_BARU` | Nama lengkap pengguna untuk akun baru | `'test1` | Nama lengkap untuk akun baru |
+| `EMAIL_BARU` | Alamat email untuk akun baru | `'test1@contoh.com'` | Alaamt email yang valid |
+| `TELP_BARU` | Nomor telepon untuk akun baru | `'628888888888'` | Nomor telpon yang terdaftar |
+| `ROLE_BARU` | Value Role untuk akun baru | `'1'` |  `'1' ` = Admin<br> `'2'` = Finance<br> `'5'` = Manager<br> `'20'` = Marketing<br> `'30'` = Agen Cina<br> `'40'` = Finance<br> `'60'` = Content Creator |
 | `GAMBAR` | Nama file bukti pembayaran (di folder `gambar/`) | `'dimasganteng.png'` | File gambar valid (`.jpg`, `.png`) |
 | `KURIR_SEA` | Value kategori biaya Jalur Laut | `'3'` | `'1'` = LARTAS SEA - SEA <br>`'3'` = BB - SEA<br>`'5'` = UMUM - SEA |
 | `KURIR_AIR` | Value kategori biaya Jalur Udara | `'4'` | `'2'` = LARTAS - AIR<br>`'4'` = CC - AIR  |
@@ -268,6 +274,12 @@ set "RESI_COLOAD=COBA1"
 set "RESI_EVA=OUAA1541"
 set "RESI_DOM=124112435U4341"
 set "KURIR=1"
+set "USER_BARU=test"
+set "PASS_BARU=123"
+set "NAMA_BARU=test1"
+set "EMAIL_BARU=test1@contoh.com"
+set "TELP_BARU=628888888888"
+set "ROLE_BARU=1"
 set "GAMBAR=dimasganteng.png"
 set "KURIR_SEA=3"
 set "KURIR_AIR=4"
@@ -287,6 +299,12 @@ $env:RESI_COLOAD="COBA1"
 $env:RESI_EVA="OUAA1541"
 $env:RESI_DOM="124112435U4341"
 $env:KURIR="1"
+$env:USER_BARU="test"
+$env:PASS_BARU="123"
+$env:NAMA_BARU="test1"
+$env:EMAIL_BARU="test1@contoh.com"
+$env:TELP_BARU="628888888888"
+$env:ROLE_BARU="1"
 $env:GAMBAR="dimasganteng.png"
 $env:KURIR_SEA="3"
 $env:KURIR_AIR="4"
