@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../../pages/LoginPage';
-import { AdminPage } from '../../../pages/AdminPage';
+import { LoginPage } from '../../../../pages/LoginPage';
+import { AdminPage } from '../../../../pages/AdminPage';
 
     // --- Variabel Data Tes ---
 
