@@ -243,7 +243,7 @@ $env:URL=""
 | Variabel | Deskripsi | Nilai Default | Opsi |
 |----------|-----------|---------------|------|
 | `CUSTOMER` | Nama customer untuk pencarian di dashboard | `'Ilham Muhammad Arif'` | Nama pelanggan YuApp |
-| `MARKETING` | Nama akun marketing untuk penugasan | `'IlhamMarketing'` | Nama akun marketing yang terdaftar |
+| `MARKETING` | Nama akun marketing untuk penugasan | `'1614'` | `'90'` = Audy<br> `'91'` = Garda<br> `'97'` = Marketing<br> `'1614'` = IlhamMarketing |
 | `RESI` | Nomor tracking lokal China | `'37443'` | Nomor resi lokal China unik |
 | `RESI_COLOAD` | Nomor tracking coload evatrack | `'COBA1'` | Nomor resi coload unik |
 | `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` | Nomor resi evatrack yang valid |
