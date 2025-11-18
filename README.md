@@ -249,12 +249,18 @@ $env:URL=""
 | `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` | Nomor resi evatrack yang valid |
 | `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` | Nomor resi domestic yang valid |
 | `KURIR` | Value kurir yang ada di Indonesia | `'1'` | `'1'` = J&T Cargo/Sentral Cargo<br>`'3'` = JNE |
-| `USER_BARU` | Username untuk akun baru yang akan dibuat | `'test'` | Nama username untuk akun baru |
-| `PASS_BARU` | Password untuk akun baru | `'123'` | Kombinasi angka dan huruf untuk akun baru |
-| `NAMA_BARU` | Nama lengkap pengguna untuk akun baru | `'test1` | Nama lengkap untuk akun baru |
-| `EMAIL_BARU` | Alamat email untuk akun baru | `'test1@contoh.com'` | Alaamt email yang valid |
-| `TELP_BARU` | Nomor telepon untuk akun baru | `'628888888888'` | Nomor telpon yang terdaftar |
-| `ROLE_BARU` | Value Role untuk akun baru | `'1'` |  `'1' ` = Admin<br> `'2'` = Finance<br> `'5'` = Manager<br> `'20'` = Marketing<br> `'30'` = Agen Cina<br> `'40'` = Finance<br> `'60'` = Content Creator |
+| `USER` | Username untuk akun baru yang akan dibuat | `'test'` | Nama username untuk akun baru |
+| `PASS` | Password untuk akun baru | `'123'` | Kombinasi angka dan huruf untuk akun baru |
+| `NAMA` | Nama lengkap pengguna untuk akun baru | `'test1` | Nama lengkap untuk akun baru |
+| `EMAIL` | Alamat email untuk akun baru | `'test1@contoh.com'` | Alaamt email yang valid |
+| `TELP` | Nomor telepon untuk akun baru | `'628888888888'` | Nomor telpon yang terdaftar |
+| `ROLE` | Value Role untuk akun baru | `'1'` |  `'1' ` = Admin<br> `'2'` = Finance<br> `'5'` = Manager<br> `'20'` = Marketing<br> `'30'` = Agen Cina<br> `'40'` = Finance<br> `'60'` = Content Creator |
+| `USER_BARU` | Username untuk akun yang akan diubah | `'ubah1'` | Nama username untuk akun baru |
+| `PASS_BARU` | Password untuk akun yang akan diubah | `'666'` | Kombinasi angka dan huruf untuk akun baru |
+| `NAMA_BARU` | Nama lengkap pengguna untuk akun yang akan diubah | `'ubah1` | Nama lengkap untuk akun baru |
+| `EMAIL_BARU` | Alamat email untuk akun yang akan diubah | `'ubah1@contoh.com'` | Alaamt email yang valid |
+| `TELP_BARU` | Nomor telepon untuk akun yang akan diubah | `'621111111111'` | Nomor telpon yang terdaftar |
+| `ROLE_BARU` | Value Role untuk akun yang akan diubah | `'20'` |  `'1' ` = Admin<br> `'2'` = Finance<br> `'5'` = Manager<br> `'20'` = Marketing<br> `'30'` = Agen Cina<br> `'40'` = Finance<br> `'60'` = Content Creator |
 | `GAMBAR` | Nama file bukti pembayaran (di folder `gambar/`) | `'dimasganteng.png'` | File gambar valid (`.jpg`, `.png`) |
 | `KURIR_SEA` | Value kategori biaya Jalur Laut | `'3'` | `'1'` = LARTAS SEA - SEA <br>`'3'` = BB - SEA<br>`'5'` = UMUM - SEA |
 | `KURIR_AIR` | Value kategori biaya Jalur Udara | `'4'` | `'2'` = LARTAS - AIR<br>`'4'` = CC - AIR  |
@@ -274,12 +280,18 @@ set "RESI_COLOAD=COBA1"
 set "RESI_EVA=OUAA1541"
 set "RESI_DOM=124112435U4341"
 set "KURIR=1"
-set "USER_BARU=test"
-set "PASS_BARU=123"
-set "NAMA_BARU=test1"
-set "EMAIL_BARU=test1@contoh.com"
-set "TELP_BARU=628888888888"
-set "ROLE_BARU=1"
+set "USER=test"
+set "PASS=123"
+set "NAMA=test1"
+set "EMAIL=test1@contoh.com"
+set "TELP=628888888888"
+set "ROLE=1"
+set "USER_BARU=ubah1"
+set "PASS_BARU=666"
+set "NAMA_BARU=ubah1"
+set "EMAIL_BARU=ubah1@contoh.com"
+set "TELP_BARU=621111111111"
+set "ROLE_BARU=20"
 set "GAMBAR=dimasganteng.png"
 set "KURIR_SEA=3"
 set "KURIR_AIR=4"
@@ -299,12 +311,18 @@ $env:RESI_COLOAD="COBA1"
 $env:RESI_EVA="OUAA1541"
 $env:RESI_DOM="124112435U4341"
 $env:KURIR="1"
-$env:USER_BARU="test"
-$env:PASS_BARU="123"
-$env:NAMA_BARU="test1"
-$env:EMAIL_BARU="test1@contoh.com"
-$env:TELP_BARU="628888888888"
-$env:ROLE_BARU="1"
+$env:USER="test"
+$env:PASS="123"
+$env:NAMA="test1"
+$env:EMAIL="test1@contoh.com"
+$env:TELP="628888888888"
+$env:ROLE="1"
+$env:USER_BARU="ubah1"
+$env:PASS_BARU="666"
+$env:NAMA_BARU="ubah1"
+$env:EMAIL_BARU="ubah1@contoh.com"
+$env:TELP_BARU="621111111111"
+$env:ROLE_BARU="20"
 $env:GAMBAR="dimasganteng.png"
 $env:KURIR_SEA="3"
 $env:KURIR_AIR="4"
@@ -328,6 +346,18 @@ set "RESI_COLOAD="
 set "RESI_EVA="
 set "RESI_DOM="
 set "KURIR="
+set "USER="
+set "PASS="
+set "NAMA="
+set "EMAIL="
+set "TELP="
+set "ROLE="
+set "USER_BARU="
+set "PASS_BARU="
+set "NAMA_BARU="
+set "EMAIL_BARU="
+set "TELP_BARU="
+set "ROLE_BARU="
 set "GAMBAR="
 set "KURIR_SEA="
 set "KURIR_AIR="
@@ -346,6 +376,18 @@ $env:RESI_COLOAD=""
 $env:RESI_EVA=""
 $env:RESI_DOM=""
 $env:KURIR=""
+$env:USER=""
+$env:PASS=""
+$env:NAMA=""
+$env:EMAIL=""
+$env:TELP=""
+$env:ROLE=""
+$env:USER_BARU=""
+$env:PASS_BARU=""
+$env:NAMA_BARU=""
+$env:EMAIL_BARU=""
+$env:TELP_BARU=""
+$env:ROLE_BARU=""
 $env:GAMBAR=""
 $env:KURIR_SEA=""
 $env:KURIR_AIR=""
