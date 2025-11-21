@@ -252,7 +252,7 @@ $env:URL=""
 | `USER` | Username untuk akun baru yang akan dibuat | `'test'` | Nama username untuk akun baru |
 | `PASS` | Password untuk akun baru | `'123'` | Kombinasi angka dan huruf untuk akun baru |
 | `NAMA` | Nama lengkap pengguna untuk akun baru | `'test1` | Nama lengkap untuk akun baru |
-| `EMAIL` | Alamat email untuk akun baru | `'test1@contoh.com'` | Alaamt email yang valid |
+| `EMAIL` | Alamat email untuk akun baru | `'test1@contoh.com'` | Alamat email yang valid |
 | `TELP` | Nomor telepon untuk akun baru | `'628888888888'` | Nomor telpon yang terdaftar |
 | `ROLE` | Value Role untuk akun baru | `'1'` |  `'1' ` = Admin<br> `'2'` = Finance<br> `'5'` = Manager<br> `'20'` = Marketing<br> `'30'` = Agen Cina<br> `'40'` = Finance<br> `'60'` = Content Creator |
 | `USER_BARU` | Username untuk akun yang akan diubah | `'ubah1'` | Nama username untuk akun baru |
@@ -268,6 +268,12 @@ $env:URL=""
 | `LEBAR` | Dimensi barang (Lebar) | `'10'` | Nilai numerik (cm) |
 | `TINGGI` | Dimensi barang (Tinggi) | `'10'` | Nilai numerik (cm) |
 | `BERAT` | Berat barang | `'10'` | Nilai numerik (kg) |
+| `URL_BANNER` | Link tujuan saat banner web/mobile diklik | `'https://www.instagram.com/__dimasim/'` | Link tujuan yang valid |
+| `URUTAN` | Nomor urutan tampilan banner | `'5'` | Nomor urutan |
+| `GAMBAR_BANNER` | Nama file gambar banner yang tersimpan di folder 'gambar/' | `'baner.png'` | File gambar valid (`.jpg`, `.png`) |
+| `URL_SBANNER` | Link tujuan saat sub banner diklik | `'https://www.instagram.com/__dimasim/'` | Link tujuan yang valid |
+| `POSIS` | Posisi tampilan sub banner | `'Kanan'` | `'Kanan'` atau `'Kiri'` |
+| `GAMBAR_SBANNER` | Nama file gambar sub banner yang tersimpan di folder 'gambar/' | `'subbaner.png'` | File gambar valid (`.jpg`, `.png`) |
 
 **Mengatur Variabel:**
 
@@ -299,6 +305,12 @@ set "PANJANG=10"
 set "LEBAR=10"
 set "TINGGI=10"
 set "BERAT=10"
+set "URL_BANNER=https://www.instagram.com/__dimasim/"
+set "URUTAN=5"
+set "GAMBAR_BANNER=baner.png"
+set "URL_SBANNER=https://www.instagram.com/__dimasim/"
+set "POSIS=Kanan"
+set "GAMBAR_SBANNER=subbaner.png"
 npx playwright test admin-positive.spec.ts
 ```
 
@@ -330,6 +342,12 @@ $env:PANJANG="10"
 $env:LEBAR="10"
 $env:TINGGI="10"
 $env:BERAT="10"
+$env:URL_BANNER="https://www.instagram.com/__dimasim/"
+$env:URUTAN="5"
+$env:GAMBAR_BANNER="baner.png"
+$env:URL_SBANNER="https://www.instagram.com/__dimasim/"
+$env:POSIS="Kanan"
+$env:GAMBAR_SBANNER="subbaner.png"
 npx playwright test admin-positive.spec.ts
 ```
 
@@ -365,6 +383,12 @@ set "PANJANG="
 set "LEBAR="
 set "TINGGI="
 set "BERAT="
+set "URL_BANNER="
+set "URUTAN="
+set "GAMBAR_BANNER="
+set "URL_SBANNER="
+set "POSIS="
+set "GAMBAR_SBANNER="
 ```
 
 **PowerShell:**
@@ -395,6 +419,12 @@ $env:PANJANG=""
 $env:LEBAR=""
 $env:TINGGI=""
 $env:BERAT=""
+$env:URL_BANNER=""
+$env:URUTAN=""
+$env:GAMBAR_BANNER=""
+$env:URL_SBANNER=""
+$env:POSIS=""
+$env:GAMBAR_SBANNER=""
 ```
 
 ## 📊 Melihat Laporan Pengujian
