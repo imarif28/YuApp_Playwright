@@ -272,7 +272,7 @@ $env:URL=""
 | `URUTAN` | Nomor urutan tampilan banner | `'5'` | Nomor urutan |
 | `GAMBAR_BANNER` | Nama file gambar banner yang tersimpan di folder 'gambar/' | `'baner.png'` | File gambar valid (`.jpg`, `.png`) |
 | `URL_SBANNER` | Link tujuan saat sub banner diklik | `'https://www.instagram.com/__dimasim/'` | Link tujuan yang valid |
-| `POSIS` | Posisi tampilan sub banner | `'Kanan'` | `'Kanan'` atau `'Kiri'` |
+| `POSISI` | Posisi tampilan sub banner | `'Kanan'` | `'Kanan'` atau `'Kiri'` |
 | `GAMBAR_SBANNER` | Nama file gambar sub banner yang tersimpan di folder 'gambar/' | `'subbaner.png'` | File gambar valid (`.jpg`, `.png`) |
 
 **Mengatur Variabel:**
@@ -309,7 +309,7 @@ set "URL_BANNER=https://www.instagram.com/__dimasim/"
 set "URUTAN=5"
 set "GAMBAR_BANNER=baner.png"
 set "URL_SBANNER=https://www.instagram.com/__dimasim/"
-set "POSIS=Kanan"
+set "POSISI=Kanan"
 set "GAMBAR_SBANNER=subbaner.png"
 npx playwright test admin-positive.spec.ts
 ```
@@ -346,7 +346,7 @@ $env:URL_BANNER="https://www.instagram.com/__dimasim/"
 $env:URUTAN="5"
 $env:GAMBAR_BANNER="baner.png"
 $env:URL_SBANNER="https://www.instagram.com/__dimasim/"
-$env:POSIS="Kanan"
+$env:POSISI="Kanan"
 $env:GAMBAR_SBANNER="subbaner.png"
 npx playwright test admin-positive.spec.ts
 ```
@@ -387,7 +387,7 @@ set "URL_BANNER="
 set "URUTAN="
 set "GAMBAR_BANNER="
 set "URL_SBANNER="
-set "POSIS="
+set "POSISI="
 set "GAMBAR_SBANNER="
 ```
 
@@ -423,7 +423,7 @@ $env:URL_BANNER=""
 $env:URUTAN=""
 $env:GAMBAR_BANNER=""
 $env:URL_SBANNER=""
-$env:POSIS=""
+$env:POSISI=""
 $env:GAMBAR_SBANNER=""
 ```
 
