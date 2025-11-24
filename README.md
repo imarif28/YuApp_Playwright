@@ -288,7 +288,7 @@ $env:URL=""
 | `NAMA_BARU` | Nama lengkap untuk diubah | `'ubah1'` | Nama lengkap |
 | `EMAIL_BARU` | Email untuk diubah | `'ubah1@contoh.com'` | Email valid |
 | `TELP_BARU` | Nomor telepon untuk diubah | `'621111111111'` | Nomor telepon valid |
-| `ROLE_BARU` | Value role untuk diubah | `'20'` | (Sama seperti `ROLE`) |
+| `ROLE_BARU` | Value role untuk diubah | `'20'` | `'1'` = Admin<br>`'2'` = Finance<br>`'5'` = Manager<br>`'20'` = Marketing<br>`'30'` = Agen Cina<br>`'40'` = Finance<br>`'60'` = Content Creator |
 | `GAMBAR` | Nama file bukti pembayaran | `'dimasganteng.png'` | File `.jpg`, `.png` |
 | `KURIR_SEA` | Value kategori Jalur Laut | `'3'` | `'1'` = LARTAS SEA<br>`'3'` = BB - SEA<br>`'5'` = UMUM - SEA |
 | `KURIR_AIR` | Value kategori Jalur Udara | `'4'` | `'2'` = LARTAS - AIR<br>`'4'` = CC - AIR |
@@ -527,36 +527,6 @@ gci env:
 - ❌ **Membuka tab/window terminal baru** = variabel tidak terbawa ke sesi baru
 - ✅ **Variabel hanya aktif di terminal yang sama** tempat Anda melakukan set/assignment
 
-### Workflow yang Disarankan
-
-**Command Prompt (CMD):**
-```cmd
-:: 1. Set variabel
-set "BARANG=Tas Persegi Kecil"
-set "JALUR=Laut"
-
-:: 2. Verifikasi variabel
-echo %BARANG%
-echo %JALUR%
-
-:: 3. Jalankan test
-npx playwright test customer-positive.spec.ts --headed
-```
-
-**PowerShell:**
-```powershell
-# 1. Set variabel
-$env:BARANG="Tas Persegi Kecil"
-$env:JALUR="Laut"
-
-# 2. Verifikasi variabel
-$env:BARANG
-$env:JALUR
-
-# 3. Jalankan test
-npx playwright test customer-positive.spec.ts --headed
-```
-
 ---
 
 ## 📊 Melihat Laporan Pengujian
@@ -644,19 +614,6 @@ npx playwright install
 
 ---
 
-## 🤝 Kontribusi
-
-Proyek ini dibuat sebagai bagian dari Program Magang QA.
-
-Jika ingin berkontribusi:
-1. Fork repository ini
-2. Buat branch fitur (`git checkout -b fitur-baru`)
-3. Commit perubahan (`git commit -m 'Menambahkan fitur baru'`)
-4. Push ke branch (`git push origin fitur-baru`)
-5. Buat Pull Request
-
----
-
 ## 📌 Repository
 
 **GitHub**: [https://github.com/imarif28/YuApp_Playwright](https://github.com/imarif28/YuApp_Playwright)
@@ -672,4 +629,10 @@ Jika ingin berkontribusi:
 
 ---
 
-**© 2024 - YuApp Playwright E2E Testing Project**
+## 🤝 Kontribusi
+
+Proyek ini dibuat sebagai bagian dari Program Magang QA.
+
+---
+
+**© 2025 - YuApp Playwright E2E Testing Pro
