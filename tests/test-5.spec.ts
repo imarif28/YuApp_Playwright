@@ -7,11 +7,16 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Password' }).click();
   await page.getByRole('textbox', { name: 'Password' }).fill('IlhamQA123');
   await page.getByRole('button', { name: 'Sign in ' }).click();
-  await page.getByRole('link', { name: /Sub Banner/ }).click();
-  await page.goto('https://yuapp.noretest2.com/subbanners');
+
+  await page.locator('.nav-item-submenu:has-text("Banner") .nav-group-sub').evaluate((element) => {
+    (element as HTMLElement).style.display = 'block';
+  });
+
+  await page.getByRole('link', { name: /Mobile/ }).click();
+  await page.goto('https://yuapp.noretest2.com/banners-mobile');
   await page.locator('#url_href').fill('https://www.instagram.com/__dimasim/');
-  await page.locator('#urutan').selectOption({ value: 'Kiri' });
-  await page.locator('#gambar_url').setInputFiles('gambar/subbaner.png');
+  await page.locator('#urutan').fill('6');
+  await page.locator('#gambar_url').setInputFiles('gambar/baner.png');
   await page.getByRole('button', { name: 'Submit' }).click();
   await expect(page.getByRole('heading', { name: 'Success' })).toBeVisible();
 });

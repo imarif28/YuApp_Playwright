@@ -59,10 +59,8 @@ export class AdminPage {
         return this.page.getByRole('button', { name: 'Upload' });
     }
     get approvePaymentLink(): Locator {
-        // Locator spesifik untuk link approve setelah upload
         return this.page.locator('a[href*="/prosesbukti/approve/"]');
     }
-
     get settingKursLink(): Locator {
         return this.page.getByRole('link', { name: /Setting Kurs/i });
     }
@@ -70,17 +68,14 @@ export class AdminPage {
         return this.page.locator('#rate_yuan');
     }
     get saveRateButton(): Locator {
-        return this.page.locator('button.btn-success'); // Menggunakan locator dari rekaman Anda
+        return this.page.locator('button.btn-success');
     }
-
     get duplicateChinaNumberError(): Locator {
         return this.page.getByText(/The no local china has already been taken/);
     }
-
     get missingFileError(): Locator {
         return this.page.getByText(/The file field is required/);
     }
-
     get invoicesMenuLink(): Locator {
         return this.page.getByRole('link', { name: /Invoices/i }).first();
     }
@@ -102,10 +97,89 @@ export class AdminPage {
     get berat2Input(): Locator {
         return this.page.locator('#berat2');
     }
+    get deleteConfirmationModal(): Locator {
+        return this.page.locator('#delform');
+    }
+    get deleteConfirmButton(): Locator {
+        return this.deleteConfirmationModal.getByRole('button', { name: 'Delete' });
+    }
+    get usersMenuLink(): Locator {
+        return this.page.getByRole('link', { name: /Users/i });
+    }
+    get tambahUserLink(): Locator {
+        return this.page.getByRole('link', { name: 'Tambah' });
+    }
+    get usernameInput(): Locator {
+        return this.page.getByPlaceholder('Username');
+    }
+    get passwordInput(): Locator {
+        return this.page.getByPlaceholder('Password');
+    }
+    get namaInput(): Locator {
+        return this.page.getByPlaceholder('Nama');
+    }
+    get emailInput(): Locator {
+        return this.page.getByPlaceholder('Email');
+    }
+    get phoneInput(): Locator {
+        return this.page.getByPlaceholder('phone');
+    }
+    get roleDropdown(): Locator {
+        return this.page.locator('#role_id');
+    }
+    get simpanButton(): Locator {
+        return this.page.getByRole('button', { name: 'Simpan' });
+    }
+    get usersSearchInput(): Locator {
+        return this.page.getByLabel('Search:');
+    }
+    get customerMenuLink(): Locator {
+        return this.page.getByRole('link', { name: /Customer/i });
+    }
+    get customerSearchInput(): Locator {
+        return this.page.getByLabel('Search:');
+    }
+    get customerMarketingDropdown(): Locator {
+        return this.page.locator('[name="marketing_id"]');
+    }
+    get webBannerLink(): Locator {
+        return this.page.getByRole('link', { name: /Web/ });
+    }
+    get mobileBannerLink(): Locator {
+        return this.page.getByRole('link', { name: /Mobile/ });
+    }
+    get subBannerLink(): Locator {
+        return this.page.getByRole('link', { name: /Sub Banner/ });
+    }
+    get bannerUrlInput(): Locator {
+        return this.page.locator('#url_href');
+    }
+    get bannerOrderInput(): Locator {
+        return this.page.locator('#urutan');
+    }
+    get bannerFileInput(): Locator {
+        return this.page.locator('#gambar_url');
+    }
+    get bannerSubmitButton(): Locator {
+        return this.page.getByRole('button', { name: 'Submit' });
+    }
+    get bannerSearchInput(): Locator {
+        return this.page.getByLabel('Search:');
+    }
+
 
     // -- Dynamic Locators --
     orderRowByCustomerName(customerName: string): Locator {
         return this.page.locator('tbody tr', { hasText: customerName }).first();
+    }
+    userRowByUsername(username: string): Locator {
+        return this.page.locator('tbody tr', { hasText: username }).first();
+    }
+    customerRowByCustomerName(customerName: string): Locator {
+        return this.page.locator('tbody tr', { hasText: customerName }).first();
+    }
+    bannerRowByUrl(url: string): Locator {
+        return this.page.locator('tbody tr', { hasText: url }).first();
     }
 
     constructor(page: Page) {
@@ -132,22 +206,22 @@ export class AdminPage {
         await this.updateButton.click();
     }
 
-    async assignMarketing(customerName: string, marketerName: string) {
+    async assignMarketing(customerName: string, marketerValue: string) {
         await this.orderMenuLink.click();
         const orderRow = this.orderRowByCustomerName(customerName);
         await expect(orderRow).toBeVisible();
         await orderRow.getByTitle('Edit').click();
-        await this.marketingDropdown.selectOption({ label: marketerName });
+        await this.marketingDropdown.selectOption({ value: marketerValue });
         await this.updateButton.click();
     }
 
-    async applyShippingAdjustment(customerName: string, marketerName: string) {
+    async applyShippingAdjustment(customerName: string, marketerValue: string) {
         await this.orderMenuLink.click();
         const orderRow = this.orderRowByCustomerName(customerName);
         await expect(orderRow).toBeVisible();
         await orderRow.getByTitle('Edit').click();
         await this.statusDropdown.selectOption({ label: 'Penyesuaian harga pengiriman' });
-        await this.marketingDropdown.selectOption({ label: marketerName });
+        await this.marketingDropdown.selectOption({ value: marketerValue });
         await this.updateButton.click();
     }
 
@@ -232,7 +306,6 @@ export class AdminPage {
         await this.uploadButton.click();
         await expect(this.successNotification).toBeVisible();
 
-        // Alur Approve setelah Upload
         await this.approvePaymentLink.click();
         await expect(this.successNotification).toBeVisible();
         await expect(this.approvePaymentButton).toBeVisible();
@@ -328,7 +401,7 @@ export class AdminPage {
         await this.kurirDomestikDropdown.selectOption({ value: domesticCourier });
         await this.updateButton.click();
     }
-   
+
     async updateYuanRate(rate: string) {
         await this.settingKursLink.click();
         await this.rateYuanInput.fill(rate);
@@ -363,6 +436,263 @@ export class AdminPage {
         await this.berat2Input.press('Tab');
 
         await this.updateButton.click();
+    }
+
+    async deleteOrder(customerName: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+
+        await orderRow.getByTitle('Delete').click();
+
+        await expect(this.deleteConfirmationModal).toBeVisible();
+        await this.deleteConfirmButton.click();
+    }
+
+    async addNewUser(data: {
+        username: string,
+        password: string,
+        nama: string,
+        email: string,
+        phone: string,
+        roleValue: string
+    }) {
+        await this.usersMenuLink.click();
+        await this.tambahUserLink.click();
+
+        await expect(this.usernameInput).toBeVisible();
+        await this.usernameInput.fill(data.username);
+        await this.passwordInput.fill(data.password);
+        await this.namaInput.fill(data.nama);
+        await this.emailInput.fill(data.email);
+        await this.phoneInput.fill(data.phone);
+        await this.roleDropdown.selectOption({ value: data.roleValue });
+
+        await this.simpanButton.click();
+    }
+
+    async deleteUser(username: string) {
+        await this.usersMenuLink.click();
+        await expect(this.usersSearchInput).toBeVisible();
+        await this.usersSearchInput.fill(username);
+
+        const userRow = this.userRowByUsername(username);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Delete').click();
+
+        await expect(this.deleteConfirmationModal).toBeVisible();
+        await this.deleteConfirmButton.click();
+    }
+
+    async editUsername(usernameToFind: string, newUsername: string) {
+        await this.usersMenuLink.click();
+        await expect(this.usersSearchInput).toBeVisible();
+        await this.usersSearchInput.fill(usernameToFind);
+
+        const userRow = this.userRowByUsername(usernameToFind);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Edit').click();
+
+        await expect(this.usernameInput).toBeVisible();
+        await this.usernameInput.fill(newUsername);
+        await this.updateButton.click();
+    }
+
+    async editPassword(usernameToFind: string, newPassword: string) {
+        await this.usersMenuLink.click();
+        await expect(this.usersSearchInput).toBeVisible();
+        await this.usersSearchInput.fill(usernameToFind);
+
+        const userRow = this.userRowByUsername(usernameToFind);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Edit').click();
+
+        await expect(this.passwordInput).toBeVisible();
+        await this.passwordInput.fill(newPassword);
+        await this.updateButton.click();
+    }
+
+    async editName(usernameToFind: string, newName: string) {
+        await this.usersMenuLink.click();
+        await expect(this.usersSearchInput).toBeVisible();
+        await this.usersSearchInput.fill(usernameToFind);
+
+        const userRow = this.userRowByUsername(usernameToFind);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Edit').click();
+
+        await expect(this.namaInput).toBeVisible();
+        await this.namaInput.fill(newName);
+        await this.updateButton.click();
+    }
+
+    async editEmail(usernameToFind: string, newEmail: string) {
+        await this.usersMenuLink.click();
+        await expect(this.usersSearchInput).toBeVisible();
+        await this.usersSearchInput.fill(usernameToFind);
+
+        const userRow = this.userRowByUsername(usernameToFind);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Edit').click();
+
+        await expect(this.emailInput).toBeVisible();
+        await this.emailInput.fill(newEmail);
+        await this.updateButton.click();
+    }
+
+    async editPhone(usernameToFind: string, newPhone: string) {
+        await this.usersMenuLink.click();
+        await expect(this.usersSearchInput).toBeVisible();
+        await this.usersSearchInput.fill(usernameToFind);
+
+        const userRow = this.userRowByUsername(usernameToFind);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Edit').click();
+
+        await expect(this.phoneInput).toBeVisible();
+        await this.phoneInput.fill(newPhone);
+        await this.updateButton.click();
+    }
+
+    async editRole(usernameToFind: string, newRoleValue: string) {
+        await this.usersMenuLink.click();
+        await expect(this.usersSearchInput).toBeVisible();
+        await this.usersSearchInput.fill(usernameToFind);
+
+        const userRow = this.userRowByUsername(usernameToFind);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Edit').click();
+
+        await expect(this.roleDropdown).toBeVisible();
+        await this.roleDropdown.selectOption({ value: newRoleValue });
+        await this.updateButton.click();
+    }
+
+    async resetUser(data: {
+        username: string,
+        password: string,
+        nama: string,
+        email: string,
+        phone: string,
+        roleValue: string
+    }, usernameToFind: string) {
+        await this.usersMenuLink.click();
+
+        await expect(this.usersSearchInput).toBeVisible();
+        await this.usersSearchInput.fill(usernameToFind);
+
+        const userRow = this.userRowByUsername(usernameToFind);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Edit').click();
+
+        await expect(this.usernameInput).toBeVisible();
+        await this.usernameInput.fill(data.username);
+        await this.passwordInput.fill(data.password);
+        await this.namaInput.fill(data.nama);
+        await this.emailInput.fill(data.email);
+        await this.phoneInput.fill(data.phone);
+        await this.roleDropdown.selectOption({ value: data.roleValue });
+
+        await this.updateButton.click();
+    }
+
+    async editMarketingInCustomer(customerName: string, marketingValue: string) {
+        await this.customerMenuLink.click();
+        await expect(this.customerSearchInput).toBeVisible();
+        await this.customerSearchInput.fill(customerName);
+
+        const customerRow = this.customerRowByCustomerName(customerName);
+        await expect(customerRow).toBeVisible();
+        await customerRow.getByTitle('Edit').click();
+
+        await expect(this.customerMarketingDropdown).toBeVisible();
+        await this.customerMarketingDropdown.selectOption({ value: marketingValue });
+
+        await this.updateButton.click();
+    }
+
+    async forceOpenBannerMenu() {
+        await this.page.locator('.nav-item-submenu:has-text("Banner") .nav-group-sub').evaluate((element) => {
+            (element as HTMLElement).style.display = 'block';
+        });
+    }
+
+    async addWebBanner(url: string, order: string, filePath: string) {
+        await this.forceOpenBannerMenu();
+        await this.webBannerLink.click();
+        await expect(this.page).toHaveURL(/banners/);
+
+        await this.bannerUrlInput.fill(url);
+        await this.bannerOrderInput.fill(order);
+        await this.bannerFileInput.setInputFiles(filePath);
+
+        await this.bannerSubmitButton.click();
+    }
+
+    async deleteWebBanner(url: string) {
+        await this.forceOpenBannerMenu();
+        await this.webBannerLink.click();
+
+        await this.bannerSearchInput.fill(url);
+
+        const bannerRow = this.bannerRowByUrl(url);
+        await expect(bannerRow).toBeVisible();
+        await bannerRow.getByTitle('Hapus').click();
+
+        await expect(this.deleteConfirmationModal).toBeVisible();
+        await this.deleteConfirmButton.click();
+    }
+
+    async addMobileBanner(url: string, order: string, filePath: string) {
+        await this.forceOpenBannerMenu();
+        await this.mobileBannerLink.click();
+        await expect(this.page).toHaveURL(/banners-mobile/);
+
+        await this.bannerUrlInput.fill(url);
+        await this.bannerOrderInput.fill(order);
+        await this.bannerFileInput.setInputFiles(filePath);
+
+        await this.bannerSubmitButton.click();
+    }
+
+    async deleteMobileBanner(url: string) {
+        await this.forceOpenBannerMenu();
+        await this.mobileBannerLink.click();
+
+        await this.bannerSearchInput.fill(url);
+
+        const bannerRow = this.bannerRowByUrl(url);
+        await expect(bannerRow).toBeVisible();
+        await bannerRow.getByTitle('Hapus').click();
+
+        await expect(this.deleteConfirmationModal).toBeVisible();
+        await this.deleteConfirmButton.click();
+    }
+
+    async addSubBanner(url: string, positionValue: string, filePath: string) {
+        await this.forceOpenBannerMenu();
+        await this.subBannerLink.click();
+        await expect(this.page).toHaveURL(/subbanners/);
+
+        await this.bannerUrlInput.fill(url);
+        await this.bannerOrderInput.selectOption({ value: positionValue }); 
+        await this.bannerFileInput.setInputFiles(filePath);
+        
+        await this.bannerSubmitButton.click();
+    }
+
+    async deleteSubBanner(url: string) {
+        await this.forceOpenBannerMenu();
+        await this.subBannerLink.click();
+        
+        await this.bannerSearchInput.fill(url);
+        
+        const bannerRow = this.bannerRowByUrl(url);
+        await expect(bannerRow).toBeVisible();
+        await bannerRow.getByTitle('Hapus').click();
+
+        await expect(this.deleteConfirmationModal).toBeVisible();
+        await this.deleteConfirmButton.click();
     }
 
     // -- Verifications --

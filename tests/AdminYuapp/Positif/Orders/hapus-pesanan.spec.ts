@@ -6,16 +6,13 @@ import { AdminPage } from '../../../../pages/AdminPage';
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
     const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
-    // Id value akun marketing yang akan ditugaskan oleh Admin ('90' untuk Audy, '91' untuk Garda, '97' untuk Marketing, '1614' untuk IlhamMarketing)
-    const id_marketing = process.env.MARKETING || '1614';
 
-    test('Mengubah status back office menjadi pengiriman', async ({ page }) => {
+    test('Admin berhasil menghapus order', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
-        await adminPage.applyShippingAdjustment(customer_name, id_marketing);
+        await adminPage.deleteOrder(customer_name);
         await adminPage.verifysuccessNotification();
     });
-
