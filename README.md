@@ -2,6 +2,8 @@
 
 Proyek ini berisi skrip otomatisasi pengujian untuk **end-to-end testing** menggunakan **Playwright**. Pengujian ini memvalidasi alur pembelian lengkap yang mencakup interaksi antara tiga sistem: Customer, Admin/Finance/Marketing, dan Agen EvaTrack.
 
+---
+
 ## 🚀 Fitur Utama
 
 - **End-to-End Testing**: Pengujian otomatis untuk alur pembelian lengkap dari awal hingga akhir
@@ -9,11 +11,15 @@ Proyek ini berisi skrip otomatisasi pengujian untuk **end-to-end testing** mengg
 - **Multi-Role Testing**: Cakupan pengujian untuk berbagai peran pengguna (Customer, Admin, Finance, Marketing, Agen)
 - **Environment Variables**: Pengelolaan kredensial yang aman menggunakan file `.env`
 
+---
+
 ## 📋 Persyaratan Sistem
 
 - Node.js (versi 14 atau lebih tinggi)
 - npm atau yarn package manager
 - Playwright browsers
+
+---
 
 ## 📁 Struktur Proyek
 
@@ -77,7 +83,7 @@ npm install
 
 ### 3. Konfigurasi Environment Variables
 
-#### a. Membuat File `.env`
+#### Membuat File .env
 
 Buat file `.env` di direktori root proyek:
 
@@ -87,7 +93,7 @@ cp .env.example .env  # Jika .env.example tersedia
 touch .env            # Untuk membuat file baru
 ```
 
-#### b. Mengisi File `.env`
+#### Mengisi File .env
 
 Isi file `.env` dengan kredensial dan URL untuk lingkungan pengujian:
 
@@ -199,6 +205,8 @@ npx playwright test evatrack-negative.spec.ts
 
 ### Variabel untuk CustomerYuapp
 
+#### Daftar Variabel CustomerYuapp
+
 | Variabel | Deskripsi | Nilai Default | Contoh |
 |----------|-----------|---------------|---------|
 | `BARANG` | Nama produk (bisa penggalan kata, tidak case-sensitive) | `'Lintas Batas Tas'` | `'Tas Persegi Kecil Gaya Korea'` |
@@ -232,7 +240,7 @@ $env:URL="https://detail.1688.com/offer/123456789.html"
 npx playwright test customer-positive.spec.ts
 ```
 
-#### Mengembalikan Variabel ke Nilai Default
+#### Mengembalikan Variabel CustomerYuapp ke Nilai Default
 
 **Command Prompt (CMD):**
 ```cmd
@@ -257,6 +265,8 @@ $env:URL=""
 ---
 
 ### Variabel untuk AdminYuapp
+
+#### Daftar Variabel AdminYuapp
 
 | Variabel | Deskripsi | Nilai Default | Opsi |
 |----------|-----------|---------------|------|
@@ -369,7 +379,7 @@ $env:GAMBAR_SBANNER="subbaner.png"
 npx playwright test admin-positive.spec.ts
 ```
 
-#### Mengembalikan Variabel ke Nilai Default
+#### Mengembalikan Variabel AdminYuapp ke Nilai Default
 
 **Command Prompt (CMD):**
 ```cmd
@@ -509,7 +519,7 @@ Get-ChildItem env:
 gci env:
 ```
 
-### 💡 Tips Penting tentang Variabel Environment
+### Tips Penting tentang Variabel Environment
 
 **Variabel Environment Bersifat SEMENTARA**
 
@@ -567,21 +577,21 @@ Untuk informasi lebih lanjut tentang best practice Playwright, kunjungi [dokumen
 npx playwright install
 ```
 
-### 2. "File .env tidak ditemukan"
+### 2. File .env tidak ditemukan
 
 **Solusi:**
 - Pastikan file `.env` ada di direktori root
 - Verifikasi format dan isi file `.env`
 - Gunakan template `.env.example` jika tersedia
 
-### 3. "File gambar tidak ditemukan"
+### 3. File gambar tidak ditemukan
 
 **Solusi:**
 - Pastikan file gambar ada di folder `gambar/`
 - Verifikasi nama file sesuai dengan variabel `GAMBAR`
 - Periksa ekstensi file (`.jpg`, `.png`, `.webp`)
 
-### 4. "RESI/TANDA duplikat"
+### 4. RESI/TANDA duplikat
 
 **Solusi:**
 - Atur RESI dan TANDA dengan nilai unik sebelum menjalankan pengujian
@@ -604,12 +614,6 @@ npx playwright install
 
 ---
 
-## 🤝 Kontribusi
-
-Proyek ini dibuat sebagai bagian dari Program Magang QA.
-
----
-
 ## 📌 Repository
 
 **GitHub**: [https://github.com/imarif28/YuApp_Playwright](https://github.com/imarif28/YuApp_Playwright)
@@ -625,4 +629,10 @@ Proyek ini dibuat sebagai bagian dari Program Magang QA.
 
 ---
 
-**© 2025 - YuApp Playwright E2E Testing Project
+## 🤝 Kontribusi
+
+Proyek ini dibuat sebagai bagian dari Program Magang QA.
+
+---
+
+**© 2025 - YuApp Playwright E2E Testing Pro
