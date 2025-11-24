@@ -53,6 +53,8 @@ YuApp_Playwright/
 └── package.json                          # Dependencies proyek
 ```
 
+---
+
 ## 🛠️ Pengaturan & Instalasi
 
 ### 1. Clone Repository
@@ -73,7 +75,9 @@ npm install
 > npx playwright install
 > ```
 
-### 3. Konfigurasi Environment
+### 3. Konfigurasi Environment Variables
+
+#### a. Membuat File `.env`
 
 Buat file `.env` di direktori root proyek:
 
@@ -82,6 +86,8 @@ cp .env.example .env  # Jika .env.example tersedia
 # atau
 touch .env            # Untuk membuat file baru
 ```
+
+#### b. Mengisi File `.env`
 
 Isi file `.env` dengan kredensial dan URL untuk lingkungan pengujian:
 
@@ -108,27 +114,31 @@ EVA_PASSWORD="..."
 
 > **⚠️ Peringatan Keamanan**: Pastikan file `.env` sudah ditambahkan ke `.gitignore` untuk mencegah kredensial ter-commit ke repository!
 
-### 4. Persiapan Asset Pengujian
+### 4. Persiapan Asset Gambar
 
 **File Gambar untuk Bukti Pembayaran:**
-- Buat folder `gambar/` di direktori root proyek
-- Simpan semua file gambar untuk bukti pembayaran di folder `gambar/`
-- Contoh struktur:
-  ```
-  YuApp_Playwright/
-  ├── gambar/
-  │   ├── dimasganteng.png
-  │   ├── beard.jpg
-  │   └── coba.png
-  │   └── mobil.webp
-  ├── tests/
-  ├── .env
-  └── package.json
-  ```
+
+1. Buat folder `gambar/` di direktori root proyek
+2. Simpan semua file gambar untuk bukti pembayaran di folder `gambar/`
+
+**Contoh struktur:**
+```
+YuApp_Playwright/
+├── gambar/
+│   ├── dimasganteng.png
+│   ├── beard.jpg
+│   ├── coba.png
+│   └── mobil.webp
+├── tests/
+├── .env
+└── package.json
+```
+
+---
 
 ## 🚀 Menjalankan Pengujian
 
-### A. Pengujian Purchase Flow (flow1.spec.ts - flow10.spec.ts)
+### A. Pengujian Purchase Flow
 
 #### Eksekusi Dasar
 
@@ -160,26 +170,34 @@ $env:TANDA="kode_mark_baru"
 npx playwright test flow[nomor].spec.ts --headed
 ```
 
-### B. Pengujian Kasus Positif & Negatif
+### B. Pengujian Positif & Negatif
 
-Proyek ini juga menyediakan skenario pengujian positif dan negatif untuk:
-- **CustomerYuapp** (alur positif & negatif)
-- **AdminYuapp** (alur positif & negatif)
+Proyek ini menyediakan skenario pengujian positif dan negatif untuk:
+- **CustomerYuapp** (customer-positive.spec.ts & customer-negative.spec.ts)
+- **AdminYuapp** (admin-positive.spec.ts & admin-negative.spec.ts)
+- **Evatrack** (evatrack-positive.spec.ts & evatrack-negative.spec.ts)
 
-#### Eksekusi
+#### Eksekusi Pengujian
 
 ```bash
+# Customer Tests
 npx playwright test customer-positive.spec.ts
 npx playwright test customer-negative.spec.ts
+
+# Admin Tests
 npx playwright test admin-positive.spec.ts
 npx playwright test admin-negative.spec.ts
+
+# Evatrack Tests
+npx playwright test evatrack-positive.spec.ts
+npx playwright test evatrack-negative.spec.ts
 ```
 
-> **Catatan**: File pengujian harus menggunakan ekstensi `.spec.ts`
+---
 
-### C. Konfigurasi Variabel Environment
+## ⚙️ Konfigurasi Variabel Environment
 
-#### Variabel Pengujian CustomerYuapp
+### Variabel untuk CustomerYuapp
 
 | Variabel | Deskripsi | Nilai Default | Contoh |
 |----------|-----------|---------------|---------|
@@ -190,9 +208,9 @@ npx playwright test admin-negative.spec.ts
 | `GAMBAR` | Nama file gambar (harus ada di folder `gambar/`) | `'beard.jpg'` | `'mobil.webp'` |
 | `URL` | URL produk dari 1688.com | `'https://detail.1688.com/offer/631468992893.html'` | URL produk 1688.com yang valid |
 
-**Mengatur Variabel:**
+#### Mengatur Variabel CustomerYuapp
 
-**CMD:**
+**Command Prompt (CMD):**
 ```cmd
 set "BARANG=Tas Persegi Kecil"
 set "JALUR=Laut"
@@ -216,9 +234,7 @@ npx playwright test customer-positive.spec.ts
 
 #### Mengembalikan Variabel ke Nilai Default
 
-Jika ingin mengembalikan variabel ke nilai default, cukup hapus nilai/value dari variabel tersebut:
-
-**CMD:**
+**Command Prompt (CMD):**
 ```cmd
 set "BARANG="
 set "JALUR="
@@ -238,49 +254,51 @@ $env:GAMBAR=""
 $env:URL=""
 ```
 
-#### Variabel Pengujian AdminYuapp
+---
+
+### Variabel untuk AdminYuapp
 
 | Variabel | Deskripsi | Nilai Default | Opsi |
 |----------|-----------|---------------|------|
-| `CUSTOMER` | Nama customer untuk pencarian di dashboard | `'Ilham Muhammad Arif'` | Nama pelanggan YuApp |
-| `MARKETING` | Nama akun marketing untuk penugasan | `'1614'` | `'90'` = Audy<br> `'91'` = Garda<br> `'97'` = Marketing<br> `'1614'` = IlhamMarketing |
-| `RESI` | Nomor tracking lokal China | `'37443'` | Nomor resi lokal China unik |
-| `RESI_COLOAD` | Nomor tracking coload evatrack | `'COBA1'` | Nomor resi coload unik |
-| `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` | Nomor resi evatrack yang valid |
-| `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` | Nomor resi domestic yang valid |
-| `KURIR` | Value kurir yang ada di Indonesia | `'1'` | `'1'` = J&T Cargo/Sentral Cargo<br>`'3'` = JNE |
-| `USER` | Username untuk akun baru yang akan dibuat | `'test'` | Nama username untuk akun baru |
-| `PASS` | Password untuk akun baru | `'123'` | Kombinasi angka dan huruf untuk akun baru |
-| `NAMA` | Nama lengkap pengguna untuk akun baru | `'test1` | Nama lengkap untuk akun baru |
-| `EMAIL` | Alamat email untuk akun baru | `'test1@contoh.com'` | Alamat email yang valid |
-| `TELP` | Nomor telepon untuk akun baru | `'628888888888'` | Nomor telpon yang terdaftar |
-| `ROLE` | Value Role untuk akun baru | `'1'` |  `'1' ` = Admin<br> `'2'` = Finance<br> `'5'` = Manager<br> `'20'` = Marketing<br> `'30'` = Agen Cina<br> `'40'` = Finance<br> `'60'` = Content Creator |
-| `USER_BARU` | Username untuk akun yang akan diubah | `'ubah1'` | Nama username untuk akun baru |
-| `PASS_BARU` | Password untuk akun yang akan diubah | `'666'` | Kombinasi angka dan huruf untuk akun baru |
-| `NAMA_BARU` | Nama lengkap pengguna untuk akun yang akan diubah | `'ubah1` | Nama lengkap untuk akun baru |
-| `EMAIL_BARU` | Alamat email untuk akun yang akan diubah | `'ubah1@contoh.com'` | Alaamt email yang valid |
-| `TELP_BARU` | Nomor telepon untuk akun yang akan diubah | `'621111111111'` | Nomor telpon yang terdaftar |
-| `ROLE_BARU` | Value Role untuk akun yang akan diubah | `'20'` |  `'1' ` = Admin<br> `'2'` = Finance<br> `'5'` = Manager<br> `'20'` = Marketing<br> `'30'` = Agen Cina<br> `'40'` = Finance<br> `'60'` = Content Creator |
-| `GAMBAR` | Nama file bukti pembayaran (di folder `gambar/`) | `'dimasganteng.png'` | File gambar valid (`.jpg`, `.png`) |
-| `KURIR_SEA` | Value kategori biaya Jalur Laut | `'3'` | `'1'` = LARTAS SEA - SEA <br>`'3'` = BB - SEA<br>`'5'` = UMUM - SEA |
-| `KURIR_AIR` | Value kategori biaya Jalur Udara | `'4'` | `'2'` = LARTAS - AIR<br>`'4'` = CC - AIR  |
-| `PANJANG` | Dimensi barang (Panjang) | `'10'` | Nilai numerik (cm) |
-| `LEBAR` | Dimensi barang (Lebar) | `'10'` | Nilai numerik (cm) |
-| `TINGGI` | Dimensi barang (Tinggi) | `'10'` | Nilai numerik (cm) |
-| `BERAT` | Berat barang | `'10'` | Nilai numerik (kg) |
-| `URL_BANNER` | Link tujuan saat banner web/mobile diklik | `'https://www.instagram.com/__dimasim/'` | Link tujuan yang valid |
-| `URUTAN` | Nomor urutan tampilan banner | `'5'` | Nomor urutan |
-| `GAMBAR_BANNER` | Nama file gambar banner yang tersimpan di folder 'gambar/' | `'baner.png'` | File gambar valid (`.jpg`, `.png`) |
-| `URL_SBANNER` | Link tujuan saat sub banner diklik | `'https://www.instagram.com/__dimasim/'` | Link tujuan yang valid |
-| `POSISI` | Posisi tampilan sub banner | `'Kanan'` | `'Kanan'` atau `'Kiri'` |
-| `GAMBAR_SBANNER` | Nama file gambar sub banner yang tersimpan di folder 'gambar/' | `'subbaner.png'` | File gambar valid (`.jpg`, `.png`) |
+| `CUSTOMER` | Nama customer untuk pencarian | `'Ilham Muhammad Arif'` | Nama pelanggan YuApp |
+| `MARKETING` | Value akun marketing | `'1614'` | `'90'` = Audy<br>`'91'` = Garda<br>`'97'` = Marketing<br>`'1614'` = IlhamMarketing |
+| `RESI` | Nomor tracking lokal China | `'37443'` | Nomor resi unik |
+| `RESI_COLOAD` | Nomor tracking coload | `'COBA1'` | Nomor resi coload unik |
+| `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` | Nomor resi evatrack valid |
+| `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` | Nomor resi domestik valid |
+| `KURIR` | Value kurir Indonesia | `'1'` | `'1'` = J&T Cargo/Sentral Cargo<br>`'3'` = JNE |
+| `USER` | Username akun baru | `'test'` | Nama username |
+| `PASS` | Password akun baru | `'123'` | Kombinasi angka/huruf |
+| `NAMA` | Nama lengkap akun baru | `'test1'` | Nama lengkap |
+| `EMAIL` | Email akun baru | `'test1@contoh.com'` | Email valid |
+| `TELP` | Nomor telepon akun baru | `'628888888888'` | Nomor telepon valid |
+| `ROLE` | Value role akun baru | `'1'` | `'1'` = Admin<br>`'2'` = Finance<br>`'5'` = Manager<br>`'20'` = Marketing<br>`'30'` = Agen Cina<br>`'40'` = Finance<br>`'60'` = Content Creator |
+| `USER_BARU` | Username untuk diubah | `'ubah1'` | Nama username |
+| `PASS_BARU` | Password untuk diubah | `'666'` | Kombinasi angka/huruf |
+| `NAMA_BARU` | Nama lengkap untuk diubah | `'ubah1'` | Nama lengkap |
+| `EMAIL_BARU` | Email untuk diubah | `'ubah1@contoh.com'` | Email valid |
+| `TELP_BARU` | Nomor telepon untuk diubah | `'621111111111'` | Nomor telepon valid |
+| `ROLE_BARU` | Value role untuk diubah | `'20'` | `'1'` = Admin<br>`'2'` = Finance<br>`'5'` = Manager<br>`'20'` = Marketing<br>`'30'` = Agen Cina<br>`'40'` = Finance<br>`'60'` = Content Creator |
+| `GAMBAR` | Nama file bukti pembayaran | `'dimasganteng.png'` | File `.jpg`, `.png` |
+| `KURIR_SEA` | Value kategori Jalur Laut | `'3'` | `'1'` = LARTAS SEA<br>`'3'` = BB - SEA<br>`'5'` = UMUM - SEA |
+| `KURIR_AIR` | Value kategori Jalur Udara | `'4'` | `'2'` = LARTAS - AIR<br>`'4'` = CC - AIR |
+| `PANJANG` | Dimensi panjang (cm) | `'10'` | Nilai numerik |
+| `LEBAR` | Dimensi lebar (cm) | `'10'` | Nilai numerik |
+| `TINGGI` | Dimensi tinggi (cm) | `'10'` | Nilai numerik |
+| `BERAT` | Berat barang (kg) | `'10'` | Nilai numerik |
+| `URL_BANNER` | Link tujuan banner | `'https://www.instagram.com/__dimasim/'` | URL valid |
+| `URUTAN` | Nomor urutan banner | `'5'` | Nomor urutan |
+| `GAMBAR_BANNER` | File gambar banner | `'baner.png'` | File `.jpg`, `.png` |
+| `URL_SBANNER` | Link tujuan sub banner | `'https://www.instagram.com/__dimasim/'` | URL valid |
+| `POSISI` | Posisi sub banner | `'Kanan'` | `'Kanan'` atau `'Kiri'` |
+| `GAMBAR_SBANNER` | File gambar sub banner | `'subbaner.png'` | File `.jpg`, `.png` |
 
-**Mengatur Variabel:**
+#### Mengatur Variabel AdminYuapp
 
-**CMD:**
+**Command Prompt (CMD):**
 ```cmd
 set "CUSTOMER=Ilham Muhammad Arif"
-set "MARKETING=IlhamMarketing"
+set "MARKETING=1614"
 set "RESI=37443"
 set "RESI_COLOAD=COBA1"
 set "RESI_EVA=OUAA1541"
@@ -317,7 +335,7 @@ npx playwright test admin-positive.spec.ts
 **PowerShell:**
 ```powershell
 $env:CUSTOMER="Ilham Muhammad Arif"
-$env:MARKETING="IlhamMarketing"
+$env:MARKETING="1614"
 $env:RESI="37443"
 $env:RESI_COLOAD="COBA1"
 $env:RESI_EVA="OUAA1541"
@@ -353,9 +371,7 @@ npx playwright test admin-positive.spec.ts
 
 #### Mengembalikan Variabel ke Nilai Default
 
-Jika ingin mengembalikan variabel ke nilai default, cukup hapus nilai/value dari variabel tersebut:
-
-**CMD:**
+**Command Prompt (CMD):**
 ```cmd
 set "CUSTOMER="
 set "MARKETING="
@@ -427,6 +443,82 @@ $env:POSISI=""
 $env:GAMBAR_SBANNER=""
 ```
 
+---
+
+## 🔍 Melihat Nilai Variabel yang Sedang Aktif
+
+Sebelum menjalankan pengujian, sangat penting untuk memverifikasi bahwa variabel environment sudah diatur dengan benar.
+
+### Command Prompt (CMD)
+
+#### Lihat Variabel Tertentu
+
+```cmd
+set BARANG
+```
+
+#### Cek Nilai Variabel Satu per Satu
+
+```cmd
+echo %BARANG%
+echo %JALUR%
+echo %PROMO%
+echo %BANK%
+echo %GAMBAR%
+echo %URL%
+```
+
+> **Catatan**: Jika tidak menampilkan apa-apa, berarti variabel kosong atau belum di-set.
+
+#### Lihat Semua Variabel Environment
+
+```cmd
+set
+```
+
+### PowerShell
+
+#### Lihat Variabel Tertentu
+
+```powershell
+# Lihat variabel yang berawalan BARANG
+gci env:BARANG*
+
+# Lihat variabel yang berawalan RESI
+gci env:RESI*
+```
+
+#### Cek Nilai Variabel Satu per Satu
+
+```powershell
+$env:BARANG
+$env:JALUR
+$env:PROMO
+$env:BANK
+$env:GAMBAR
+$env:URL
+```
+
+> **Catatan**: Jika tidak muncul apa-apa, berarti variabel kosong atau belum di-set.
+
+#### Lihat Semua Variabel Environment
+
+```powershell
+Get-ChildItem env:
+# atau singkatnya
+gci env:
+```
+
+### 💡 Tips Penting tentang Variabel Environment
+
+**Variabel Environment Bersifat SEMENTARA**
+
+- ❌ **Jika Anda menutup terminal** dan membukanya lagi, semua variabel yang sudah di-set akan **hilang**
+- ❌ **Membuka tab/window terminal baru** = variabel tidak terbawa ke sesi baru
+- ✅ **Variabel hanya aktif di terminal yang sama** tempat Anda melakukan set/assignment
+
+---
+
 ## 📊 Melihat Laporan Pengujian
 
 Setelah eksekusi pengujian selesai, Playwright akan menghasilkan laporan HTML.
@@ -436,50 +528,101 @@ Setelah eksekusi pengujian selesai, Playwright akan menghasilkan laporan HTML.
 npx playwright show-report
 ```
 
-Laporan akan terbuka di browser dengan informasi detail:
+**Informasi dalam Laporan:**
 - Ringkasan eksekusi pengujian
 - Status Pass/Fail per test case
 - Screenshot (jika pengujian gagal)
 - Jejak eksekusi
 - Metrik performa
 
+---
+
 ## 📝 Praktik Terbaik
 
-- Selalu gunakan mode `--headed` saat debugging
-- Atur RESI dan TANDA yang unik untuk setiap eksekusi pengujian
-- Simpan kredensial di file `.env`, jangan hardcode di file pengujian
-- Gunakan UI Mode (`--ui`) untuk memeriksa langkah-langkah pengujian
-- Tinjau laporan HTML setelah eksekusi pengujian
-- Simpan asset gambar di folder `gambar/` dengan konvensi penamaan yang jelas
+### Saat Development & Debugging
+
+- ✅ Gunakan mode `--headed` untuk melihat browser saat debugging
+- ✅ Gunakan UI Mode (`--ui`) untuk inspeksi langkah-langkah pengujian secara interaktif
+- ✅ Tinjau laporan HTML setelah setiap eksekusi pengujian
+
+### Pengelolaan Data
+
+- ✅ Selalu gunakan RESI dan TANDA yang **unik** untuk setiap eksekusi pengujian
+- ✅ Verifikasi variabel environment sebelum menjalankan test
+- ✅ Simpan kredensial di file `.env`, **jangan** hardcode di file pengujian
+- ✅ Simpan asset gambar di folder `gambar/` dengan penamaan yang jelas
+
+### Best Practice Playwright
+
+Untuk informasi lebih lanjut tentang best practice Playwright, kunjungi [dokumentasi resmi Playwright](https://playwright.dev/docs/best-practices).
+
+---
 
 ## 🐛 Penyelesaian Masalah
 
-### Masalah Umum
+### 1. Error "Browser not found"
 
-1. **Error "Browser not found"**
-   ```bash
-   npx playwright install
-   ```
+**Solusi:**
+```bash
+npx playwright install
+```
 
-2. **"File .env tidak ditemukan"**
-   - Pastikan file `.env` ada di direktori root
-   - Verifikasi format dan isi file `.env`
+### 2. "File .env tidak ditemukan"
 
-3. **"File gambar tidak ditemukan"**
-   - Pastikan file gambar ada di folder `gambar/`
-   - Verifikasi nama file sesuai dengan variabel `GAMBAR`
+**Solusi:**
+- Pastikan file `.env` ada di direktori root
+- Verifikasi format dan isi file `.env`
+- Gunakan template `.env.example` jika tersedia
 
-4. **"RESI/TANDA duplikat"**
-   - Atur RESI dan TANDA dengan nilai unik sebelum menjalankan pengujian
-   - Gunakan timestamp atau nomor acak untuk menghasilkan nilai unik
+### 3. "File gambar tidak ditemukan"
+
+**Solusi:**
+- Pastikan file gambar ada di folder `gambar/`
+- Verifikasi nama file sesuai dengan variabel `GAMBAR`
+- Periksa ekstensi file (`.jpg`, `.png`, `.webp`)
+
+### 4. "RESI/TANDA duplikat"
+
+**Solusi:**
+- Atur RESI dan TANDA dengan nilai unik sebelum menjalankan pengujian
+- Gunakan timestamp atau nomor acak untuk menghasilkan nilai unik
+- Contoh: `RESI_20241124_001`, `TANDA_TEST_001`
+
+### 5. Variabel environment tidak terbaca
+
+**Solusi:**
+- Verifikasi variabel sudah di-set dengan benar menggunakan `echo %VAR%` (CMD) atau `$env:VAR` (PowerShell)
+- Pastikan tidak menutup terminal setelah set variabel
+- Jalankan test di terminal yang sama tempat variabel di-set
+
+### 6. Test gagal karena timeout
+
+**Solusi:**
+- Periksa koneksi internet
+- Tingkatkan timeout di `playwright.config.ts`
+- Gunakan mode `--headed` untuk melihat apa yang terjadi
+
+---
 
 ## 🤝 Kontribusi
 
 Proyek ini dibuat sebagai bagian dari Program Magang QA.
 
+---
+
 ## 📌 Repository
 
-GitHub: [https://github.com/imarif28/YuApp_Playwright](https://github.com/imarif28/YuApp_Playwright)
+**GitHub**: [https://github.com/imarif28/YuApp_Playwright](https://github.com/imarif28/YuApp_Playwright)
 
 ---
 
+## 📚 Referensi & Dokumentasi
+
+- [Playwright Official Documentation](https://playwright.dev/docs/intro)
+- [Playwright Best Practices](https://playwright.dev/docs/best-practices)
+- [Playwright Test Runner](https://playwright.dev/docs/test-runners)
+- [Environment Variables in Node.js](https://nodejs.org/en/learn/command-line/how-to-read-environment-variables-from-nodejs)
+
+---
+
+**© 2025 - YuApp Playwright E2E Testing Project
