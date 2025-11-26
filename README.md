@@ -302,6 +302,16 @@ $env:URL=""
 | `URL_SBANNER` | Link tujuan sub banner | `'https://www.instagram.com/__dimasim/'` | URL valid |
 | `POSISI` | Posisi sub banner | `'Kanan'` | `'Kanan'` atau `'Kiri'` |
 | `GAMBAR_SBANNER` | File gambar sub banner | `'subbaner.png'` | File `.jpg`, `.png` |
+| `PROMO` | Kode promo yang akan dibuat | `'dimas'` | Kode promo unik |
+| `DESC_PROMO` | Deskripsi promo | `'Dibuat Melalui Playwright'` | Keterangan promo |
+| `PERSEN_PROMO` | Persentase potongan | `'12'` | Angka (0-100) |
+| `MAX_PROMO` | Maksimal potongan (Rp) | `'200000'` | Nominal rupiah |
+| `MIN_PROMO` | Minimal pembelian (Rp) | `'120000'` | Nominal rupiah |
+| `IS_EVENT` | Apakah promo event? | `'0'` | `'0'` = Tidak<br>`'1'` = Ya |
+| `DESC_PROMO_BARU` | Deskripsi baru untuk edit promo | `'Dibuat Melalui Playwright(Edit)'` | Keterangan promo baru |
+| `MAX_PROMO_BARU` | Maksimal potongan baru (Rp) | `'150000'` | Nominal rupiah baru |
+| `MIN_PROMO_BARU` | Minimal pembelian baru (Rp) | `'100000'` | Nominal rupiah baru |
+| `PERSEN_PROMO_BARU` | Persentase potongan baru | `'10'` | Angka (0-100) baru |
 
 #### Mengatur Variabel AdminYuapp
 
@@ -339,6 +349,16 @@ set "GAMBAR_BANNER=baner.png"
 set "URL_SBANNER=https://www.instagram.com/__dimasim/"
 set "POSISI=Kanan"
 set "GAMBAR_SBANNER=subbaner.png"
+set "PROMO=dimas"
+set "DESC_PROMO=Dibuat Melalui Playwright"
+set "PERSEN_PROMO=12"
+set "MAX_PROMO=200000"
+set "MIN_PROMO=120000"
+set "IS_EVENT=0"
+set "DESC_PROMO_BARU=Dibuat Melalui Playwright(Edit)"
+set "MAX_PROMO_BARU=150000"
+set "MIN_PROMO_BARU=100000"
+set "PERSEN_PROMO_BARU=10"
 npx playwright test admin-positive.spec.ts
 ```
 
@@ -376,6 +396,16 @@ $env:GAMBAR_BANNER="baner.png"
 $env:URL_SBANNER="https://www.instagram.com/__dimasim/"
 $env:POSISI="Kanan"
 $env:GAMBAR_SBANNER="subbaner.png"
+$env:PROMO="dimas"
+$env:DESC_PROMO="Dibuat Melalui Playwright"
+$env:PERSEN_PROMO="12"
+$env:MAX_PROMO="200000"
+$env:MIN_PROMO="120000"
+$env:IS_EVENT="0"
+$env:DESC_PROMO_BARU="Dibuat Melalui Playwright(Edit)"
+$env:MAX_PROMO_BARU="150000"
+$env:MIN_PROMO_BARU="100000"
+$env:PERSEN_PROMO_BARU="10"
 npx playwright test admin-positive.spec.ts
 ```
 
@@ -415,6 +445,16 @@ set "GAMBAR_BANNER="
 set "URL_SBANNER="
 set "POSISI="
 set "GAMBAR_SBANNER="
+set "PROMO="
+set "DESC_PROMO="
+set "PERSEN_PROMO="
+set "MAX_PROMO="
+set "MIN_PROMO="
+set "IS_EVENT="
+set "DESC_PROMO_BARU="
+set "MAX_PROMO_BARU="
+set "MIN_PROMO_BARU="
+set "PERSEN_PROMO_BARU="
 ```
 
 **PowerShell:**
@@ -451,6 +491,16 @@ $env:GAMBAR_BANNER=""
 $env:URL_SBANNER=""
 $env:POSISI=""
 $env:GAMBAR_SBANNER=""
+$env:PROMO=""
+$env:DESC_PROMO=""
+$env:PERSEN_PROMO=""
+$env:MAX_PROMO=""
+$env:MIN_PROMO=""
+$env:IS_EVENT=""
+$env:DESC_PROMO_BARU=""
+$env:MAX_PROMO_BARU=""
+$env:MIN_PROMO_BARU=""
+$env:PERSEN_PROMO_BARU=""
 ```
 
 ---
