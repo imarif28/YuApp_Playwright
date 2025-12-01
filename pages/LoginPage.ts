@@ -16,11 +16,10 @@ export class LoginPage {
     get signInButton(): Locator {
         return this.page.getByRole('button', { name: /Sign in/ });
     }
-    
+
     constructor(page: Page) {
         this.page = page;
     }
-
 
     // -- Actions --
     async goto() {

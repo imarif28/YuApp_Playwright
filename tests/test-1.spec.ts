@@ -7,16 +7,15 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Password' }).click();
   await page.getByRole('textbox', { name: 'Password' }).fill('IlhamQA123');
   await page.getByRole('button', { name: 'Sign in ' }).click();
-
-  await page.locator('.nav-item-submenu:has-text("Banner") .nav-group-sub').evaluate((element) => {
-    (element as HTMLElement).style.display = 'block';
-  });
-
-  await page.getByRole('link', { name: /Web/ }).click();
-  await page.goto('https://yuapp.noretest2.com/banners');
-  await page.locator('#url_href').fill('https://www.instagram.com/__dimasim/');
-  await page.locator('#urutan').fill('6');
-  await page.locator('#gambar_url').setInputFiles('gambar/baner.png');
-  await page.getByRole('button', { name: 'Submit' }).click();
+  await page.getByRole('link', { name: /Promo/ }).click();
+  await page.goto('https://yuapp.noretest2.com/masterpromo');
+  await page.getByRole('link', { name: 'Tambah' }).click();
+  await page.locator('input[placeholder="YUAPP100"]').fill('Playwright');
+  await page.locator('#deskripsi').fill('Dibuat Melalui Playwright');
+  await page.locator('input[name="persentase_potongan"]').fill('12');
+  await page.locator('input[name="max_potongan"]').fill('200000');
+  await page.locator('input[name="minimal_pembelian"]').fill('120000');
+  await page.locator('#is_event').selectOption('0');
+  await page.getByRole('button', { name: 'Simpan' }).click();
   await expect(page.getByRole('heading', { name: 'Success' })).toBeVisible();
 });

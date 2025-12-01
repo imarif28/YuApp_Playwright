@@ -1,13 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { EvaPage } from '../../pages/EvaPage';
 
-test.describe('Purchase Flow Approve', () => {
     // --- Variabel Data Tes ---
 
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = 'Udara';
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = process.env.RESI || '73284792';
+    const no_local_china = process.env.RESI || '547172';
     // Tanda pengiriman unik
     const shipping_mark = process.env.TANDA || 'CB46';
 
@@ -33,5 +32,3 @@ test.describe('Purchase Flow Approve', () => {
 
         await evaPage.agentInputNewReceipt(receiptData);
     });
-
-});

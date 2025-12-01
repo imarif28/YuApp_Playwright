@@ -4,20 +4,20 @@ import { AdminPage } from '../../../../pages/AdminPage';
 
     // --- Variabel Data Tes ---
 
-    // Data untuk Tambah User
-    const newUserData = {
-        nama: process.env.NAMA || 'test1',                          // Nama yang di cari
+    // Data untuk Tambah Promo
+    const promo_data = {
+        code: process.env.PROMO || 'dimas',
     };
 
-    const phone_baru = process.env.TELP_BARU || '621111111111';     // Phone baru yang telah di ubah
+    const deskripsi_baru = process.env.DESC_PROMO_BARU || 'ganti lek';
 
-    test('Admin berhasil mengubah phone user', async ({ page }) => {
+    test('Admin berhasil mengubah deskripsi promo', async ({ page }) => {
         const loginPage = new LoginPage(page);
-        const adminPage = new AdminPage(page); 
+        const adminPage = new AdminPage(page);
 
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
-
-        await adminPage.editPhone(newUserData.nama, phone_baru);
+        
+        await adminPage.editPromo(promo_data.code, { description: deskripsi_baru });
         await adminPage.verifysuccessNotification();
     });

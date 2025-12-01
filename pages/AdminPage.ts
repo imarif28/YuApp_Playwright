@@ -91,6 +91,9 @@ export class AdminPage {
     get tinggi1Input(): Locator {
         return this.page.locator('#tinggi1');
     }
+    get volume1Input(): Locator {
+        return this.page.locator('#volume1');
+    }
     get airCategoryDropdown(): Locator {
         return this.page.locator('#biaya_kategori_air');
     }
@@ -166,7 +169,45 @@ export class AdminPage {
     get bannerSearchInput(): Locator {
         return this.page.getByLabel('Search:');
     }
-
+    get promoMenuLink(): Locator {
+        return this.page.getByRole('link', { name: /Promo/ });
+    }
+    get tambahPromoLink(): Locator {
+        return this.page.getByRole('link', { name: 'Tambah' });
+    }
+    get promoSearchInput(): Locator {
+        return this.page.getByLabel('Search:');
+    }
+    get promoCodeInput(): Locator {
+        return this.page.locator('input[placeholder="YUAPP100"]');
+    }
+    get promoDescriptionInput(): Locator {
+        return this.page.locator('#deskripsi');
+    }
+    get promoPercentageInput(): Locator {
+        return this.page.locator('input[name="persentase_potongan"]');
+    }
+    get promoMaxDiscountInput(): Locator {
+        return this.page.locator('input[name="max_potongan"]');
+    }
+    get promoMinPurchaseInput(): Locator {
+        return this.page.locator('input[name="minimal_pembelian"]');
+    }
+    get promoIsEventSelect(): Locator {
+        return this.page.locator('#is_event');
+    }
+    get promoSaveButton(): Locator {
+        return this.page.getByRole('button', { name: 'Simpan' });
+    }
+    get deactivateButton(): Locator {
+        return this.page.getByRole('button', { name: 'Deaktivasi' });
+    }
+    get activateModal(): Locator {
+        return this.page.locator('#aktform');
+    }
+    get activateButton(): Locator {
+        return this.page.getByRole('button', { name: 'Aktivasi' });
+    }
 
     // -- Dynamic Locators --
     orderRowByCustomerName(customerName: string): Locator {
@@ -180,6 +221,9 @@ export class AdminPage {
     }
     bannerRowByUrl(url: string): Locator {
         return this.page.locator('tbody tr', { hasText: url }).first();
+    }
+    promoRowByName(promoName: string): Locator {
+        return this.page.locator('tbody tr', { hasText: promoName }).first();
     }
 
     constructor(page: Page) {
@@ -423,6 +467,7 @@ export class AdminPage {
 
         await this.seaCategoryDropdown.press('Enter');
         await this.seaCategoryDropdown.selectOption({ value: data.seaCategoryValue });
+        await expect(this.volume1Input).toHaveValue(/.+/, { timeout: 10000 });
         await this.panjang1Input.fill(data.panjang);
         await this.panjang1Input.press('Tab');
         await this.lebar1Input.fill(data.lebar);
@@ -675,24 +720,102 @@ export class AdminPage {
         await expect(this.page).toHaveURL(/subbanners/);
 
         await this.bannerUrlInput.fill(url);
-        await this.bannerOrderInput.selectOption({ value: positionValue }); 
+        await this.bannerOrderInput.selectOption({ value: positionValue });
         await this.bannerFileInput.setInputFiles(filePath);
-        
+
         await this.bannerSubmitButton.click();
     }
 
     async deleteSubBanner(url: string) {
         await this.forceOpenBannerMenu();
         await this.subBannerLink.click();
-        
+
         await this.bannerSearchInput.fill(url);
-        
+
         const bannerRow = this.bannerRowByUrl(url);
         await expect(bannerRow).toBeVisible();
         await bannerRow.getByTitle('Hapus').click();
 
         await expect(this.deleteConfirmationModal).toBeVisible();
         await this.deleteConfirmButton.click();
+    }
+
+    async addPromo(data: {
+        code: string,
+        description: string,
+        percentage: string,
+        maxDiscount: string,
+        minPurchase: string,
+        isEvent: string
+    }) {
+        await this.promoMenuLink.click();
+        await this.tambahPromoLink.click();
+        await expect(this.page).toHaveURL(/masterpromo\/create/);
+
+        await this.promoCodeInput.fill(data.code);
+        await this.promoDescriptionInput.fill(data.description);
+        await this.promoPercentageInput.fill(data.percentage);
+        await this.promoMaxDiscountInput.fill(data.maxDiscount);
+        await this.promoMinPurchaseInput.fill(data.minPurchase);
+        await this.promoIsEventSelect.selectOption(data.isEvent);
+
+        await this.promoSaveButton.click();
+    }
+
+    async deactivatePromo(promoName: string) {
+        await this.promoMenuLink.click();
+        await this.promoSearchInput.fill(promoName);
+
+        const promoRow = this.promoRowByName(promoName);
+        await expect(promoRow).toBeVisible();
+        await promoRow.getByTitle('Delete').click();
+
+        await expect(this.deleteConfirmationModal).toBeVisible();
+        await this.deactivateButton.click();
+    }
+
+    async activatePromo(promoName: string) {
+        await this.promoMenuLink.click();
+        await this.promoSearchInput.fill(promoName);
+
+        const promoRow = this.promoRowByName(promoName);
+        await expect(promoRow).toBeVisible();
+        await promoRow.getByTitle('Aktivasi').click();
+
+        await expect(this.activateModal).toBeVisible();
+        await this.activateButton.click();
+        await this.verifysuccessNotification();
+    }
+
+    async editPromo(promoName: string, dataToUpdate: {
+        description?: string,
+        maxDiscount?: string,
+        minPurchase?: string,
+        percentage?: string
+    }) {
+        await this.promoMenuLink.click();
+        await this.promoSearchInput.fill(promoName);
+
+        const promoRow = this.promoRowByName(promoName);
+        await expect(promoRow).toBeVisible();
+        await promoRow.getByTitle('Edit').click();
+
+        // Update field hanya jika data disediakan
+        if (dataToUpdate.description) {
+            await this.promoDescriptionInput.fill(dataToUpdate.description);
+        }
+        if (dataToUpdate.maxDiscount) {
+            await this.promoMaxDiscountInput.fill(dataToUpdate.maxDiscount);
+        }
+        if (dataToUpdate.minPurchase) {
+            await this.promoMinPurchaseInput.fill(dataToUpdate.minPurchase);
+        }
+        if (dataToUpdate.percentage) {
+            await this.promoPercentageInput.fill(dataToUpdate.percentage);
+        }
+
+        await this.promoSaveButton.click();
+        await this.verifysuccessNotification();
     }
 
     // -- Verifications --

@@ -8,7 +8,7 @@ import { CustomerPage } from '../../../pages/CustomerPage';
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = process.env.PENGIRIMAN || 'Laut';
     // Nama bank untuk metode pembayaran (bisa penggalan kata, case-insensitive, misal: 'PERMATA' untuk 'VA_PERMATA')
-    const nama_bank = process.env.BANK || 'BCA';
+    const nama_bank = process.env.BANK || 'PERMATA';
 
     test('Pilih pengiriman menggunkan promo terpakai', async ({ page }) => {
         const customerPage = new CustomerPage(page);

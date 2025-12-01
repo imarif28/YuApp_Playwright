@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { EvaPage } from '../../pages/EvaPage';
 
-test.describe('Purchase Flow Approve', () => {
 
     test('Agen berhasil mengeluarkan barang dari kontainer ke gudang', async ({ page }) => {
         const evaPage = new EvaPage(page);
@@ -11,5 +10,3 @@ test.describe('Purchase Flow Approve', () => {
 
         await evaPage.agentUnstuffingProcess();
     });
-
-});

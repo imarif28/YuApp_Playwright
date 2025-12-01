@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../../pages/CustomerPage';
 
-test.describe('Purchase Flow Approve', () => {
     // --- Variabel Data Tes ---
 
     // Nama produk yang dibeli (bisa penggalan kata, case-insensitive)
@@ -23,5 +22,3 @@ test.describe('Purchase Flow Approve', () => {
         await customerPage.chooseShippingAndPaymentWithoutPromo(jalur_pengiriman, nama_bank);
         await customerPage.verifyPaymentPage(nama_bank);
     });
-
-});

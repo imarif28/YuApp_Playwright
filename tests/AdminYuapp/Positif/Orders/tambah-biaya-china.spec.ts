@@ -9,7 +9,7 @@ import { AdminPage } from '../../../../pages/AdminPage';
     // Biaya tambahan di China
     const costs_china = process.env.BIAYA_CHINA || '10000';
 
-    test('Menginput nomor resi evatrack', async ({ page }) => {
+    test('Menambahkan biaya tambahan Indonesia', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 

@@ -10,8 +10,8 @@ test('test', async ({ page }) => {
   await page.getByRole('link', { name: /Promo/ }).click();
   await page.goto('https://yuapp.noretest2.com/masterpromo');
   await page.getByLabel('Search:').fill('Playwright');
-  await page.locator('tbody tr', { hasText: 'Playwright' }).first().getByTitle('Delete').click();
-  await expect(page.locator('#delform')).toBeVisible();
-  await page.getByRole('button', { name: 'Deaktivasi' }).click();
+  await page.locator('tbody tr', { hasText: 'Playwright' }).first().getByTitle('Edit').click();
+  await page.locator('input[name="minimal_pembelian"]').fill('100000');
+  await page.getByRole('button', { name: 'Simpan' }).click();
   await expect(page.getByRole('heading', { name: 'Success' })).toBeVisible();
 });

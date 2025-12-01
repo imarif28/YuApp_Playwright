@@ -4,16 +4,20 @@ import { AdminPage } from '../../../../pages/AdminPage';
 
     // --- Variabel Data Tes ---
 
-    // [BARU] Variabel untuk Rate Yuan
-    const rate_yuan = process.env.KURS || '4000.00';
-    
-    test('Admin berhasil mengubah Rate Yuan', async ({ page }) => {
+    // Data untuk Tambah Promo
+    const promo_data = {
+        code: process.env.PROMO || 'dimas',
+    };
+
+    const min_promo_baru = process.env.MIN_PROMO_BARU || '100000';
+
+    test('Admin berhasil mengubah minimal pembelian promo', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
         
-        await adminPage.updateYuanRate(rate_yuan);
+        await adminPage.editPromo(promo_data.code, { minPurchase: min_promo_baru });
         await adminPage.verifysuccessNotification();
     });

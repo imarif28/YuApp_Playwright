@@ -2,13 +2,12 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { AdminPage } from '../../pages/AdminPage';
 
-test.describe('Purchase Flow Approve', () => {
     // --- Variabel Data Tes ---
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
     const customer_name = 'Ilham Muhammad Arif';
     // Nama akun marketing yang akan ditugaskan oleh Admin
-    const nama_marketing = 'IlhamMarketing';
+    const nama_marketing = '1614';
 
     test('Admin berhasil mengubah status back office menjadi pengiriman', async ({ page }) => {
         const loginPage = new LoginPage(page);
@@ -19,5 +18,3 @@ test.describe('Purchase Flow Approve', () => {
         await adminPage.applyShippingAdjustment(customer_name, nama_marketing);
         await adminPage.verifysuccessNotification();
     });
-
-});

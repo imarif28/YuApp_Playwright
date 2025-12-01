@@ -6,7 +6,7 @@ import { AdminPage } from '../../../../pages/AdminPage';
 
     // Data untuk Tambah User
     const newUserData = {
-        nama: process.env.NAMA || 'ubah1',                      // Nama yang di cari
+        nama: process.env.NAMA || 'test1',                      // Nama yang di cari
     };
 
     const role_baru = process.env.ROLE_BARU || '20';            // Role baru yang telah di ubah

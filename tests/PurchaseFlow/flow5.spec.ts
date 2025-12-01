@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { AdminPage } from '../../pages/AdminPage';
-
-test.describe('Purchase Flow Approve', () => {
     // --- Variabel Data Tes ---
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
@@ -21,5 +19,3 @@ test.describe('Purchase Flow Approve', () => {
         await adminPage.uploadAndApproveManualPayment(customer_name, filePath);
         await adminPage.verifysuccessNotification();
     });
-
-});
