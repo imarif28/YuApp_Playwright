@@ -5,7 +5,7 @@ import { AdminPage } from '../../../../pages/AdminPage';
     // --- Variabel Data Tes ---
 
     // [BARU] Variabel untuk Rate Yuan
-    const rate_yuan = '2500.00';
+    const rate_yuan = '2500';
     
     test('Admin berhasil mengubah Rate Yuan', async ({ page }) => {
         const loginPage = new LoginPage(page);
@@ -16,4 +16,5 @@ import { AdminPage } from '../../../../pages/AdminPage';
         
         await adminPage.updateYuanRate(rate_yuan);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyYuanRateValue(rate_yuan);
     });

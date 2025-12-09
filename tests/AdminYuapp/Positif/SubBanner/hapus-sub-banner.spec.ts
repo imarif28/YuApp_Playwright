@@ -16,5 +16,6 @@ import { AdminPage } from '../../../../pages/AdminPage';
         
         await adminPage.deleteSubBanner(sub_banner_url);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyBannerDeleted(sub_banner_url);
     });
 

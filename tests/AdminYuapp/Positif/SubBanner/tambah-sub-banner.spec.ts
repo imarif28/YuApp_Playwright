@@ -23,5 +23,6 @@ import { AdminPage } from '../../../../pages/AdminPage';
 
         await adminPage.addSubBanner(sub_banner_url, sub_banner_position, filePath);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyBannerExists(sub_banner_url);
     });
 

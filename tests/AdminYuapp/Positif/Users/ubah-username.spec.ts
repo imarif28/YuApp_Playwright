@@ -18,6 +18,7 @@ import { AdminPage } from '../../../../pages/AdminPage';
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
 
-        await adminPage.editUsername(newUserData.nama, username_baru);
+        await adminPage.editUser(newUserData.nama, { username: username_baru });
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyEditUser(newUserData.nama, { username: username_baru });
     });

@@ -32,7 +32,7 @@ export class CustomerPage {
     get pesanLink(): Locator {
         return this.page.getByRole('link', { name: 'Pesan' });
     }
-    // coba
+
     get transactionListLink(): Locator {
         return this.page.getByRole('link', { name: 'Daftar Transaksi' });
     }
@@ -166,6 +166,10 @@ export class CustomerPage {
         return this.linkSearchDialog.getByText('Tautan tidak valid');
     }
 
+    get successDialogTransactionListLink(): Locator {
+        return this.successMessageHeading.getByRole('link', { name: 'Daftar Transaksi' });
+    }
+
     // -- Dynamic Locators (berdasarkan parameter) --
 
     promoContainerByName(promoName: string) {
@@ -239,6 +243,10 @@ export class CustomerPage {
     paymentPageVerificationElement(bankName: string): Locator {
         return this.page.locator('.mui-1ax0uoq')
             .filter({ hasText: `${bankName} Virtual Account` });
+    }
+
+    detailPageProductLink(productName: string): Locator {
+        return this.page.getByRole('link', { name: new RegExp(productName.trim(), 'i') }).first();
     }
 
     constructor(page: Page) {
@@ -507,11 +515,19 @@ export class CustomerPage {
 
     async verifySearchByLinkSuccess() {
         // await expect(this.page.locator('p', { hasText: new RegExp(partialProductName.trim(), 'i') })).toBeVisible({ timeout: 8000 });
-    await expect(this.keranjangButton).toBeVisible({ timeout: 8000 });
+        await expect(this.keranjangButton).toBeVisible({ timeout: 8000 });
     }
 
     async verifySearchByLinkInvalid() {
         await expect(this.linkSearchDialogErrorMessage).toBeVisible({ timeout: 800 });
+    }
+
+    async verifyTransactionCreated(productName: string) {
+        await this.successDialogTransactionListLink.click();
+        await expect(this.transaksiContainerByProductName(productName).first()).toBeVisible({ timeout: 10000 });
+        await this.detailTransaksiLink(productName).click();
+        await this.page.waitForURL('**/transaction/**');
+        await expect(this.detailPageProductLink(productName)).toBeVisible({ timeout: 10000 });
     }
 
 }

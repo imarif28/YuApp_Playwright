@@ -18,7 +18,7 @@ export class AdminPage {
         return this.page.getByRole('button', { name: /Update/ });
     }
     get successNotification(): Locator {
-        return this.page.getByRole('heading', { name: 'Success' });
+        return this.page.getByRole('heading', { name: /Success/i });
     }
     get approvePaymentButton(): Locator {
         return this.page.getByRole('button', { name: /APPROVE PAYMENT/i });
@@ -207,6 +207,12 @@ export class AdminPage {
     }
     get activateButton(): Locator {
         return this.page.getByRole('button', { name: 'Aktivasi' });
+    }
+    get emptyTableMessage(): Locator {
+        return this.page.locator('td.dataTables_empty', { hasText: 'No matching records found' });
+    }
+    get statusContainer(): Locator {
+        return this.page.locator('#select2-status_id_bo-container');
     }
 
     // -- Dynamic Locators --
@@ -514,6 +520,17 @@ export class AdminPage {
         await this.roleDropdown.selectOption({ value: data.roleValue });
 
         await this.simpanButton.click();
+        await this.verifysuccessNotification();
+        await this.usersSearchInput.fill(data.username);
+
+        const userRow = this.userRowByUsername(data.username);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Edit').click();
+        await expect(this.usernameInput).toHaveValue(data.username);
+        await expect(this.namaInput).toHaveValue(data.nama);
+        await expect(this.emailInput).toHaveValue(data.email);
+        await expect(this.phoneInput).toHaveValue(data.phone);
+        await expect(this.roleDropdown).toHaveValue(data.roleValue);
     }
 
     async deleteUser(username: string) {
@@ -527,116 +544,55 @@ export class AdminPage {
 
         await expect(this.deleteConfirmationModal).toBeVisible();
         await this.deleteConfirmButton.click();
+        await this.verifysuccessNotification();
+        await this.usersSearchInput.fill(username);
+        await expect(userRow).toBeHidden({timeout : 10000});
     }
 
-    async editUsername(usernameToFind: string, newUsername: string) {
+    async editUser(usernameToFind: string, dataToUpdate: {
+        username?: string,
+        password?: string,
+        nama?: string,
+        email?: string,
+        phone?: string,
+        roleValue?: string
+    }) {
         await this.usersMenuLink.click();
         await expect(this.usersSearchInput).toBeVisible();
         await this.usersSearchInput.fill(usernameToFind);
-
         const userRow = this.userRowByUsername(usernameToFind);
         await expect(userRow).toBeVisible();
         await userRow.getByTitle('Edit').click();
 
-        await expect(this.usernameInput).toBeVisible();
-        await this.usernameInput.fill(newUsername);
-        await this.updateButton.click();
-    }
+        if (dataToUpdate.username) {
+            await expect(this.usernameInput).toBeVisible();
+            await this.usernameInput.fill(dataToUpdate.username);
+        }
 
-    async editPassword(usernameToFind: string, newPassword: string) {
-        await this.usersMenuLink.click();
-        await expect(this.usersSearchInput).toBeVisible();
-        await this.usersSearchInput.fill(usernameToFind);
+        if (dataToUpdate.password) {
+            await expect(this.passwordInput).toBeVisible();
+            await this.passwordInput.fill(dataToUpdate.password);
+        }
 
-        const userRow = this.userRowByUsername(usernameToFind);
-        await expect(userRow).toBeVisible();
-        await userRow.getByTitle('Edit').click();
+        if (dataToUpdate.nama) {
+            await expect(this.namaInput).toBeVisible();
+            await this.namaInput.fill(dataToUpdate.nama);
+        }
 
-        await expect(this.passwordInput).toBeVisible();
-        await this.passwordInput.fill(newPassword);
-        await this.updateButton.click();
-    }
+        if (dataToUpdate.email) {
+            await expect(this.emailInput).toBeVisible();
+            await this.emailInput.fill(dataToUpdate.email);
+        }
 
-    async editName(usernameToFind: string, newName: string) {
-        await this.usersMenuLink.click();
-        await expect(this.usersSearchInput).toBeVisible();
-        await this.usersSearchInput.fill(usernameToFind);
+        if (dataToUpdate.phone) {
+            await expect(this.phoneInput).toBeVisible();
+            await this.phoneInput.fill(dataToUpdate.phone);
+        }
 
-        const userRow = this.userRowByUsername(usernameToFind);
-        await expect(userRow).toBeVisible();
-        await userRow.getByTitle('Edit').click();
-
-        await expect(this.namaInput).toBeVisible();
-        await this.namaInput.fill(newName);
-        await this.updateButton.click();
-    }
-
-    async editEmail(usernameToFind: string, newEmail: string) {
-        await this.usersMenuLink.click();
-        await expect(this.usersSearchInput).toBeVisible();
-        await this.usersSearchInput.fill(usernameToFind);
-
-        const userRow = this.userRowByUsername(usernameToFind);
-        await expect(userRow).toBeVisible();
-        await userRow.getByTitle('Edit').click();
-
-        await expect(this.emailInput).toBeVisible();
-        await this.emailInput.fill(newEmail);
-        await this.updateButton.click();
-    }
-
-    async editPhone(usernameToFind: string, newPhone: string) {
-        await this.usersMenuLink.click();
-        await expect(this.usersSearchInput).toBeVisible();
-        await this.usersSearchInput.fill(usernameToFind);
-
-        const userRow = this.userRowByUsername(usernameToFind);
-        await expect(userRow).toBeVisible();
-        await userRow.getByTitle('Edit').click();
-
-        await expect(this.phoneInput).toBeVisible();
-        await this.phoneInput.fill(newPhone);
-        await this.updateButton.click();
-    }
-
-    async editRole(usernameToFind: string, newRoleValue: string) {
-        await this.usersMenuLink.click();
-        await expect(this.usersSearchInput).toBeVisible();
-        await this.usersSearchInput.fill(usernameToFind);
-
-        const userRow = this.userRowByUsername(usernameToFind);
-        await expect(userRow).toBeVisible();
-        await userRow.getByTitle('Edit').click();
-
-        await expect(this.roleDropdown).toBeVisible();
-        await this.roleDropdown.selectOption({ value: newRoleValue });
-        await this.updateButton.click();
-    }
-
-    async resetUser(data: {
-        username: string,
-        password: string,
-        nama: string,
-        email: string,
-        phone: string,
-        roleValue: string
-    }, usernameToFind: string) {
-        await this.usersMenuLink.click();
-
-        await expect(this.usersSearchInput).toBeVisible();
-        await this.usersSearchInput.fill(usernameToFind);
-
-        const userRow = this.userRowByUsername(usernameToFind);
-        await expect(userRow).toBeVisible();
-        await userRow.getByTitle('Edit').click();
-
-        await expect(this.usernameInput).toBeVisible();
-        await this.usernameInput.fill(data.username);
-        await this.passwordInput.fill(data.password);
-        await this.namaInput.fill(data.nama);
-        await this.emailInput.fill(data.email);
-        await this.phoneInput.fill(data.phone);
-        await this.roleDropdown.selectOption({ value: data.roleValue });
+        if (dataToUpdate.roleValue) {
+            await expect(this.roleDropdown).toBeVisible();
+            await this.roleDropdown.selectOption({ value: dataToUpdate.roleValue });
+        }
 
         await this.updateButton.click();
     }
@@ -820,7 +776,8 @@ export class AdminPage {
 
     // -- Verifications --
     async verifysuccessNotification() {
-        await expect(this.successNotification).toBeVisible();
+        await expect(this.successNotification).toBeVisible({ timeout: 10000 });
+        await expect(this.successNotification).toBeHidden({ timeout: 10000 });
     }
 
     async verifyDuplicateChinaNumberError() {
@@ -830,4 +787,70 @@ export class AdminPage {
     async verifyMissingFileError() {
         await expect(this.missingFileError).toBeVisible();
     }
+
+    async verifyYuanRateValue(rate: string) {
+        const formattedRate = rate.includes('.') ? rate : `${rate}.00`;
+        await expect(this.rateYuanInput).toHaveValue(formattedRate, { timeout: 10000 });
+    }
+
+    async verifyBannerExists(url: string) {
+        await this.bannerSearchInput.fill(url);
+        const bannerRow = this.bannerRowByUrl(url);
+        
+        await expect(bannerRow).toBeVisible();
+    }
+
+    async verifyBannerDeleted(url: string) {
+        await this.bannerSearchInput.fill(url);
+        await expect(this.emptyTableMessage).toBeVisible();
+    }
+
+    async verifyBackOfficeStatus(customerName: string, expectedStatus: string) {
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await expect(this.statusContainer).toHaveText(expectedStatus, { timeout: 10000 });
+    }
+
+    async verifyLocalChinaNumber(customerName: string, expectedNumber: string) {
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await expect(this.localChinaNumberInput).toHaveValue(expectedNumber, { timeout: 10000 });
+    }
+
+    async verifyEditUser(usernameToFind: string, dataToUpdate: {
+        username?: string,
+        nama?: string,
+        email?: string,
+        phone?: string,
+        roleValue?: string
+    }) {
+        await expect(this.usersSearchInput).toBeVisible();
+        await this.usersSearchInput.fill(usernameToFind);
+        const userRow = this.userRowByUsername(usernameToFind);
+        await expect(userRow).toBeVisible();
+        await userRow.getByTitle('Edit').click();
+
+        if (dataToUpdate.username) {
+            await expect(this.usernameInput).toHaveValue(dataToUpdate.username);
+        }
+
+        if (dataToUpdate.nama) {
+            await expect(this.namaInput).toHaveValue(dataToUpdate.nama);
+        }
+
+        if (dataToUpdate.email) {
+            await expect(this.emailInput).toHaveValue(dataToUpdate.email);
+        }
+
+        if (dataToUpdate.phone) {
+            await expect(this.phoneInput).toHaveValue(dataToUpdate.phone);
+        }
+
+        if (dataToUpdate.roleValue) {
+            await expect(this.roleDropdown).toHaveValue(dataToUpdate.roleValue);
+        }
+    }
+
 }

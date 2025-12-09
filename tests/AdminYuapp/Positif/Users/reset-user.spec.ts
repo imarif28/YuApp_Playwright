@@ -4,8 +4,8 @@ import { AdminPage } from '../../../../pages/AdminPage';
 
     // --- Variabel Data Tes ---
 
-    // Data untuk Tambah User
-    const newUserData = {
+    // Data untuk Reset User
+    const resetUserData = {
         username: process.env.USER || 'test',                   // Username untuk akun baru yang akan dibuat
         password: process.env.PASS || '123',                    // Password untuk akun baru
         nama: process.env.NAMA || 'test1',                      // Nama lengkap pengguna untuk akun baru
@@ -18,11 +18,12 @@ import { AdminPage } from '../../../../pages/AdminPage';
 
     test('Admin berhasil reset user', async ({ page }) => {
         const loginPage = new LoginPage(page);
-        const adminPage = new AdminPage(page); 
+        const adminPage = new AdminPage(page);
 
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
 
-        await adminPage.resetUser(newUserData, username_baru);
+        await adminPage.editUser(username_baru, resetUserData);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyEditUser(resetUserData.nama, resetUserData);
     });

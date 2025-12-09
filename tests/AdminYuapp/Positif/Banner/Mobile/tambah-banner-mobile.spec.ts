@@ -23,5 +23,6 @@ import { AdminPage } from '../../../../../pages/AdminPage';
         
         await adminPage.addMobileBanner(banner_mobile_url, banner_mobile_order, filePath);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyBannerExists(banner_mobile_url);
     });
 

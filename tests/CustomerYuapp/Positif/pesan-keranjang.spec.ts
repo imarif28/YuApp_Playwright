@@ -11,4 +11,5 @@ import { CustomerPage } from '../../../pages/CustomerPage';
         await customerPage.login(process.env.CUSTOMER_WHATSAPP!, process.env.CUSTOMER_PASSWORD!);
         await customerPage.checkoutProduct(nama_barang);
         await customerPage.createOrder();
+        await customerPage.verifyTransactionCreated(nama_barang);
     });

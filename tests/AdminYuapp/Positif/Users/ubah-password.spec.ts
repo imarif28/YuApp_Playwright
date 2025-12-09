@@ -18,6 +18,6 @@ import { AdminPage } from '../../../../pages/AdminPage';
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
 
-        await adminPage.editPassword(newUserData.nama, password_baru);
+        await adminPage.editUser(newUserData.nama, { password: password_baru });
         await adminPage.verifysuccessNotification();
     });

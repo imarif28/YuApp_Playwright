@@ -15,5 +15,6 @@ import { AdminPage } from '../../../../pages/AdminPage';
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
         await adminPage.updateStatusToShippingAdjustment(customer_name);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyBackOfficeStatus(customer_name, 'Penyesuaian harga pengiriman');
     });
 

@@ -14,5 +14,6 @@ import { CustomerPage } from '../../pages/CustomerPage';
         await customerPage.addProductToCart(nama_barang);
         await customerPage.checkoutProduct(nama_barang);
         await customerPage.createOrder();
+        await customerPage.verifyTransactionCreated(nama_barang);
     });
 
