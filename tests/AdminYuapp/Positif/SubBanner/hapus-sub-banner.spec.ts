@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
-    // Link tujuan saat sub banner diklik
-    const sub_banner_url = process.env.URL_SBANNER || 'https://www.instagram.com/__dimasim/';
+    // Link sub banner yang akan di cari
+    const sub_banner_url = process.env.URL_SBANNER || adminData.subBanner.url;
 
     test('Admin berhasil menghapus sub banner', async ({ page }) => {
         const loginPage = new LoginPage(page);

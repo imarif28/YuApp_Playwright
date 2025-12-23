@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../../../pages/CustomerPage';
 
-    // Nama produk yang dibeli (bisa penggalan kata, case-insensitive) Tas Persegi Kecil Gaya Korea, Lintas Batas Tas
+    // Nama produk yang dibeli (bisa penggalan kata, case-insensitive)
     const nama_barang = 'Grosir pengisi daya mobil 15W';
 
     test('Pembelian dibawah Minimal', async ({ page }) => {

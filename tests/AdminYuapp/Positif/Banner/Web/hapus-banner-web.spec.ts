@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../../pages/LoginPage';
 import { AdminPage } from '../../../../../pages/AdminPage';
+import { adminData } from '../../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
-    // Link tujuan banner yang ingin dihapus (digunakan untuk mencari baris banner)
-    const banner_url = process.env.URL_BANNER || 'https://www.instagram.com/__dimasim/'
+    // Link tujuan banner yang di cari
+    const banner_url = process.env.URL_BANNER || adminData.banner.urlWeb;
     
     test('Admin berhasil menghapus banner web', async ({ page }) => {
         const loginPage = new LoginPage(page);

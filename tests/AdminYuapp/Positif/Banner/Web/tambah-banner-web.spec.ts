@@ -1,17 +1,18 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../../pages/LoginPage';
 import { AdminPage } from '../../../../../pages/AdminPage';
+import { adminData } from '../../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
-    // Link tujuan saat banner diklik (misal: link Instagram atau halaman promo)
-    const banner_url = process.env.URL_BANNER || 'https://www.instagram.com/__dimasim/';
+    // Link tujuan saat banner diklik
+    const banner_url = process.env.URL_BANNER || adminData.banner.urlWeb;
 
     // Nomor urutan tampilan banner pada halaman website
-    const banner_order = process.env.URUTAN || '6';
+    const banner_order = process.env.URUTAN || adminData.banner.orderWeb;
 
     // Nama file gambar banner yang tersimpan di folder 'gambar/'
-    const gambar = process.env.GAMBAR_BANNER || 'baner.png';
+    const gambar = process.env.GAMBAR_BANNER || adminData.banner.filePathWeb;
     const filePath = `gambar/${gambar}`;
 
     test('Admin berhasil menambah banner web', async ({ page }) => {

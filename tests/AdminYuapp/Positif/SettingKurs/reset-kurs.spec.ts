@@ -2,9 +2,10 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
 
+
     // --- Variabel Data Tes ---
 
-    // [BARU] Variabel untuk Rate Yuan
+    // Variabel untuk Rate Yuan
     const rate_yuan = '2500';
     
     test('Admin berhasil mengubah Rate Yuan', async ({ page }) => {

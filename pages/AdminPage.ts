@@ -178,8 +178,11 @@ export class AdminPage {
     get promoSearchInput(): Locator {
         return this.page.getByLabel('Search:');
     }
+    get promoMethodSelect(): Locator {
+        return this.page.locator('#promo_method');
+    }
     get promoCodeInput(): Locator {
-        return this.page.locator('input[placeholder="YUAPP100"]');
+        return this.page.locator('input[name="nama"]');
     }
     get promoDescriptionInput(): Locator {
         return this.page.locator('#deskripsi');
@@ -192,6 +195,9 @@ export class AdminPage {
     }
     get promoMinPurchaseInput(): Locator {
         return this.page.locator('input[name="minimal_pembelian"]');
+    }
+    get promoTipeSelect(): Locator {
+        return this.page.locator('#tipe_promo');
     }
     get promoIsEventSelect(): Locator {
         return this.page.locator('#is_event');
@@ -231,13 +237,18 @@ export class AdminPage {
     promoRowByName(promoName: string): Locator {
         return this.page.locator('tbody tr', { hasText: promoName }).first();
     }
+    promoActiveIndicator(promoName: string): Locator {
+        return this.promoRowByName(promoName).locator('span.text-success i.icon-primitive-dot');
+    }
+    promoInactiveIndicator(promoName: string): Locator {
+        return this.promoRowByName(promoName).locator('span.text-danger i.icon-primitive-dot');
+    }
 
     constructor(page: Page) {
         this.page = page;
     }
 
     // -- Actions --
-
     async updateStatusToItemAdjustment(customerName: string) {
         await this.orderMenuLink.click();
         const orderRow = this.orderRowByCustomerName(customerName);
@@ -473,7 +484,9 @@ export class AdminPage {
 
         await this.seaCategoryDropdown.press('Enter');
         await this.seaCategoryDropdown.selectOption({ value: data.seaCategoryValue });
+        await this.volume1Input.press('Enter');
         await expect(this.volume1Input).toHaveValue(/.+/, { timeout: 10000 });
+
         await this.panjang1Input.fill(data.panjang);
         await this.panjang1Input.press('Tab');
         await this.lebar1Input.fill(data.lebar);
@@ -520,17 +533,6 @@ export class AdminPage {
         await this.roleDropdown.selectOption({ value: data.roleValue });
 
         await this.simpanButton.click();
-        await this.verifysuccessNotification();
-        await this.usersSearchInput.fill(data.username);
-
-        const userRow = this.userRowByUsername(data.username);
-        await expect(userRow).toBeVisible();
-        await userRow.getByTitle('Edit').click();
-        await expect(this.usernameInput).toHaveValue(data.username);
-        await expect(this.namaInput).toHaveValue(data.nama);
-        await expect(this.emailInput).toHaveValue(data.email);
-        await expect(this.phoneInput).toHaveValue(data.phone);
-        await expect(this.roleDropdown).toHaveValue(data.roleValue);
     }
 
     async deleteUser(username: string) {
@@ -544,9 +546,6 @@ export class AdminPage {
 
         await expect(this.deleteConfirmationModal).toBeVisible();
         await this.deleteConfirmButton.click();
-        await this.verifysuccessNotification();
-        await this.usersSearchInput.fill(username);
-        await expect(userRow).toBeHidden({timeout : 10000});
     }
 
     async editUser(usernameToFind: string, dataToUpdate: {
@@ -696,23 +695,27 @@ export class AdminPage {
         await this.deleteConfirmButton.click();
     }
 
-    async addPromo(data: {
+    async addPromo(promoName: string, data: {
+        method: string,
         code: string,
         description: string,
         percentage: string,
         maxDiscount: string,
         minPurchase: string,
+        type: string,
         isEvent: string
     }) {
         await this.promoMenuLink.click();
         await this.tambahPromoLink.click();
         await expect(this.page).toHaveURL(/masterpromo\/create/);
 
+        await this.promoMethodSelect.selectOption(data.method);
         await this.promoCodeInput.fill(data.code);
         await this.promoDescriptionInput.fill(data.description);
         await this.promoPercentageInput.fill(data.percentage);
         await this.promoMaxDiscountInput.fill(data.maxDiscount);
         await this.promoMinPurchaseInput.fill(data.minPurchase);
+        await this.promoTipeSelect.selectOption(data.type);
         await this.promoIsEventSelect.selectOption(data.isEvent);
 
         await this.promoSaveButton.click();
@@ -740,14 +743,16 @@ export class AdminPage {
 
         await expect(this.activateModal).toBeVisible();
         await this.activateButton.click();
-        await this.verifysuccessNotification();
     }
 
     async editPromo(promoName: string, dataToUpdate: {
+        method?: string,
         description?: string,
         maxDiscount?: string,
         minPurchase?: string,
-        percentage?: string
+        percentage?: string,
+        type?: string,
+        isEvent?: string
     }) {
         await this.promoMenuLink.click();
         await this.promoSearchInput.fill(promoName);
@@ -756,7 +761,9 @@ export class AdminPage {
         await expect(promoRow).toBeVisible();
         await promoRow.getByTitle('Edit').click();
 
-        // Update field hanya jika data disediakan
+        if (dataToUpdate.method) {
+            await this.promoMethodSelect.selectOption(dataToUpdate.method);
+        }
         if (dataToUpdate.description) {
             await this.promoDescriptionInput.fill(dataToUpdate.description);
         }
@@ -769,15 +776,20 @@ export class AdminPage {
         if (dataToUpdate.percentage) {
             await this.promoPercentageInput.fill(dataToUpdate.percentage);
         }
+        if (dataToUpdate.type) {
+            await this.promoTipeSelect.selectOption(dataToUpdate.type);
+        }
+        if (dataToUpdate.isEvent) {
+            await this.promoIsEventSelect.selectOption(dataToUpdate.isEvent);
+        }
 
         await this.promoSaveButton.click();
-        await this.verifysuccessNotification();
     }
 
     // -- Verifications --
     async verifysuccessNotification() {
         await expect(this.successNotification).toBeVisible({ timeout: 10000 });
-        await expect(this.successNotification).toBeHidden({ timeout: 10000 });
+        await expect(this.successNotification).toBeHidden({ timeout: 15000 });
     }
 
     async verifyDuplicateChinaNumberError() {
@@ -788,28 +800,18 @@ export class AdminPage {
         await expect(this.missingFileError).toBeVisible();
     }
 
-    async verifyYuanRateValue(rate: string) {
-        const formattedRate = rate.includes('.') ? rate : `${rate}.00`;
-        await expect(this.rateYuanInput).toHaveValue(formattedRate, { timeout: 10000 });
-    }
-
-    async verifyBannerExists(url: string) {
-        await this.bannerSearchInput.fill(url);
-        const bannerRow = this.bannerRowByUrl(url);
-        
-        await expect(bannerRow).toBeVisible();
-    }
-
-    async verifyBannerDeleted(url: string) {
-        await this.bannerSearchInput.fill(url);
-        await expect(this.emptyTableMessage).toBeVisible();
-    }
-
     async verifyBackOfficeStatus(customerName: string, expectedStatus: string) {
         const orderRow = this.orderRowByCustomerName(customerName);
         await expect(orderRow).toBeVisible();
         await orderRow.getByTitle('Edit').click();
         await expect(this.statusContainer).toHaveText(expectedStatus, { timeout: 10000 });
+    }
+
+    async verifyColoadTrackingNumber(customerName: string, coloadTrackingNumber: string) {
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await expect(this.coloadTrackingNumberInput).toHaveValue(coloadTrackingNumber, { timeout: 10000 });
     }
 
     async verifyLocalChinaNumber(customerName: string, expectedNumber: string) {
@@ -819,6 +821,177 @@ export class AdminPage {
         await expect(this.localChinaNumberInput).toHaveValue(expectedNumber, { timeout: 10000 });
     }
 
+    async verifyEvatrackTrackingNumber(customerName: string, evatrackTrackingNumber: string) {
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await expect(this.evatrackTrackingNumberInput).toHaveValue(evatrackTrackingNumber, { timeout: 10000 });
+    }
+
+    async verifyDomesticTrackingNumber(customerName: string, domesticTrackingNumber: string) {
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await expect(this.domesticTrackingNumberInput).toHaveValue(domesticTrackingNumber, { timeout: 10000 });
+    }
+
+    async verifyAdditionalCostsChina(customerName: string, additionalCosts: string) {
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await expect(this.additionalCostsChina).toHaveValue(additionalCosts, { timeout: 10000 });
+    }
+
+    async verifyAdditionalCostsIndonesia(customerName: string, additionalCosts: string) {
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await expect(this.additionalCostsIndonesia).toHaveValue(additionalCosts, { timeout: 10000 });
+    }
+
+    async verifyDomesticCourier(customerName: string, domesticCourier: string) {
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await expect(this.kurirDomestikDropdown).toHaveValue(domesticCourier, { timeout: 10000 });
+    }
+
+    async verifyAssignedMarketing(customerName: string, marketerValue: string) {
+        await this.orderMenuLink.click();
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+        await expect(this.marketingDropdown).toHaveValue(marketerValue, { timeout: 10000 });
+    }
+
+    async verifyYuanRateValue(rate: string) {
+        const formattedRate = rate.includes('.') ? rate : `${rate}.00`;
+        await expect(this.rateYuanInput).toHaveValue(formattedRate, { timeout: 10000 });
+    }
+
+    async verifyBannerExists(url: string) {
+        await this.bannerSearchInput.fill(url);
+        const bannerRow = this.bannerRowByUrl(url);
+
+        await expect(bannerRow).toBeVisible();
+    }
+
+    async verifyBannerDeleted(url: string) {
+        await this.bannerSearchInput.fill(url);
+        await expect(this.emptyTableMessage).toBeVisible();
+    }
+
+    async verifyPromoCreated(promoName: string, data: {
+        method: string,
+        code: string,
+        description: string,
+        percentage: string,
+        maxDiscount: string,
+        minPurchase: string,
+        type: string,
+        isEvent: string
+    }) {
+        await this.promoSearchInput.fill(promoName);
+        const promoRow = this.promoRowByName(promoName);
+        await expect(promoRow).toBeVisible();
+
+        await promoRow.getByTitle('Edit').click();
+
+        await expect(this.promoCodeInput).toHaveValue(data.code);
+        await expect(this.promoMethodSelect).toHaveValue(data.method);
+        await expect(this.promoTipeSelect).toHaveValue(data.type);
+        await expect(this.promoDescriptionInput).toHaveValue(data.description);
+        const formattedPercentage = data.percentage.includes('.') ? data.percentage : `${data.percentage}.00`;
+        await expect(this.promoPercentageInput).toHaveValue(formattedPercentage);
+        await expect(this.promoMaxDiscountInput).toHaveValue(data.maxDiscount);
+        await expect(this.promoMinPurchaseInput).toHaveValue(data.minPurchase);
+        await expect(this.promoIsEventSelect).toHaveValue(data.isEvent);
+
+    }
+
+    async verifyPromoActivated(promoName: string) {
+        await this.promoSearchInput.fill(promoName);
+        await expect(this.promoRowByName(promoName)).toBeVisible({ timeout: 10000 });
+        await expect(this.promoActiveIndicator(promoName)).toBeVisible();
+    }
+
+    async verifyPromoDeactivated(promoName: string) {
+        await this.promoSearchInput.fill(promoName);
+        await expect(this.promoRowByName(promoName)).toBeVisible({ timeout: 10000 });
+        await expect(this.promoInactiveIndicator(promoName)).toBeVisible();
+    }
+
+    async verifyEditPromo(promoName: string, dataToUpdate: {
+        method?: string,
+        code?: string,
+        description?: string,
+        percentage?: string,
+        maxDiscount?: string,
+        minPurchase?: string,
+        type?: string,
+        isEvent?: string
+    }) {
+        await this.promoSearchInput.fill(promoName);
+        const promoRow = this.promoRowByName(promoName);
+        await expect(promoRow).toBeVisible();
+
+        await promoRow.getByTitle('Edit').click();
+
+        if (dataToUpdate.method) {
+            await expect(this.promoMethodSelect).toHaveValue(dataToUpdate.method);
+        }
+        if (dataToUpdate.description) {
+            await expect(this.promoDescriptionInput).toHaveValue(dataToUpdate.description);
+        }
+        if (dataToUpdate.maxDiscount) {
+            await expect(this.promoMaxDiscountInput).toHaveValue(dataToUpdate.maxDiscount);
+        }
+        if (dataToUpdate.minPurchase) {
+            await expect(this.promoMinPurchaseInput).toHaveValue(dataToUpdate.minPurchase);
+        }
+        if (dataToUpdate.percentage) {
+            const formattedPercentage = dataToUpdate.percentage.includes('.') ? dataToUpdate.percentage : `${dataToUpdate.percentage}.00`;
+            await expect(this.promoPercentageInput).toHaveValue(formattedPercentage);
+        }
+        if (dataToUpdate.type) {
+            await expect(this.promoTipeSelect).toHaveValue(dataToUpdate.type);
+        }
+        if (dataToUpdate.isEvent) {
+            await expect(this.promoIsEventSelect).toHaveValue(dataToUpdate.isEvent);
+        }
+    }
+
+    async verifyUserCreated(data: {
+        username: string,
+        nama: string,
+        email: string,
+        phone: string,
+        roleValue: string
+    }) {
+        await this.usersSearchInput.fill(data.username);
+
+        const userRow = this.userRowByUsername(data.username);
+        await expect(userRow).toBeVisible();
+
+        await userRow.getByTitle('Edit').click();
+
+        await expect(this.usernameInput).toHaveValue(data.username);
+        await expect(this.namaInput).toHaveValue(data.nama);
+        await expect(this.emailInput).toHaveValue(data.email);
+        await expect(this.phoneInput).toHaveValue(data.phone);
+        await expect(this.roleDropdown).toHaveValue(data.roleValue);
+    }
+
+    async verifyUserDeleted(username: string) {
+        await this.usersMenuLink.click();
+        await this.usersSearchInput.fill(username);
+
+        const userRow = this.userRowByUsername(username);
+
+        await expect(userRow).toBeHidden({ timeout: 10000 });
+        await expect(this.emptyTableMessage).toBeVisible();
+    }
+
     async verifyEditUser(usernameToFind: string, dataToUpdate: {
         username?: string,
         nama?: string,
@@ -826,6 +999,7 @@ export class AdminPage {
         phone?: string,
         roleValue?: string
     }) {
+        await this.usersMenuLink.click();
         await expect(this.usersSearchInput).toBeVisible();
         await this.usersSearchInput.fill(usernameToFind);
         const userRow = this.userRowByUsername(usernameToFind);
@@ -851,6 +1025,43 @@ export class AdminPage {
         if (dataToUpdate.roleValue) {
             await expect(this.roleDropdown).toHaveValue(dataToUpdate.roleValue);
         }
+    }
+
+    async verifyEditMarketingInCustomer(customerName: string, marketingValue: string) {
+        await expect(this.customerSearchInput).toBeVisible();
+        await this.customerSearchInput.fill(customerName);
+
+        const customerRow = this.customerRowByCustomerName(customerName);
+        await expect(customerRow).toBeVisible();
+
+        await customerRow.getByTitle('Edit').click();
+
+        await expect(this.customerMarketingDropdown).toBeVisible();
+        await expect(this.customerMarketingDropdown).toHaveValue(marketingValue);
+    }
+
+    async verifyEditInvoice(customerName: string, data: {
+        seaCategoryValue: string,
+        panjang: string,
+        lebar: string,
+        tinggi: string,
+        airCategoryValue: string,
+        berat: string
+    }) {
+        const orderRow = this.orderRowByCustomerName(customerName);
+        await expect(orderRow).toBeVisible();
+        await orderRow.getByTitle('Edit').click();
+
+        await expect(this.seaCategoryDropdown).toHaveValue(data.seaCategoryValue);
+
+        await expect(this.panjang1Input).toHaveValue(data.panjang);
+        await expect(this.lebar1Input).toHaveValue(data.lebar);
+        await expect(this.tinggi1Input).toHaveValue(data.tinggi);
+
+        await expect(this.airCategoryDropdown).toHaveValue(data.airCategoryValue);
+
+        const formattedBerat = data.berat.includes('.') ? data.berat : `${data.berat}.00`;
+        await expect(this.berat2Input).toHaveValue(formattedBerat);
     }
 
 }

@@ -1,17 +1,19 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../../pages/LoginPage';
 import { AdminPage } from '../../../../../pages/AdminPage';
+import { adminData } from '../../../../../data/adminData';
+
 
     // --- Variabel Data Tes ---
 
     // Link tujuan saat banner mobile diklik
-    const banner_mobile_url = process.env.URL_BANNER || 'https://www.instagram.com/__dimasim/';
+    const banner_mobile_url = process.env.URL_BANNER || adminData.banner.urlMobile;
 
     // Nomor urutan tampilan banner pada aplikasi mobile
-    const banner_mobile_order = process.env.URUTAN || '5';
+    const banner_mobile_order = process.env.URUTAN || adminData.banner.orderMobile;
 
     // Nama file gambar banner yang tersimpan di folder 'gambar/'
-    const gambar = process.env.GAMBAR_BANNER || 'baner.png';
+    const gambar = process.env.GAMBAR_BANNER || adminData.banner.filePathMobile;
     const filePath = `gambar/${gambar}`;
 
     test('Admin berhasil menambah banner mobile', async ({ page }) => {

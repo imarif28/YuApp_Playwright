@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../../../pages/CustomerPage';
+import { customerData } from '../../../data/customerData';
 
     // Path ke file gambar
-    const gambar = process.env.GAMBAR || 'beard.jpg';
+    const gambar = process.env.GAMBAR || customerData.gambarValid;
     const pathgambar = `gambar/${gambar}`;
 
     test('Mencari produk berdasarkan gambar', async ({ page }) => {

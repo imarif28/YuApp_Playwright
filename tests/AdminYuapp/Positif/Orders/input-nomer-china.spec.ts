@@ -1,14 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
-    const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
+    const customer_name = process.env.CUSTOMER || adminData.targetCustomerName;
 
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = process.env.RESI || '612781247';
+    const no_local_china = process.env.RESI || adminData.noLocalChina;
 
     test('Menginput nomor lokal China', async ({ page }) => {
         const loginPage = new LoginPage(page);

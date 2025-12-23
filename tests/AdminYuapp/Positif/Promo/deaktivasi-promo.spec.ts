@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
-    // Data untuk Tambah Promo
+    // Code Promo yang di cari
     const promo_data = {
-        code: process.env.PROMO || 'dimas',
+        code: process.env.PROMO || adminData.promo.code,
     };
 
     test('Admin berhasil menonaktifkan promo', async ({ page }) => {
@@ -18,4 +19,5 @@ import { AdminPage } from '../../../../pages/AdminPage';
         
         await adminPage.deactivatePromo(promo_data.code);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyPromoDeactivated(promo_data.code);
     });

@@ -1,15 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
-    // Data untuk Tambah Promo
+    // Code Promo yang di cari
     const promo_data = {
-        code: process.env.PROMO || 'dimas',
+        code: process.env.PROMO || adminData.promo.code,
     };
 
-    const maks_promo_baru = process.env.MAX_PROMO_BARU || '150000';
+    const maks_promo_baru = process.env.MAX_PROMO_BARU || adminData.updatePromo.maxDiscount;
 
     test('Admin berhasil mengubah maksimal potongan promo', async ({ page }) => {
         const loginPage = new LoginPage(page);
@@ -20,4 +21,5 @@ import { AdminPage } from '../../../../pages/AdminPage';
         
         await adminPage.editPromo(promo_data.code, { maxDiscount: maks_promo_baru });
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyEditPromo(promo_data.code, { maxDiscount: maks_promo_baru });
     });

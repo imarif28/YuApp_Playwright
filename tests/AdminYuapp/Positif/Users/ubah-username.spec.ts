@@ -1,15 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
     // Data untuk Tambah User
     const newUserData = {
-        nama: process.env.NAMA || 'test1',                      // Nama yang di cari
+        username: process.env.USER || adminData.newUserData.username                    // User yang di cari
     };
 
-    const username_baru = process.env.USER_BARU || 'ubah1';     // Username baru yang telah di ubah
+    const username_baru = process.env.USER_BARU || adminData.updateUser.username;       // Username baru yang telah di ubah
 
     test('Admin berhasil mengubah username user', async ({ page }) => {
         const loginPage = new LoginPage(page);
@@ -18,7 +19,7 @@ import { AdminPage } from '../../../../pages/AdminPage';
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
 
-        await adminPage.editUser(newUserData.nama, { username: username_baru });
+        await adminPage.editUser(newUserData.username, { username: username_baru });
         await adminPage.verifysuccessNotification();
-        await adminPage.verifyEditUser(newUserData.nama, { username: username_baru });
+        await adminPage.verifyEditUser(username_baru, { username: username_baru });
     });

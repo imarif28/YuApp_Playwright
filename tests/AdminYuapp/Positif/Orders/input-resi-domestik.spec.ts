@@ -1,14 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
-    const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
+    const customer_name = process.env.CUSTOMER || adminData.targetCustomerName;
 
     // Nomor resi domestic yang diinput oleh Admin
-    const no_resi_domestic = process.env.RESI_DOM || '124112435U4341';
+    const no_resi_domestic = process.env.RESI_DOM || adminData.noResiDomestic;
 
     test('Menginput nomor resi domestik', async ({ page }) => {
         const loginPage = new LoginPage(page);
@@ -19,4 +20,5 @@ import { AdminPage } from '../../../../pages/AdminPage';
 
         await adminPage.inputDomesticTrackingNumber(customer_name, no_resi_domestic);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyDomesticTrackingNumber(customer_name, no_resi_domestic);
     });

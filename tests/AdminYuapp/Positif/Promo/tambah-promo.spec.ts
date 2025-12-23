@@ -1,17 +1,20 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
     // Data untuk Tambah Promo
     const promo_data = {
-        code: process.env.PROMO || 'dimas',
-        description: process.env.DESC_PROMO || 'Dibuat Melalui Playwright',
-        percentage: process.env.PERSEN_PROMO || '12',
-        maxDiscount: process.env.MAX_PROMO || '200000',
-        minPurchase: process.env.MIN_PROMO || '120000',
-        isEvent: process.env.IS_EVENT || '0'
+        method: process.env.METHOD_PROMO || adminData.promo.method,
+        code: process.env.PROMO || adminData.promo.code,
+        description: process.env.DESC_PROMO || adminData.promo.description,
+        percentage: process.env.PERSEN_PROMO || adminData.promo.percentage,
+        maxDiscount: process.env.MAX_PROMO || adminData.promo.maxDiscount,
+        minPurchase: process.env.MIN_PROMO || adminData.promo.minPurchase,
+        type: process.env.TIPE_PROMO || adminData.promo.type,
+        isEvent: process.env.IS_EVENT || adminData.promo.isEvent
     };
 
     test('Admin berhasil menambah promo', async ({ page }) => {
@@ -21,6 +24,7 @@ import { AdminPage } from '../../../../pages/AdminPage';
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
 
-        await adminPage.addPromo(promo_data);
+        await adminPage.addPromo(promo_data.code, promo_data);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyPromoCreated(promo_data.code, promo_data);
     });

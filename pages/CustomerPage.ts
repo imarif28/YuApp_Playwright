@@ -108,6 +108,10 @@ export class CustomerPage {
         return this.page.getByPlaceholder('Masukkan Kode Promo');
     }
 
+    get terapkanButton(): Locator {
+        return this.page.getByRole('button', { name: 'Terapkan' });
+    }
+
     get errorPaymentBank(): Locator {
         return this.page.getByText('Error, Checkout Fail. Please try again');
     }
@@ -174,8 +178,8 @@ export class CustomerPage {
 
     promoContainerByName(promoName: string) {
         return this.appliedPromoContainer.filter({
-            hasText: new RegExp(`^${promoName}$`)
-        }).nth(2);
+            hasText: new RegExp(promoName, 'i')
+        }).first();
     }
 
     checkboxInContainer(container: Locator) {
@@ -273,6 +277,9 @@ export class CustomerPage {
         await this.keranjangButton.click();
         await expect(this.successAlert).toBeVisible({ timeout: 10000 });
         await expect(this.successAlert).toBeHidden({ timeout: 10000 });
+        await this.shoppingCartIcon.click();
+        await this.productLinkInCart.click();
+        await expect(this.productContainerByName(productName)).toBeVisible();
     }
 
     async checkoutProduct(productName: string) {
@@ -364,6 +371,8 @@ export class CustomerPage {
         await this.unselectProductCheckbox(productName);
         await expect(this.deleteByProductName(productName)).toBeVisible();
         await this.deleteByProductName(productName).click();
+        await expect(this.successDelete).toBeVisible({ timeout: 10000 });
+        await expect(this.successDelete).toBeHidden({ timeout: 10000 });
     }
 
     async createOrder() {
@@ -430,14 +439,12 @@ export class CustomerPage {
         } else {
             await this.applyPromoCode(promoName);
         }
-        await expect(this.promoContainerByName(promoName)).toBeVisible({ timeout: 10000 });
         await this.checkoutButton.click();
     }
 
     async applyPromoCode(promoName: string) {
         await this.inputPromo.fill(promoName);
         await this.inputPromo.press('Enter');
-        // Verifikasi bahwa promo yang benar sekarang aktif
         await expect(this.promoContainerByName(promoName)).toBeVisible({ timeout: 10000 });
     }
 
@@ -481,8 +488,10 @@ export class CustomerPage {
         await expect(this.successMessageHeading).toBeVisible({ timeout: 20000 });
     }
 
-    async verifyDeleteProduct() {
-        await expect(this.successDelete).toBeVisible({ timeout: 10000 });
+    async verifyDeleteProduct(productName: string) {
+        await this.shoppingCartIcon.click();
+        await this.productLinkInCart.click();
+        await expect(this.productContainerByName(productName)).toBeHidden({ timeout: 20000 });
     }
 
     async verifyPaymentPage(bankName: string) {

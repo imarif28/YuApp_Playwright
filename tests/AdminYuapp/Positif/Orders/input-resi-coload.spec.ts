@@ -1,14 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
-    const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
+    const customer_name = process.env.CUSTOMER || adminData.targetCustomerName;
 
     // Nomor resi coload evatrack yang diinput oleh Admin
-    const no_resi_coload = process.env.RESI_COLOAD || 'COBA1';
+    const no_resi_coload = process.env.RESI_COLOAD || adminData.noResiCoload;
 
     test('Menginput nomor resi coload evatrack', async ({ page }) => {
         const loginPage = new LoginPage(page);
@@ -19,4 +20,5 @@ import { AdminPage } from '../../../../pages/AdminPage';
 
         await adminPage.inputColoadTrackingNumber(customer_name, no_resi_coload);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyColoadTrackingNumber(customer_name, no_resi_coload);
     });

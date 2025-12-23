@@ -1,15 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
-    // Data untuk Tambah User
     const newUserData = {
-        nama: process.env.NAMA || 'test1',                          // Nama yang di cari
+        username: process.env.USER || adminData.newUserData.username            // User yang di cari
     };
 
-    const phone_baru = process.env.TELP_BARU || '621111111111';     // Phone baru yang telah di ubah
+    const phone_baru = process.env.TELP_BARU || adminData.updateUser.phone;     // Phone baru yang telah di ubah
 
     test('Admin berhasil mengubah phone user', async ({ page }) => {
         const loginPage = new LoginPage(page);
@@ -18,7 +18,7 @@ import { AdminPage } from '../../../../pages/AdminPage';
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
 
-        await adminPage.editUser(newUserData.nama, { phone: phone_baru });
+        await adminPage.editUser(newUserData.username, { phone: phone_baru });
         await adminPage.verifysuccessNotification();
-        await adminPage.verifyEditUser(newUserData.nama, { phone: phone_baru });
+        await adminPage.verifyEditUser(newUserData.username, { phone: phone_baru });
     });

@@ -5,16 +5,21 @@ import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
-    // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
-    const customer_name = process.env.CUSTOMER || adminData.targetCustomerName;
+    // Code Promo yang di cari
+    const promo_data = {
+        code: process.env.PROMO || adminData.promo.code,
+    };
 
-    test('Mengubah status back office menjadi Cancel Order', async ({ page }) => {
+    const metode_promo_baru = process.env.METHOD_PROMO_BARU || adminData.updatePromo.method;
+
+    test('Admin berhasil mengubah metode promo', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const adminPage = new AdminPage(page);
 
         await loginPage.goto();
         await loginPage.login(process.env.ADMIN_USERNAME!, process.env.ADMIN_PASSWORD!);
-        await adminPage.updateStatusToCancelled(customer_name);
+        
+        await adminPage.editPromo(promo_data.code, { method: metode_promo_baru });
         await adminPage.verifysuccessNotification();
-        await adminPage.verifyBackOfficeStatus(customer_name, 'Cancel Order');
+        await adminPage.verifyEditPromo(promo_data.code, { method: metode_promo_baru });
     });

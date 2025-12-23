@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../pages/LoginPage';
 import { AdminPage } from '../../../pages/AdminPage';
+import { adminData } from '../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
-    const customer_name = process.env.CUSTOMER || 'Ilham Muhammad Arif';
+    const customer_name = process.env.CUSTOMER || adminData.targetCustomerName;
  
     test('Mengupload Bukti pembayaran tanpa upload file', async ({ page }) => {
         const loginPage = new LoginPage(page);

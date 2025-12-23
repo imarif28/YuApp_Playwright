@@ -1,15 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../../../pages/LoginPage';
 import { AdminPage } from '../../../../pages/AdminPage';
+import { adminData } from '../../../../data/adminData';
 
     // --- Variabel Data Tes ---
 
-    // Data untuk Tambah Promo
+    // Code Promo yang di cari
     const promo_data = {
-        code: process.env.PROMO || 'dimas',
+        code: process.env.PROMO || adminData.promo.code,
     };
 
-    const deskripsi_baru = process.env.DESC_PROMO_BARU || 'ganti lek';
+    const deskripsi_baru = process.env.DESC_PROMO_BARU || adminData.updatePromo.description;
 
     test('Admin berhasil mengubah deskripsi promo', async ({ page }) => {
         const loginPage = new LoginPage(page);
@@ -20,4 +21,5 @@ import { AdminPage } from '../../../../pages/AdminPage';
         
         await adminPage.editPromo(promo_data.code, { description: deskripsi_baru });
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyEditPromo(promo_data.code, { description: deskripsi_baru });
     });

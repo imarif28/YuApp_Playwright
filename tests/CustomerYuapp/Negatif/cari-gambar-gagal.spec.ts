@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { CustomerPage } from '../../../pages/CustomerPage';
+import { customerData } from '../../../data/customerData';
 
     // Path ke file gambar yang tidak akan ditemukan
-    const gambar = 'dimasganteng.png';
+    const gambar = customerData.gambarInvalid;
     const pathgambar = `gambar/${gambar}`;
 
     test('Mencari berdasarkan gambar tidak ditemukan', async ({ page }) => {
