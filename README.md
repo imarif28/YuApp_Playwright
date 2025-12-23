@@ -277,6 +277,8 @@ $env:URL=""
 | `RESI_EVA` | Nomor tracking evatrack | `'OUAA1541'` | Nomor resi evatrack valid |
 | `RESI_DOM` | Nomor tracking domestik | `'124112435U4341'` | Nomor resi domestik valid |
 | `KURIR` | Value kurir Indonesia | `'1'` | `'1'` = J&T Cargo/Sentral Cargo<br>`'3'` = JNE |
+| `BIAYA_INDO` | Biaya tambahan di Indonesia (Yuan) | `'2500'` | Nominal dalam Rupiah |
+| `BIAYA_CHINA` | Biaya tambahan di China (Rupiah) | `'4000'` | Nominal dalam Yuan |
 | `USER` | Username akun baru | `'test'` | Nama username |
 | `PASS` | Password akun baru | `'123'` | Kombinasi angka/huruf |
 | `NAMA` | Nama lengkap akun baru | `'test1'` | Nama lengkap |
@@ -308,10 +310,15 @@ $env:URL=""
 | `MAX_PROMO` | Maksimal potongan (Rp) | `'200000'` | Nominal rupiah |
 | `MIN_PROMO` | Minimal pembelian (Rp) | `'120000'` | Nominal rupiah |
 | `IS_EVENT` | Apakah promo event? | `'0'` | `'0'` = Tidak<br>`'1'` = Ya |
+| `METHOD_PROMO` | Cakupan penerapan diskon promo | `'1'` | `'1'` = All<br>`'2'` = Goods<br>`'3'` = Freight |
+| `TIPE_PROMO` | Batasan penggunaan kuota promo | `'unlimited'` | `'unlimited'` = unlimited<br>`'limited'` = limited |
 | `DESC_PROMO_BARU` | Deskripsi baru untuk edit promo | `'Dibuat Melalui Playwright(Edit)'` | Keterangan promo baru |
+| `PERSEN_PROMO_BARU` | Persentase potongan baru | `'10'` | Angka (0-100) baru |
 | `MAX_PROMO_BARU` | Maksimal potongan baru (Rp) | `'150000'` | Nominal rupiah baru |
 | `MIN_PROMO_BARU` | Minimal pembelian baru (Rp) | `'100000'` | Nominal rupiah baru |
-| `PERSEN_PROMO_BARU` | Persentase potongan baru | `'10'` | Angka (0-100) baru |
+| `IS_EVENT_PROMO_BARU` | Apakah promo event? | `'1'` | `'0'` = Tidak<br>`'1'` = Ya |
+| `METHOD_PROMO_BARU` | Cakupan penerapan diskon promo | `'3'` | `'1'` = All<br>`'2'` = Goods<br>`'3'` = Freight |
+| `TIPE_PROMO_BARU` | Batasan penggunaan kuota promo | `'limited'` | `'unlimited'` = unlimited<br>`'limited'` = limited |
 
 #### Mengatur Variabel AdminYuapp
 
@@ -324,6 +331,8 @@ set "RESI_COLOAD=COBA1"
 set "RESI_EVA=OUAA1541"
 set "RESI_DOM=124112435U4341"
 set "KURIR=1"
+set "BIAYA_INDO=2500"
+set "BIAYA_CHINA=4000"
 set "USER=test"
 set "PASS=123"
 set "NAMA=test1"
@@ -355,10 +364,15 @@ set "PERSEN_PROMO=12"
 set "MAX_PROMO=200000"
 set "MIN_PROMO=120000"
 set "IS_EVENT=0"
+set "METHOD_PROMO=1"
+set "TIPE_PROMO=unlimited"
 set "DESC_PROMO_BARU=Dibuat Melalui Playwright(Edit)"
+set "PERSEN_PROMO_BARU=10"
 set "MAX_PROMO_BARU=150000"
 set "MIN_PROMO_BARU=100000"
-set "PERSEN_PROMO_BARU=10"
+set "IS_EVENTPROMO_BARU=1"
+set "METHOD_PROMO_BARU=3"
+set "TIPE_PROMO_BARU=limited"
 npx playwright test admin-positive.spec.ts
 ```
 
@@ -371,6 +385,8 @@ $env:RESI_COLOAD="COBA1"
 $env:RESI_EVA="OUAA1541"
 $env:RESI_DOM="124112435U4341"
 $env:KURIR="1"
+$env:BIAYA_INDO="2500"
+$env:BIAYA_CHINA="4000"
 $env:USER="test"
 $env:PASS="123"
 $env:NAMA="test1"
@@ -402,10 +418,15 @@ $env:PERSEN_PROMO="12"
 $env:MAX_PROMO="200000"
 $env:MIN_PROMO="120000"
 $env:IS_EVENT="0"
+$env:METHOD_PROMO="1"
+$env:TIPE_PROMO="unlimited"
 $env:DESC_PROMO_BARU="Dibuat Melalui Playwright(Edit)"
+$env:PERSEN_PROMO_BARU="10"
 $env:MAX_PROMO_BARU="150000"
 $env:MIN_PROMO_BARU="100000"
-$env:PERSEN_PROMO_BARU="10"
+$env:METHOD_PROMO_BARU="3"
+$env:IS_EVENTPROMO_BARU="1"
+$env:TIPE_PROMO_BARU="limited"
 npx playwright test admin-positive.spec.ts
 ```
 
@@ -420,6 +441,8 @@ set "RESI_COLOAD="
 set "RESI_EVA="
 set "RESI_DOM="
 set "KURIR="
+set "BIAYA_INDO="
+set "BIAYA_CHINA="
 set "USER="
 set "PASS="
 set "NAMA="
@@ -452,9 +475,12 @@ set "MAX_PROMO="
 set "MIN_PROMO="
 set "IS_EVENT="
 set "DESC_PROMO_BARU="
+set "PERSEN_PROMO_BARU="
 set "MAX_PROMO_BARU="
 set "MIN_PROMO_BARU="
-set "PERSEN_PROMO_BARU="
+set "IS_EVENTPROMO_BARU="
+set "METHOD_PROMO_BARU="
+set "TIPE_PROMO_BARU="
 ```
 
 **PowerShell:**
@@ -466,6 +492,8 @@ $env:RESI_COLOAD=""
 $env:RESI_EVA=""
 $env:RESI_DOM=""
 $env:KURIR=""
+$env:BIAYA_INDO=""
+$env:BIAYA_CHINA=""
 $env:USER=""
 $env:PASS=""
 $env:NAMA=""
@@ -498,9 +526,12 @@ $env:MAX_PROMO=""
 $env:MIN_PROMO=""
 $env:IS_EVENT=""
 $env:DESC_PROMO_BARU=""
+$env:PERSEN_PROMO_BARU=""
 $env:MAX_PROMO_BARU=""
 $env:MIN_PROMO_BARU=""
-$env:PERSEN_PROMO_BARU=""
+$env:IS_EVENTPROMO_BARU="1"
+$env:METHOD_PROMO_BARU=""
+$env:TIPE_PROMO_BARU=""
 ```
 
 ---
