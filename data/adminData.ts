@@ -3,11 +3,11 @@
 export const adminData = {
     // Identitas Customer Target
     targetCustomerName: 'Ilham Muhammad Arif',
-    
+
     // Marketing
     marketingName: 'IlhamMarketing',
     marketingValueForEdit: '1614',
-    
+
     // Finance & Shipping Adjustment
     filePathBuktiBayar: 'dimasganteng.png',
     filePathBuktiBarang: 'tas.jpg',
@@ -16,8 +16,8 @@ export const adminData = {
     noResiEvatrack: 'ZNLJA131',
     noResiDomestic: '134Y131',
     kurirDomestik: '1',
-    costsCina: '20000',
-    costsIndo: '4000',
+    costsCina: '4000',
+    costsIndo: '2500',
 
     // Kurs
     rateYuan: '6600',
@@ -44,12 +44,12 @@ export const adminData = {
     
     // Data Update User
     updateUser: {
-        username: 'UserDiubah1',
-        password: '666',
-        nama: 'Nama Diubah',
-        email: 'ubah1@contoh.com',
-        phone: '621111111111',
-        roleValue: '20'
+        username: 'UserDiubah1',                                // Username untuk akun yang akan diubah
+        password: '666',                                        // Password untuk akun yang akan diubah
+        nama: 'Nama Diubah',                                    // Nama lengkap pengguna untuk akun yang akan diubah
+        email: 'ubah1@contoh.com',                              // Alamat email untuk akun yang akan diubah
+        phone: '621111111111',                                  // Nomor telepon untuk akun yang akan diubah
+        roleValue: '20'                                         // ID Role untuk akun yang akan diubah
     },
 
     // Invoice
@@ -85,10 +85,11 @@ export const adminData = {
         description: 'Dibuat Melalui Playwright',
         percentage: '12',
         maxDiscount: '200000',
-        minPurchase: '120000',
+        minPurchase: '40000',
         isEvent: '0',
         method: '1',
-        type: 'unlimited'
+        type: 'limited',
+        limitCount: '4'
     },
 
     // Promo Edit
@@ -97,9 +98,10 @@ export const adminData = {
         description: 'Ubah Melalui Playwright',
         percentage: '7',
         maxDiscount: '50000',
-        minPurchase: '40000',
+        minPurchase: '30000',
         isEvent: '1',
         method: '3',
-        type: 'unlimited'
+        type: 'limited',
+        limitCount: '1'
     }
 };

@@ -6,7 +6,7 @@ import { EvaPage } from '../../pages/EvaPage';
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = 'Udara';
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = process.env.RESI || '547172';
+    const no_local_china = process.env.RESI || '142642';
     // Tanda pengiriman unik
     const shipping_mark = process.env.TANDA || 'CB46';
 

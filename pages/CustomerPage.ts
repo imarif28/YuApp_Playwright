@@ -117,7 +117,7 @@ export class CustomerPage {
     }
 
     get errorPaymentPromo(): Locator {
-        return this.page.getByText('Transaksi gagal, Promo sudah tidak dapat digunakan. Gunakan promo lain');
+        return this.page.getByText('Promo tidak tersedia atau sudah dipakai');
     }
 
     get checkedProductContainer() {
@@ -440,6 +440,23 @@ export class CustomerPage {
             await this.applyPromoCode(promoName);
         }
         await this.checkoutButton.click();
+    }
+
+    async selectUsedPromo(shippingMethod: string, bankName: string, promoName: string) {
+        await this.shippingMethodLabel(shippingMethod).click();
+        await this.paymentMethodDropdown.click();
+        await this.paymentMethodRadio(bankName).check();
+        await this.confirmPaymentButton.click();
+        const activePromoCount = await this.appliedPromoContainer.count();
+
+        if (activePromoCount > 0) {
+            await this.removePromoButton.click();
+            await expect(this.removePromoButton).toBeHidden();
+            await expect(this.inputPromo).toBeVisible();
+        }
+        await this.inputPromo.fill(promoName);
+        await this.inputPromo.press('Enter');
+        await expect(this.errorPaymentPromo).toBeVisible();
     }
 
     async applyPromoCode(promoName: string) {

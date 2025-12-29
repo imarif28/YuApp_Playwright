@@ -12,7 +12,7 @@ export const customerData = {
     namaBank: 'PERMATA',
     
     // Nama promo yang belum di pakai
-    promoCode: 'YUKYUAPP',
+    promoCode: 'Playwright',
     
     // Pencarian Gambar (pastikan file ada di folder root/gambar)
     gambarValid: 'beard.jpg',

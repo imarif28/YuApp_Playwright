@@ -4,7 +4,7 @@ import { CustomerPage } from '../../pages/CustomerPage';
     // --- Variabel Data Tes ---
 
     // Nama produk yang dibeli (bisa penggalan kata, case-insensitive)
-    const nama_barang = 'Lintas Batas Tas';
+    const nama_barang = 'Alat Cukur Listrik Portabel Pria';
 
     test('Customer berhasil melakukan pembelian', async ({ page }) => {
         const customerPage = new CustomerPage(page);

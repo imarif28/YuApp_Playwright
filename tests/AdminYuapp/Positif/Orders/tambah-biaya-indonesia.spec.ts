@@ -7,7 +7,7 @@ import { adminData } from '../../../../data/adminData';
 
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
     const customer_name = process.env.CUSTOMER || adminData.targetCustomerName;
-    // Biaya tambahan di China
+    // Biaya tambahan di Indo
     const costs_indo = process.env.BIAYA_INDO || adminData.costsIndo;
 
     test('Menambahkan biaya tambahan China', async ({ page }) => {

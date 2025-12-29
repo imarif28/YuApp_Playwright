@@ -14,6 +14,7 @@ import { adminData } from '../../../../data/adminData';
         maxDiscount: process.env.MAX_PROMO || adminData.promo.maxDiscount,
         minPurchase: process.env.MIN_PROMO || adminData.promo.minPurchase,
         type: process.env.TIPE_PROMO || adminData.promo.type,
+        limitCount: process.env.LIMIT_PROMO || adminData.promo.limitCount,
         isEvent: process.env.IS_EVENT || adminData.promo.isEvent
     };
 

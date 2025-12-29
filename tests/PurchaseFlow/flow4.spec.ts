@@ -4,7 +4,7 @@ import { CustomerPage } from '../../pages/CustomerPage';
     // --- Variabel Data Tes ---
 
     // Nama produk yang dibeli (bisa penggalan kata, case-insensitive)
-    const nama_barang = 'Lintas Batas Tas';
+    const nama_barang = 'Alat Cukur Listrik Portabel Pria';
 
     // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
     const jalur_pengiriman = 'Udara';

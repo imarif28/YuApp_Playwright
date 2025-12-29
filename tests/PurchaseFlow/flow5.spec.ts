@@ -7,7 +7,8 @@ import { AdminPage } from '../../pages/AdminPage';
     const customer_name = 'Ilham Muhammad Arif';
     
     // Path relatif ke file bukti pembayaran yang akan diupload oleh Finance
-    const filePath = 'gambar/dimasganteng.png';
+    const gambar = 'dimasganteng.png';
+    const filePath = `gambar/${gambar}`;
 
     test('Finance berhasil menyetujui pembayaran', async ({ page }) => {
         const loginPage = new LoginPage(page);

@@ -7,7 +7,7 @@ import { AdminPage } from '../../pages/AdminPage';
     // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
     const customer_name = 'Ilham Muhammad Arif';
     // Nomor lokal China yang diinput oleh Admin
-    const no_local_china = process.env.RESI ||  '547172';
+    const no_local_china = process.env.RESI ||  '142642';
     
     test('Admin berhasil menginput nomor lokal China', async ({ page }) => {
         const loginPage = new LoginPage(page);
@@ -18,4 +18,5 @@ import { AdminPage } from '../../pages/AdminPage';
 
         await adminPage.inputLocalChinaNumber(customer_name, no_local_china);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyLocalChinaNumber(customer_name, no_local_china);
     });

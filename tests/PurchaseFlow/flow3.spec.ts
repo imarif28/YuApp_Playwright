@@ -15,4 +15,5 @@ import { AdminPage } from '../../pages/AdminPage';
         await loginPage.login(process.env.MARKETING_USERNAME!, process.env.MARKETING_PASSWORD!);
         await adminPage.updateStatusToAwaitingPayment(customer_name);
         await adminPage.verifysuccessNotification();
+        await adminPage.verifyBackOfficeStatus(customer_name, 'Menunggu pembayaran');
     });

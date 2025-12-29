@@ -199,6 +199,9 @@ export class AdminPage {
     get promoTipeSelect(): Locator {
         return this.page.locator('#tipe_promo');
     }
+    get promoLimitCountInput(): Locator {
+        return this.page.locator('#count_tipe');
+    }
     get promoIsEventSelect(): Locator {
         return this.page.locator('#is_event');
     }
@@ -703,6 +706,7 @@ export class AdminPage {
         maxDiscount: string,
         minPurchase: string,
         type: string,
+        limitCount?: string,
         isEvent: string
     }) {
         await this.promoMenuLink.click();
@@ -715,7 +719,12 @@ export class AdminPage {
         await this.promoPercentageInput.fill(data.percentage);
         await this.promoMaxDiscountInput.fill(data.maxDiscount);
         await this.promoMinPurchaseInput.fill(data.minPurchase);
+        await this.promoTipeSelect.press('Enter');
         await this.promoTipeSelect.selectOption(data.type);
+        if (data.type === 'limited' && data.limitCount) {
+            await expect(this.promoLimitCountInput).toBeVisible();
+            await this.promoLimitCountInput.fill(data.limitCount);
+        }
         await this.promoIsEventSelect.selectOption(data.isEvent);
 
         await this.promoSaveButton.click();
@@ -752,6 +761,7 @@ export class AdminPage {
         minPurchase?: string,
         percentage?: string,
         type?: string,
+        limitCount?: string,
         isEvent?: string
     }) {
         await this.promoMenuLink.click();
@@ -777,7 +787,16 @@ export class AdminPage {
             await this.promoPercentageInput.fill(dataToUpdate.percentage);
         }
         if (dataToUpdate.type) {
+            await this.promoTipeSelect.press('Enter');
             await this.promoTipeSelect.selectOption(dataToUpdate.type);
+        }
+        if (dataToUpdate.limitCount) {
+            if (dataToUpdate.type === 'limited') {
+                await this.promoLimitCountInput.fill(dataToUpdate.limitCount);
+            }
+            else if (!dataToUpdate.type && await this.promoLimitCountInput.isVisible()) {
+                await this.promoLimitCountInput.fill(dataToUpdate.limitCount);
+            }
         }
         if (dataToUpdate.isEvent) {
             await this.promoIsEventSelect.selectOption(dataToUpdate.isEvent);
@@ -889,6 +908,7 @@ export class AdminPage {
         maxDiscount: string,
         minPurchase: string,
         type: string,
+        limitCount?: string,
         isEvent: string
     }) {
         await this.promoSearchInput.fill(promoName);
@@ -905,6 +925,12 @@ export class AdminPage {
         await expect(this.promoPercentageInput).toHaveValue(formattedPercentage);
         await expect(this.promoMaxDiscountInput).toHaveValue(data.maxDiscount);
         await expect(this.promoMinPurchaseInput).toHaveValue(data.minPurchase);
+        if (data.type === 'limited' && data.limitCount) {
+            await expect(this.promoLimitCountInput).toBeVisible();
+            await expect(this.promoLimitCountInput).toHaveValue(data.limitCount);
+        } else {
+            await expect(this.promoLimitCountInput).toBeHidden();
+        }
         await expect(this.promoIsEventSelect).toHaveValue(data.isEvent);
 
     }
@@ -929,6 +955,7 @@ export class AdminPage {
         maxDiscount?: string,
         minPurchase?: string,
         type?: string,
+        limitCount?: string,
         isEvent?: string
     }) {
         await this.promoSearchInput.fill(promoName);
@@ -955,6 +982,12 @@ export class AdminPage {
         }
         if (dataToUpdate.type) {
             await expect(this.promoTipeSelect).toHaveValue(dataToUpdate.type);
+        }
+        const currentType = await this.promoTipeSelect.inputValue();
+
+        if (dataToUpdate.limitCount && currentType === 'limited') {
+            await expect(this.promoLimitCountInput).toBeVisible();
+            await expect(this.promoLimitCountInput).toHaveValue(dataToUpdate.limitCount);
         }
         if (dataToUpdate.isEvent) {
             await expect(this.promoIsEventSelect).toHaveValue(dataToUpdate.isEvent);
