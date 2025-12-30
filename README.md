@@ -9,6 +9,7 @@ Proyek ini berisi skrip otomatisasi pengujian untuk **end-to-end testing** mengg
 - **End-to-End Testing**: Pengujian otomatis untuk alur pembelian lengkap dari awal hingga akhir
 - **Page Object Model (POM)**: Struktur kode menggunakan pola desain POM untuk kemudahan pemeliharaan
 - **Multi-Role Testing**: Cakupan pengujian untuk berbagai peran pengguna (Customer, Admin, Finance, Marketing, Agen)
+-  **Centralized Data Management**: Pengelolaan data pengujian terpusat melalui file konfigurasi
 - **Environment Variables**: Pengelolaan kredensial yang aman menggunakan file `.env`
 
 ---
@@ -25,6 +26,10 @@ Proyek ini berisi skrip otomatisasi pengujian untuk **end-to-end testing** mengg
 
 ```
 YuApp_Playwright/
+├── data/                                # Kumpulan data tes terpusat
+│   ├── adminData.ts
+│   └── customerData.ts
+│
 ├── pages/                               # Kelas Page Object Model
 │   ├── AdminPage.ts
 │   ├── CustomerPage.ts
@@ -117,10 +122,109 @@ EVA_URL="https://..."
 EVA_USERNAME="..."
 EVA_PASSWORD="..."
 ```
-
 > **⚠️ Peringatan Keamanan**: Pastikan file `.env` sudah ditambahkan ke `.gitignore` untuk mencegah kredensial ter-commit ke repository!
 
-### 4. Persiapan Asset Gambar
+### 4. Konfigurasi Centralized Data Management
+
+#### Konfigurasi Data Customer (`data/customerData.ts`)
+
+File ini berisi semua data yang digunakan untuk pengujian Customer seperti informasi produk, metode pembayaran, dan preferensi pengiriman.
+
+**Contoh struktur:**
+
+```typescript
+// data/customerData.ts
+
+export const customerData = {
+
+    // Nama produk yang dibeli (bisa penggalan kata, case-insensitive)
+    namaBarang: 'Alat Cukur Listrik Portabel Pria',
+    
+    // Pilih jalur pengiriman yang diinginkan Customer ('Udara' atau 'Laut')
+    jalurPengiriman: 'Laut',
+
+    // Nama bank untuk metode pembayaran (bisa penggalan kata, case-insensitive)
+    namaBank: 'PERMATA',
+    
+    // Nama promo yang belum di pakai
+    promoCode: 'Playwright',
+    
+    // Pencarian Gambar (pastikan file ada di folder root/gambar)
+    gambarValid: 'beard.jpg',
+
+};
+```
+
+**Cara penggunaan di test:**
+
+```typescript
+import { test, expect } from '@playwright/test';
+import { customerData } from '../../../data/customerData';
+
+    // Nama produk yang dibeli (bisa penggalan kata, case-insensitive) 
+    const nama_barang = process.env.BARANG || customerData.namaBarang;
+
+    await customerPage.addProductToCart(nama_barang);
+
+    });
+
+```
+
+#### Konfigurasi Data Admin (`data/adminData.ts`)
+
+File ini berisi semua data yang digunakan untuk pengujian Admin, Finance, dan Marketing seperti informasi customer, tracking, biaya, dan konfigurasi sistem.
+
+**Contoh struktur:**
+
+```typescript
+// data/adminData.ts
+
+export const adminData = {
+    // Identitas Customer Target
+    targetCustomerName: 'Ilham Muhammad Arif',                  // Nama lengkap Customer
+
+    // Marketing
+    marketingName: 'IlhamMarketing',                            // Username Marketing
+    marketingValueForEdit: '1614',                              // Value Marketing untuk Edit Invoice
+
+    // Kurs
+    rateYuan: '6600',                                           // Kurs Yuan
+
+    // Promo
+    promo: {
+        code: 'Playwright',                                     // Nama Promo
+        description: 'Dibuat Melalui Playwright',               // Deskripsi Promo
+        percentage: '12',                                       // Persentase Diskon
+        maxDiscount: '200000',                                  // Maksimal Diskon
+        minPurchase: '40000',                                   // Minimal Pembelian
+        isEvent: '0',                                           // Apakah Promo Event
+        method: '1',                                            // Metode Promo 
+        type: 'limited',                                        // Tipe Promo
+        limitCount: '4'                                         // Batas Penggunaan Promo
+    },
+
+};
+```
+
+**Cara penggunaan di test:**
+
+```typescript
+import { test, expect } from '@playwright/test';
+import { adminData } from '../../../../data/adminData';
+
+    // Nama customer yang melakukan pembelian (untuk pencarian di dashboard admin/marketing/finance)
+    const customer_name = process.env.CUSTOMER || adminData.targetCustomerName;
+
+    // Nomor lokal China yang diinput oleh Admin
+    const no_local_china = process.env.RESI || adminData.noLocalChina;
+
+    await adminPage.inputLocalChinaNumber(customer_name, no_local_china);
+
+    });
+
+```
+
+### 5. Persiapan Asset Gambar
 
 **File Gambar untuk Bukti Pembayaran:**
 
