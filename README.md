@@ -306,6 +306,7 @@ npx playwright test evatrack-negative.spec.ts
 ---
 
 ## ⚙️ Konfigurasi Variabel Environment
+> **💡 Tips**: Dengan Centralized Data Management, Anda dapat mengubah nilai default langsung di file `data/adminData.ts` atau `data/customerData.ts` untuk perubahan permanen, atau menggunakan environment variables untuk perubahan sementara.
 
 ### Variabel untuk CustomerYuapp
 
@@ -733,6 +734,12 @@ npx playwright show-report
 ---
 
 ## 📝 Praktik Terbaik
+### Pengelolaan Centralized Data Management
+
+- ✅ **Gunakan file data untuk nilai default**: Edit `data/adminData.ts` atau `data/customerData.ts` untuk data yang sering digunakan
+- ✅ **Gunakan environment variables untuk override**: Set env var untuk testing skenario khusus tanpa mengubah file data
+- ✅ **Dokumentasikan perubahan data**: Tambahkan komentar di file data untuk menjelaskan perubahan penting
+- ✅ **Jangan hardcode data di test files**: Selalu import dari file data terpusat
 
 ### Saat Development & Debugging
 
@@ -769,28 +776,36 @@ npx playwright install
 - Verifikasi format dan isi file `.env`
 - Gunakan template `.env.example` jika tersedia
 
-### 3. File gambar tidak ditemukan
+### 3. Data tidak terbaca dari file data terpusat
+
+**Solusi:**
+- Verifikasi import statement di test file: `import { adminData } from '../data/adminData'`
+- Pastikan struktur data di file data sesuai dengan yang digunakan di test
+- Periksa apakah TypeScript sudah di-compile dengan benar
+
+
+### 4. File gambar tidak ditemukan
 
 **Solusi:**
 - Pastikan file gambar ada di folder `gambar/`
 - Verifikasi nama file sesuai dengan variabel `GAMBAR`
 - Periksa ekstensi file (`.jpg`, `.png`, `.webp`)
 
-### 4. RESI/TANDA duplikat
+### 5. RESI/TANDA duplikat
 
 **Solusi:**
 - Atur RESI dan TANDA dengan nilai unik sebelum menjalankan pengujian
 - Gunakan timestamp atau nomor acak untuk menghasilkan nilai unik
 - Contoh: `RESI_20241124_001`, `TANDA_TEST_001`
 
-### 5. Variabel environment tidak terbaca
+### 6. Variabel environment tidak terbaca
 
 **Solusi:**
 - Verifikasi variabel sudah di-set dengan benar menggunakan `echo %VAR%` (CMD) atau `$env:VAR` (PowerShell)
 - Pastikan tidak menutup terminal setelah set variabel
 - Jalankan test di terminal yang sama tempat variabel di-set
 
-### 6. Test gagal karena timeout
+### 7. Test gagal karena timeout
 
 **Solusi:**
 - Periksa koneksi internet
