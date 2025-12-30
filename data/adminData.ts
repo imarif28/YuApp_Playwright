@@ -2,34 +2,34 @@
 
 export const adminData = {
     // Identitas Customer Target
-    targetCustomerName: 'Ilham Muhammad Arif',
+    targetCustomerName: 'Ilham Muhammad Arif',                  // Nama lengkap Customer
 
     // Marketing
-    marketingName: 'IlhamMarketing',
-    marketingValueForEdit: '1614',
+    marketingName: 'IlhamMarketing',                            // Username Marketing
+    marketingValueForEdit: '1614',                              // Value Marketing untuk Edit Invoice
 
     // Finance & Shipping Adjustment
-    filePathBuktiBayar: 'dimasganteng.png',
-    filePathBuktiBarang: 'tas.jpg',
-    noLocalChina: '2356579',
-    noResiCoload: 'COBA3',
-    noResiEvatrack: 'ZNLJA131',
-    noResiDomestic: '134Y131',
-    kurirDomestik: '1',
-    costsCina: '4000',
-    costsIndo: '2500',
+    filePathBuktiBayar: 'dimasganteng.png',                     // File Bukti Pembayaran
+    filePathBuktiBarang: 'tas.jpg',                             // File Bukti Barang
+    noLocalChina: '2356579',                                    // Nomor resi lokal pengiriman di China
+    noResiCoload: 'COBA3',                                      // Nomor resi Coload
+    noResiEvatrack: 'ZNLJA131',                                 // Nomor resi tracking sistem internal (Evatrack)
+    noResiDomestic: '134Y131',                                  // Nomor resi pengiriman domestik Indonesia
+    kurirDomestik: '1',                                         // Kurir pengiriman domestik Indonesia
+    costsCina: '4000',                                          // Biaya tambahan dari Cina
+    costsIndo: '2500',                                          // Biaya tambahan dari Indonesia
 
     // Kurs
-    rateYuan: '6600',
+    rateYuan: '6600',                                           // Kurs Yuan
 
     // Data Invoice Baru (Edit)
     editInvoiceData: {
-        seaCategoryValue: '3',
-        panjang: '5',
-        lebar: '5',
-        tinggi: '10',
-        airCategoryValue: '4',
-        berat: '3'
+        seaCategoryValue: '3',                                  // Kategori Biaya Laut
+        panjang: '5',                                           // Dimensi barang (Panjang)
+        lebar: '5',                                             // Dimensi barang (Lebar)
+        tinggi: '10',                                           // Dimensi barang (Tinggi)
+        airCategoryValue: '4',                                  // Kategori Biaya Udara
+        berat: '3'                                              // Berat barang
     },
 
     // User Management (Data User Baru)
@@ -64,44 +64,44 @@ export const adminData = {
 
     // Banner
     banner: {
-        urlMobile: 'https://www.instagram.com/__dimasim/',
-        orderMobile: '6',
-        filePathMobile: 'baner.png',
-        urlWeb: 'https://www.instagram.com/__dimasim/',
-        orderWeb: '5',
-        filePathWeb: 'baner.png'
+        urlMobile: 'https://www.instagram.com/__dimasim/',      // URL Banner Mobile
+        orderMobile: '6',                                       // Urutan Banner Mobile
+        filePathMobile: 'baner.png',                            // File Banner Mobile
+        urlWeb: 'https://www.instagram.com/__dimasim/',         // URL Banner Web
+        orderWeb: '5',                                          // Urutan Banner Web
+        filePathWeb: 'baner.png'                                // File Banner Web
     },
 
     // Sub Banner
     subBanner: {
-        url: 'https://www.instagram.com/__dimasim/',
-        position: 'Kiri',
-        filePath: 'subbaner.png'
+        url: 'https://www.instagram.com/__dimasim/',            // URL Sub Banner
+        position: 'Kiri',                                       // Posisi Sub Banner
+        filePath: 'subbaner.png'                                // File Sub Banner
     },
 
     // Promo
     promo: {
-        code: 'Playwright',
-        description: 'Dibuat Melalui Playwright',
-        percentage: '12',
-        maxDiscount: '200000',
-        minPurchase: '40000',
-        isEvent: '0',
-        method: '1',
-        type: 'limited',
-        limitCount: '4'
+        code: 'Playwright',                                     // Nama Promo
+        description: 'Dibuat Melalui Playwright',               // Deskripsi Promo
+        percentage: '12',                                       // Persentase Diskon
+        maxDiscount: '200000',                                  // Maksimal Diskon
+        minPurchase: '40000',                                   // Minimal Pembelian
+        isEvent: '0',                                           // Apakah Promo Event
+        method: '1',                                            // Metode Promo 
+        type: 'limited',                                        // Tipe Promo
+        limitCount: '4'                                         // Batas Penggunaan Promo
     },
 
     // Promo Edit
     updatePromo: {
-        code: 'UbahCode',
-        description: 'Ubah Melalui Playwright',
-        percentage: '7',
-        maxDiscount: '50000',
-        minPurchase: '30000',
-        isEvent: '1',
-        method: '3',
-        type: 'limited',
-        limitCount: '1'
+        code: 'UbahCode',                                       // Ubah Nama Promo
+        description: 'Ubah Melalui Playwright',                 // Ubah Deskripsi Promo
+        percentage: '7',                                        // Ubah Persentase Diskon
+        maxDiscount: '50000',                                   // Ubah Maksimal Diskon
+        minPurchase: '30000',                                   // Ubah Minimal Pembelian
+        isEvent: '1',                                           // Ubah Apakah Promo Event
+        method: '3',                                            // Ubah Metode Promo
+        type: 'limited',                                        // Ubah Tipe Promo
+        limitCount: '1'                                         // Ubah Batas Penggunaan Promo
     }
 };
