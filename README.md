@@ -835,4 +835,4 @@ Proyek ini dibuat sebagai bagian dari Program Magang QA.
 
 ---
 
-**© 2025 - YuApp Playwright E2E Testing Pro
+**© 2025 - YuApp Playwright E2E Testing Project**
